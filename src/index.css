@@ -1,0 +1,723 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* 
+html {
+  font-size: 62.5%;
+} */
+
+html, body {
+  /* height: 100%;
+  font-family: 'Arial'; */
+  font-weight: bold;
+  color: #2f1946;
+}
+
+a:active,
+a:hover,
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+body {
+  font-size: 1.4rem;
+}
+
+img {
+  vertical-align: middle;
+}
+
+@font-face {
+  font-family: 'Lane-Narrow';
+  src:  url('./fonts/Lane-Narrow.eot?xrp82');
+  src:  url('./fonts/Lane-Narrow.eot?xrp82#iefix') format('embedded-opentype'),
+    url('./fonts/Lane-Narrow.ttf?xrp82') format('truetype'),
+    url('./fonts/Lane-Narrow.woff?xrp82') format('woff'),
+    url('./fonts/Lane-Narrow.svg?xrp82#Lane-Narrow') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('./fonts/icomoon.eot?xrp82');
+  src:  url('./fonts/icomoon.eot?xrp82#iefix') format('embedded-opentype'),
+    url('./fonts/icomoon.ttf?xrp82') format('truetype'),
+    url('./fonts/icomoon.woff?xrp82') format('woff'),
+    url('./fonts/icomoon.svg?xrp82#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-reply:before {
+  content: "\e965";
+}
+.icon-warning:before {
+  content: "\e963";
+}
+.icon-questions-circular:before {
+  content: "\e964";
+}
+.icon-paper-plane-black:before {
+  content: "\e962";
+}
+.icon-job-icon:before {
+  content: "\e960";
+}
+.icon-ellipsis:before {
+  content: "\e95f";
+}
+.icon-clipboard-2:before {
+  content: "\e951";
+}
+.icon-cart:before {
+  content: "\e952";
+}
+.icon-service:before {
+  content: "\e953";
+}
+.icon-support:before {
+  content: "\e954";
+}
+.icon-legal:before {
+  content: "\e955";
+}
+.icon-globe:before {
+  content: "\e956";
+}
+.icon-ink:before {
+  content: "\e957";
+}
+.icon-palette:before {
+  content: "\e958";
+}
+.icon-system:before {
+  content: "\e959";
+}
+.icon-computer:before {
+  content: "\e95a";
+}
+.icon-code:before {
+  content: "\e95b";
+}
+.icon-network-2:before {
+  content: "\e95c";
+}
+.icon-search:before {
+  content: "\e95d";
+}
+.icon-money:before {
+  content: "\e95e";
+}
+.icon-user2:before {
+  content: "\e950";
+}
+.icon-google-plus-logo:before {
+  content: "\e94f";
+}
+.icon-right-arrow:before {
+  content: "\e94e";
+}
+.icon-heart:before {
+  content: "\e94d";
+}
+.icon-play:before {
+  content: "\e94c";
+}
+.icon-download2:before {
+  content: "\e94b";
+}
+.icon-bank:before {
+  content: "\e949";
+}
+.icon-credit-card:before {
+  content: "\e94a";
+}
+.icon-circle-up:before {
+  content: "\e947";
+}
+.icon-circle-down:before {
+  content: "\e948";
+}
+.icon-handshake:before {
+  content: "\e961";
+}
+.icon-upload:before {
+  content: "\e946";
+}
+.icon-drawing-pencil:before {
+  content: "\e943";
+}
+.icon-optical:before {
+  content: "\e945";
+}
+.icon-pdf-file:before {
+  content: "\e93f";
+}
+.icon-file-icon:before {
+  content: "\e940";
+}
+.icon-music-note:before {
+  content: "\e941";
+}
+.icon-film-strip:before {
+  content: "\e942";
+}
+.icon-picture:before {
+  content: "\e944";
+}
+.icon-badge-solid:before {
+  content: "\e92d";
+}
+.icon-badge-flat .path1:before {
+  content: "\e930";
+  color: rgb(255, 153, 31);
+}
+.icon-badge-flat .path2:before {
+  content: "\e936";
+  margin-left: -0.724609375em;
+  color: rgb(255, 118, 26);
+}
+.icon-badge-flat .path3:before {
+  content: "\e937";
+  margin-left: -0.724609375em;
+  color: rgb(255, 153, 31);
+}
+.icon-badge-flat .path4:before {
+  content: "\e938";
+  margin-left: -0.724609375em;
+  color: rgb(255, 118, 26);
+}
+.icon-badge-flat .path5:before {
+  content: "\e939";
+  margin-left: -0.724609375em;
+  color: rgb(255, 197, 51);
+}
+.icon-badge-flat .path6:before {
+  content: "\e93a";
+  margin-left: -0.724609375em;
+  color: rgb(242, 172, 15);
+}
+.icon-badge-flat .path7:before {
+  content: "\e93b";
+  margin-left: -0.724609375em;
+  color: rgb(252, 234, 129);
+}
+.icon-badge-flat .path8:before {
+  content: "\e93c";
+  margin-left: -0.724609375em;
+  color: rgb(242, 172, 15);
+}
+.icon-badge-flat .path9:before {
+  content: "\e93d";
+  margin-left: -0.724609375em;
+  color: rgb(255, 255, 255);
+}
+.icon-badge-flat .path10:before {
+  content: "\e93e";
+  margin-left: -0.724609375em;
+  color: rgb(255, 255, 255);
+}
+.icon-pencil:before {
+  content: "\e92c";
+}
+.icon-clipboard:before {
+  content: "\e92b";
+}
+.icon-comment:before {
+  content: "\e91a";
+}
+.icon-output:before {
+  content: "\e92a";
+}
+.icon-comments:before {
+  content: "\e92e";
+}
+.icon-calendar2:before {
+  content: "\e92f";
+}
+.icon-shape:before {
+  content: "\e931";
+}
+.icon-wallet:before {
+  content: "\e932";
+}
+.icon-clock-1:before {
+  content: "\e933";
+}
+.icon-location:before {
+  content: "\e934";
+}
+.icon-award:before {
+  content: "\e935";
+}
+.icon-down-arrow:before {
+  content: "\e919";
+}
+.icon-add:before {
+  content: "\e910";
+}
+.icon-icon:before {
+  content: "\e917";
+}
+.icon-loupe:before {
+  content: "\e90e";
+}
+.icon-zip:before {
+  content: "\e903";
+}
+.icon-accounts:before {
+  content: "\e921";
+}
+.icon-jobs:before {
+  content: "\e922";
+}
+.icon-media:before {
+  content: "\e923";
+}
+.icon-message:before {
+  content: "\e924";
+}
+.icon-overview:before {
+  content: "\e925";
+}
+.icon-profile:before {
+  content: "\e926";
+}
+.icon-promo:before {
+  content: "\e927";
+}
+.icon-saved:before {
+  content: "\e928";
+}
+.icon-skills:before {
+  content: "\e929";
+}
+.icon-save:before {
+  content: "\e920";
+}
+.icon-check-mark:before {
+  content: "\e91f";
+}
+.icon-plus-button:before {
+  content: "\e91e";
+}
+.icon-file:before {
+  content: "\e91d";
+}
+.icon-flag:before {
+  content: "\e91b";
+}
+.icon-settings:before {
+  content: "\e91c";
+}
+.icon-dollar-coin:before {
+  content: "\e916";
+}
+.icon-star:before {
+  content: "\e918";
+}
+.icon-info-sign:before {
+  content: "\e915";
+}
+.icon-download:before {
+  content: "\e913";
+}
+.icon-prev-arrow:before {
+  content: "\e914";
+}
+.icon-next-arrow:before {
+  content: "\e912";
+}
+.icon-hourglass:before {
+  content: "\e911";
+}
+.icon-garbage:before {
+  content: "\e90f";
+}
+.icon-calendar:before {
+  content: "\e90c";
+}
+.icon-filter:before {
+  content: "\e90d";
+}
+.icon-two-polaroid-pictures:before {
+  content: "\e90a";
+}
+.icon-user:before {
+  content: "\e90b";
+}
+.icon-tag:before {
+  content: "\e905";
+}
+.icon-placeholder:before {
+  content: "\e906";
+}
+.icon-clock:before {
+  content: "\e907";
+}
+.icon-speech:before {
+  content: "\e908";
+}
+.icon-photo-camera:before {
+  content: "\e909";
+}
+.icon-dollars-sign:before {
+  content: "\e900";
+}
+.icon-conversation:before {
+  content: "\e901";
+}
+.icon-timer:before {
+  content: "\e902";
+}
+.icon-chart:before {
+  content: "\e904";
+}
+.icon-star-full:before {
+  content: "\e9d9";
+}
+.icon-facebook:before {
+  content: "\ea90";
+}
+.icon-twitter:before {
+  content: "\ea96";
+}
+.icon-dribbble:before {
+  content: "\eaa7";
+}
+.icon-behance:before {
+  content: "\eaa8";
+}
+.icon-menu:before {
+  content: "\e9bd";
+}
+.icon-attachment:before {
+  content: "\e9cd";
+}
+.icon-smile:before {
+  content: "\e9e1";
+}
+.icon-linkedin2:before {
+  content: "\eaca";
+}
+
+.wrapper {
+    max-width: 1240px;
+    min-height: auto;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.landing {
+  background-color: #263c58;
+  color: #fff;
+  min-height: 100vh;
+  height: auto;
+}
+
+.landingWrap {
+  background-image: url(./img/s-e-o-moves-top-banner.png);
+  background-position: top;
+  min-height: 90vh;
+  height: auto;
+  background-size: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(255, 255, 255,.27);
+}
+
+.logo {
+  margin: auto 0;
+  padding: 33px 0;
+}
+
+.nav_tablet {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.nav_list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.nav_btns__item {
+  border-radius: 0;
+  padding: 5px 20px;
+  text-transform: capitalize;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  color: #fff;
+  outline: none;
+  background-color: transparent;
+}
+
+.nav_btns__item:not(:last-child) {
+  border-right: solid 1px rgba(255, 255, 255, .24);
+}
+
+.nav_list_item {
+  margin: 0 25px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+
+.nav_btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav_list_item .item_text {
+  margin: auto;
+  padding: 30px 0;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+.nav_btns .icon {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-size: 16px;
+}
+
+.nav_btns .button_content .icon {
+  color: #15a4fa;
+}
+
+.button_content {
+  position: relative;
+  padding-left: 30px;
+  display: inline-block;
+  font-weight: normal;
+}
+
+.modal-text {
+  color: #7f7f7f;
+}
+
+/* MODAL WINDOW POP-UP */
+.modal-header {
+  border: none;
+}
+
+.sign-up-modal {
+  color: #000;
+}
+
+.modal-body {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.modal-title {
+    font-size: 49px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.39;
+    text-align: center;
+    color: #15a4fa;
+    margin: 15px 0;
+}
+
+.modal-text {
+    font-size: 25px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.44;
+    text-align: center;
+    color: #7f7f7f;
+    margin: 50px 0;
+}
+
+.modal-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.modal-form .btn {
+    font-size: 13px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 2px;
+}
+
+.modal-form label {
+  width: 100%;
+  margin: 0;
+}
+
+.modal-form input:invalid {
+    background-color: #fff1f5;
+    border: solid 2px #cb001f;
+}
+
+.modal-form input:focus:invalid {
+    background-color: #fffaf1;
+    border: solid 2px #f5a623;
+}
+
+.modal-form_item {
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  color: #334965;
+  background-image: none;
+  border: 1px solid #d9dada;
+}
+
+.sign-up-modal .modal-body input, 
+.sign-up-modal .modal-body .btn {
+    padding: 17px 32px;
+    width: 100%;
+    height: auto;
+    border-radius: 30px;
+    outline: none;
+}
+
+.sign-up-modal .modal-form_label {
+  text-align: center;
+}
+
+.sign-up-modal .inputWrapper {
+  margin-bottom: 17px;
+}
+
+.modal-dialog {
+  width: 95%;
+  max-width: 765px;
+}
+
+.modal-form .isValid {
+  background-color: #fff1f5;
+  border: solid 2px #2bd285;
+}
+
+.modal-form .noValid {
+  background-color: #fff1f5;
+  border: solid 2px #cb001f;
+}
+
+.modal-form .noValid:focus {
+    background-color: #fff1f5;
+    border: solid 2px #f5a623;
+}
+
+.modal-form .btn-blue {
+    background-color: #15a4fa;
+    color: #fff;
+    border-color: #15a4fa;
+    outline: none;
+}
+
+.modal-form span.button-content {
+    position: relative;
+    padding-left: 30px;
+}
+
+.btn-with-icon .button-content .icon {
+    font-size: 34px;
+    margin-top: -17px;
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    margin-top: -15px;
+}
+
+.sign-up-modal .modal-footer {
+    padding: 55px;
+    background-color: rgba(216,216,216,.28);
+    border-top: solid 1px rgba(151,151,151,.28);
+}
+
+.sign-up-modal .modal-footer-content {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    color: #8894a5;
+}
+
+.sign-up-modal .soc-btn {
+    width: 55px;
+    height: 55px;
+    margin: 0 15px;
+    padding: 0;
+    color: #fff;
+}
+
+.sign-up-modal .soc-btn--f {
+    background-image: -moz-linear-gradient(top, #527ed9 0%, #3969cc 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #527ed9), color-stop(100%, #3969cc));
+    background: -webkit-linear-gradient(top, #527ed9 0%, #3969cc 100%);
+    background: -o-linear-gradient(top, #527ed9 0%, #3969cc 100%);
+    background: -ms-linear-gradient(top, #527ed9 0%, #3969cc 100%);
+    background: linear-gradient(to bottom, #527ed9 0%, #3969cc 100%);
+}
+
+.sign-up-modal .soc-btn--g {
+    background-image: -moz-linear-gradient(top, #dd6262 0%, #c34949 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dd6262), color-stop(100%, #c34949));
+    background: -webkit-linear-gradient(top, #dd6262 0%, #c34949 100%);
+    background: -o-linear-gradient(top, #dd6262 0%, #c34949 100%);
+    background: -ms-linear-gradient(top, #dd6262 0%, #c34949 100%);
+    background: linear-gradient(to bottom, #dd6262 0%, #c34949 100%);
+}
+
+.btn {
+    padding: 6px 25px;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    border-radius: 30px;
+    -webkit-transition: all ease 0.25s;
+    transition: all ease 0.25s;
+}
+
+.sign-up-modal .soc-btn:hover {
+    color: #fff;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
