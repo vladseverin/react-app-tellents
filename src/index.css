@@ -584,17 +584,17 @@ img {
   margin: 0;
 }
 
-.modal-form input:invalid {
+.sign-up-modal .modal-form input:invalid {
     background-color: #fff1f5;
     border: solid 2px #cb001f;
 }
 
-.modal-form input:focus:invalid {
+.sign-up-modal .modal-form input:focus:invalid {
     background-color: #fffaf1;
     border: solid 2px #f5a623;
 }
 
-.modal-form_item {
+.sign-up-modal .modal-form_item {
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -604,8 +604,8 @@ img {
   border: 1px solid #d9dada;
 }
 
-.sign-up-modal .modal-body input, 
-.sign-up-modal .modal-body .btn {
+ .sign-up-modal .modal-body input, 
+ .sign-up-modal .modal-body .btn {
     padding: 17px 32px;
     width: 100%;
     height: auto;
@@ -626,34 +626,34 @@ img {
   max-width: 765px;
 }
 
-.modal-form .isValid {
+.sign-up-modal .modal-form .isValid {
   background-color: #fff1f5;
   border: solid 2px #2bd285;
 }
 
-.modal-form .noValid {
+.sign-up-modal .modal-form .noValid {
   background-color: #fff1f5;
   border: solid 2px #cb001f;
 }
 
-.modal-form .noValid:focus {
+.sign-up-modal .modal-form .noValid:focus {
     background-color: #fff1f5;
     border: solid 2px #f5a623;
 }
 
-.modal-form .btn-blue {
+.sign-up-modal .modal-form .btn-blue {
     background-color: #15a4fa;
     color: #fff;
     border-color: #15a4fa;
     outline: none;
 }
 
-.modal-form span.button-content {
+.sign-up-modal .modal-form span.button-content {
     position: relative;
     padding-left: 30px;
 }
 
-.btn-with-icon .button-content .icon {
+.sign-up-modal .btn-with-icon .button-content .icon {
     font-size: 34px;
     margin-top: -17px;
     position: absolute;
@@ -720,4 +720,116 @@ img {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* LOGIN FORM */
+.login-modal .modal-dialog {
+    width: 95%;
+    max-width: 598px;
+}
+
+.login-modal .login-title {
+    color: #555;
+    font-size: 30px;
+    font-weight: 400;
+    display: block;
+}
+
+.login-modal .omb_loginOr {
+    position: relative;
+    font-size: 1.5em;
+    color: #aaa;
+    margin-top: 0.7em;
+    margin-bottom: 0.5em;
+    padding: 0.5em 0.5em;
+}
+
+.login-modal .omb_loginOr .omb_hrOr {
+    background-color: #cdcdcd;
+    height: 1px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.login-modal .omb_loginOr .omb_spanOr {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: -0.9em;
+    margin-left: -1.5em;
+    background-color: white;
+    width: 3em;
+    text-align: center;
+    font-weight: normal;
+}
+
+.login-modal .form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    border: 1px solid #cbcbcb;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.login-modal .form-signin input[type="text"], 
+.login-modal .form-signin input[type="email"] {
+    margin-bottom: 12px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid #cbcbcb;
+    border-radius: 30px;
+}
+
+.login-modal .signer-wrapper .form-signin {
+    max-width: 390px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.login-modal form.modal-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.login-modal .loginWrapper {
+  width: 100%;
+}
+
+.login-modal .form-signin input[type="password"], 
+.login-modal .form-signin input[type="text"] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid #cbcbcb;
+    border-radius: 30px;
+    width: 100%;
+    height: 45px;
+    outline: none;
+    padding-left: 12px;
+    margin-bottom: 12px;
+}
+
+.login-modal .modal-form span.button-content {
+    position: relative;
+    padding: 0;
+    width: 100%;
+}
+
+.login-modal .modal-form .btn-blue {
+    background-color: #15a4fa;
+    color: #fff;
+    border-color: #15a4fa;
+    outline: none;
+    width: 100%;
+    height: 50px;
+}
+
+.login-modal .login-close-btn {
+    position: absolute;
+    right: 27px;
+    z-index: 99;
 }

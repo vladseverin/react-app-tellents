@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Logo from '../img/brand.png';
 import RegisterForm from './RegisterForm';
+import LoginForm from './LoginForm';
 
-class Landing extends Component {
+class LandingPage extends Component {
   render() {
     return (
       <div className="landing">
@@ -49,43 +50,14 @@ class Landing extends Component {
                 </div>
               </div>
 
-              {/* <!-- Modal Register--> */}
               <div className="modal fade sign-up-modal" id="registerModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document" >
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      <RegisterForm />
-                    </div>
-                    <div className="modal-footer">
-                      <div 
-                        className="modal-footer-content ng-isolate-scope">
-                          Or you could sign up with
-                        <button className="btn circul-shape soc-btn soc-btn--f" ng-click="$ctrl.omniAuth('facebook')">
-                          <span className="icon icon-facebook"></span>
-                        </button>
-                        <span>or </span>
-                        <button className="btn circul-shape soc-btn soc-btn--g" ng-click="$ctrl.omniAuth('google')">
-                          <span className="icon icon-google-plus-logo"></span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <RegisterForm />
+              </div>
+
+              <div className="modal fade login-modal" id="loginModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <LoginForm />
               </div>
               
-              {/* <!-- Modal Signin--> */}
-              {/* <Modal id='loginModal'>
-                <div className="sign-up-modal" >
-                  <div className="modal-title blue-color">Please Sign Up</div>
-                  <div className="modal-text">Join over 2 million tallents already using Tellents. Start now for free!</div>
-                </div>
-              </Modal> */}
-
             </div>
           </div>
         </div>
@@ -94,4 +66,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+export default LandingPage;
