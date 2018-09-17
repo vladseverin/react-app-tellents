@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from '../reducers/index';
-import { signup, login } from '../reducers/auth';
+import { validateToken } from '../reducers/auth';
 
 export default function configureStore() {
   if (process.env.NODE_ENV === 'production') {
@@ -13,8 +13,7 @@ export default function configureStore() {
   const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
 
   window.store = store;
-  window.signup = signup;
-  window.login = login;
+  window.validateToken = validateToken;
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {

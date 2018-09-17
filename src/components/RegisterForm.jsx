@@ -38,7 +38,6 @@ class RegisterForm extends Component {
 
     //valid pass
     if (name === "password") {
-      console.log(value.length);
       value.length < 8 ? this.setState({
         [name]: {
           text: value,
@@ -54,8 +53,6 @@ class RegisterForm extends Component {
 
     //valid email
     if (name === "email") {
-      console.log(value);
-
       if (validateEmail(value)) {
         this.setState({
           [name]: {
@@ -98,11 +95,11 @@ class RegisterForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { firstName, lastName, email, password } = this.state;
+    const { signup } = this.props;
 
     if (firstName.isValid && lastName.isValid && email.isValid && password.isValid) {
-      console.log(firstName, lastName, email, password);
-    } else {
-      console.log('Something not valid')
+      document.getElementById("hidePopUpBtn").click();
+      signup(firstName.text, lastName.text, email.text, password.text);
     }
   }
 
@@ -114,7 +111,7 @@ class RegisterForm extends Component {
         <div className="modal-content">
           {/* MODAL HEADER */}
           <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+            <button id="hidePopUpBtn" type="button" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

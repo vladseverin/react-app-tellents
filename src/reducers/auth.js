@@ -8,6 +8,16 @@ const LOGIN_REQUEST = 'LOGIN_REQUEST';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
+const TOKEN_REQUEST = 'TOKEN_REQUEST';
+const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
+const TOKEN_FAILURE = 'TOKEN_FAILURE';
+
+let tokenIsValid = false;
+
 Auth.configure({
   apiUrl: 'https://floating-atoll-63112.herokuapp.com/api',
 });
@@ -24,27 +34,21 @@ export function signup(fistName, lastName, email, password) {
       last_name: lastName,
       password: password,
     })
-    .then((response) => {
-      if (response.status === 'success') {
-        return response;
-      }
+      .then((response) => {
+        if (response.status === 'success') {
+          return response;
+        }
 
-      throw new Error(response.errors);
-    })
-    .then((json) => {
-      // console.log(json);
-      dispatch({
+        throw new Error(response.errors);
+      })
+      .then((json) => dispatch({
         type: SIGNUP_SUCCESS,
         payload: json,
-      });
-    })
-    .catch(reason => {
-      // console.log(reason);
-      dispatch({
+      }))
+      .catch(reason => dispatch({
         type: SIGNUP_FAILURE,
         payload: reason,
-      })
-    });
+      }));
 
   };
 }
@@ -59,33 +63,84 @@ export function login(email, password) {
       email: email,
       password: password
     })
-    .then(response => {
-      if (response.success === true) {
-        return response;
-      }
+      .then(response => {
+        if (response.success === true) {
+          return response;
+        }
 
-      throw new Error(response.errors);
-    })
-    .then(json => {
-      // console.log(json);
-      dispatch({
+        throw new Error(response.errors);
+      })
+      .then(json => dispatch({
         type: LOGIN_SUCCESS,
         payload: json,
-      });
-    })
-    .catch(reason => {
-      // console.log(reason);
-      dispatch({
+      }))
+      .catch(reason => dispatch({
         type: LOGIN_FAILURE,
         payload: reason,
-      })
-    });
-
+      }));
   }
 }
 
+export function logout() {
+  return (dispatch) => {
+    dispatch({
+      type: LOGOUT_REQUEST,
+    });
+
+    Auth.signOut()
+      .then(response => {
+        if (response.success === true) {
+          return response;
+        }
+
+        throw new Error (response.errors);
+      })
+      .then(json => dispatch({
+        type: LOGOUT_SUCCESS,
+        payload: json,
+      }))
+      .catch(reason => dispatch({
+        type: LOGOUT_FAILURE,
+        payload: reason,
+      }));
+  }
+}
+
+export function validateToken() {
+  return (dispatch) => {
+    dispatch({
+      type: TOKEN_REQUEST,
+    });
+
+    Auth.validateToken()
+      .then(user => {
+        if ( Object.keys(user).length !== 0) {
+          return user;
+        }
+
+        throw new Error (user);
+      })
+      .then(json => {
+        tokenIsValid = true;
+        dispatch({
+          type: TOKEN_SUCCESS,
+          payload: json,
+      })})
+      .catch(reason => {
+        console.log(reason);
+        dispatch({
+          type: TOKEN_FAILURE,
+          payload: reason,
+      })});
+  }
+}
+
+// console.log('token', validateToken());
+// const token = Auth.validateToken()
+//   .then(response => console.log(response));
+
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: tokenIsValid,
   email: null,
   firstName: null,
   lastName: null,
@@ -112,6 +167,27 @@ const actionsMap = {
       image: action.payload.data.image.url,
     }
   },
+  [LOGOUT_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      isAuthenticated: false,
+      email: null,
+      firstName: null,
+      lastName: null,
+      image: null,
+    }
+  },
+  [TOKEN_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      isAuthenticated: true,
+      email: action.payload.email,
+      firstName: action.payload.first_name,
+      lastName: action.payload.last_name,
+      image: action.payload.image.url,
+    }
+  },
+
 
 }
 

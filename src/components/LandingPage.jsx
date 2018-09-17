@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Logo from '../img/brand.png';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 
 class LandingPage extends Component {
+
+  componentDidMount() {
+    const { validateToken } = this.props;
+
+    validateToken();
+  }
+
   render() {
+    const { login, signup, isAuthenticated} = this.props;
+
+    // if (isAuthenticated) {
+    //   return <Redirect to='/home' />
+    // }
+
     return (
       <div className="landing">
         <div className="landingWrap">
@@ -51,11 +65,11 @@ class LandingPage extends Component {
               </div>
 
               <div className="modal fade sign-up-modal" id="registerModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <RegisterForm />
+                <RegisterForm signup={signup} />
               </div>
 
               <div className="modal fade login-modal" id="loginModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <LoginForm />
+                <LoginForm login={login} />
               </div>
               
             </div>

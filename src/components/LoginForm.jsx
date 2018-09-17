@@ -29,8 +29,12 @@ class LoginForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = this.state;
+    const { login } = this.props;
 
-    console.log(this.state);
+    if ( email.text && password.text ) {
+      login(email.text, password.text);
+      document.getElementById("hidePopUpBtn2").click();
+    }
   }
 
   render() {
@@ -41,7 +45,7 @@ class LoginForm extends Component {
         <div className="modal-content">
           {/* MODAL HEADER */}
           <div className="modal-header">
-            <button type="button login-close-btn" className="close" data-dismiss="modal" aria-label="Close">
+            <button id="hidePopUpBtn2" type="button login-close-btn" className="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -82,7 +86,6 @@ class LoginForm extends Component {
                     placeholder="Password (8 or more characters)"
                   />
                 </div>
-
 
                 <button className="btn btn-blue btn-with-icon" type="submit">
                   <span className="button-content">
