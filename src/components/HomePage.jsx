@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
-
-const SearchPage = () => <h1>Search</h1>;
-const SkillsPage = () => <h1>Skills</h1>;
+import SearchPage from '../containers/SearchPage';
+import SkillsPage from './SkillsPage';
 
 class HomePage extends Component {
   handleLogOut = () => {
@@ -17,7 +16,7 @@ class HomePage extends Component {
 
   render() {
     const { match } = this.props;
-    console.log(match);
+    
     return (
       <div className='home-page'>
         <div className="home-page-header">
@@ -45,11 +44,9 @@ class HomePage extends Component {
         </div>
 
         <div className="home-page-body">
-          <div className="wrapper">
-            <Route exact path={`${match.url}`} component={() => <h1> Choose what you need</h1>} />
-            <Route path={`${match.url}/search`} component={SearchPage} />
-            <Route path={`${match.url}/skills`} component={SkillsPage} />
-          </div>
+          <Route exact path={`${match.url}`} component={() => <h1> Choose what you need</h1>} />
+          <Route path={`${match.url}/search`} component={SearchPage} />
+          <Route path={`${match.url}/skills`} component={SkillsPage} />
         </div>
       </div>
     );

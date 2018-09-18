@@ -881,3 +881,156 @@ img {
     color: #768b98;
     font-weight: bold;
 }
+
+/* SEARCH PAGE */
+
+.contant-header {
+  margin-bottom: 15px;
+}
+
+.my-form-search {
+  position: relative;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding: 6px 12px;
+    font-size: 14px;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9dada;
+    border-radius: 30px;
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.search-filter {
+  display: flex;
+  position: absolute;
+  border-radius: 50px;
+  overflow: hidden;
+  background-color: #eeeeee;
+  font-size: 13px;
+  top: 50%;
+  right: 39px;
+  transform: translateY(-50%);
+}
+
+.serch-filter-item {
+  background-color: #EEEEEE;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  outline:none;
+}
+
+button:focus {
+  outline: none;
+  border: none;
+}
+
+.my-form-search button.btn-search {
+    position: absolute;
+    top: 50%;
+    font-size: 17px;
+    right: 15px;
+    transform: translateY(-50%);
+    margin: 0;
+    color: #15a4fa;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.serch-filter-item:first-child {
+  border-right: 1px solid #dde2e6;
+}
+
+.greating {
+  font-size: 12px;
+}
+
+.greating-name {
+  color: #15a4fa;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+@media (max-width: 576px) {
+  .greating {
+    text-align: center;
+  }
+}
+
+.panel {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 20px 10px 20px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    background-color: #dde2e6;
+    color: #4b5053;
+    border: none;
+    -webkit-box-shadow: 0 1px 1px rgba(204,204,204,1);
+    box-shadow: 0 1px 1px rgba(204,204,204,1);
+}
+
+/* The switch - the box around the slider */
+.panel-radio {
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.radio-text {
+  color: #15a4fa;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #15a4fa;
+  transition: .4s;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
