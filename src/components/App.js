@@ -5,32 +5,19 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-
+import PrivateRoute from './PrivateRoute';
 import LandingPage from '../containers/LandingPage';
 import HomePage from '../containers/HomePage';
 
 class App extends Component {
   render() {
-    const { isAuthenticated} = this.props;
-    console.log(isAuthenticated);
+    const { isAuthenticated } = this.props;
+
     return (
       <Router >
         <Switch>
-          {/* <Route exact path="/" component={LandingPage} /> */}
-          {/* <Route path="/home" component={HomePage} />
-
-          <Route path='/home' render={() => isAuthenticated 
-            ? <Redirect to="/home" />
-            : <Redirect to="/" />
-          } /> */}
-          <Route 
-            exact 
-            path="/" 
-            render={() => isAuthenticated
-              ? <HomePage />
-              : <LandingPage />} 
-          />
-
+          <Route exact path="/" component={LandingPage} />
+          <PrivateRoute isAuthenticated={isAuthenticated} path="/home" component={HomePage} />
           <Redirect to="/" />
         </Switch>
       </Router>

@@ -10,10 +10,14 @@ html {
 } */
 
 html, body {
-  /* height: 100%;
-  font-family: 'Arial'; */
+  height: 100%;
+
   font-weight: bold;
   color: #2f1946;
+}
+
+#root {
+  height: 100%;
 }
 
 a:active,
@@ -832,4 +836,47 @@ img {
     position: absolute;
     right: 27px;
     z-index: 99;
+}
+
+/* HOME PAGE */
+
+.home-page {
+  height: 100%;
+  background-color: #EEEEEE;
+  font-weight: normal;
+}
+
+/* .root, html {
+  height: 100%;
+} */
+
+.home-page .link-wrap {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  padding: 20px 40px;
+  margin: 20px 0;
+  -webkit-box-shadow: 1px 22px 94px -36px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 22px 94px -36px rgba(0,0,0,0.75);
+  box-shadow: 1px 22px 94px -36px rgba(0,0,0,0.75);
+}
+
+.home-page .link-item {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    border: 2px solid;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dadee1;
+    border-radius: 4px;
+}
+
+.home-page .link-item > .btn {
+    background-color: #1293E1;
+    color: #fff;
+    font-weight: bold;
 }

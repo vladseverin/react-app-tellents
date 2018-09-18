@@ -6,18 +6,17 @@ import LoginForm from './LoginForm';
 
 class LandingPage extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     const { validateToken } = this.props;
-
     validateToken();
   }
 
   render() {
     const { login, signup, isAuthenticated} = this.props;
 
-    // if (isAuthenticated) {
-    //   return <Redirect to='/home' />
-    // }
+    if (isAuthenticated) {
+      return <Redirect to='/home' />
+    }
 
     return (
       <div className="landing">

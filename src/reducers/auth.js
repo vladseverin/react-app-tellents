@@ -1,4 +1,5 @@
 import Auth from 'j-toker';
+import getCookie from '../utils/getCookies';
 
 const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
@@ -16,7 +17,7 @@ const TOKEN_REQUEST = 'TOKEN_REQUEST';
 const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 const TOKEN_FAILURE = 'TOKEN_FAILURE';
 
-let tokenIsValid = false;
+let token = null;
 
 Auth.configure({
   apiUrl: 'https://floating-atoll-63112.herokuapp.com/api',
@@ -95,10 +96,12 @@ export function logout() {
 
         throw new Error (response.errors);
       })
-      .then(json => dispatch({
-        type: LOGOUT_SUCCESS,
-        payload: json,
-      }))
+      .then(json => {
+        dispatch({
+          type: LOGOUT_SUCCESS,
+          payload: json,
+        });
+      })
       .catch(reason => dispatch({
         type: LOGOUT_FAILURE,
         payload: reason,
@@ -114,33 +117,31 @@ export function validateToken() {
 
     Auth.validateToken()
       .then(user => {
-        if ( Object.keys(user).length !== 0) {
+        let token = getCookie("authHeaders")
+          ? JSON.parse(getCookie("authHeaders"))['access-token']
+          : null;
+        if (token) {
           return user;
         }
 
-        throw new Error (user);
+        throw new Error(user);
       })
-      .then(json => {
-        tokenIsValid = true;
-        dispatch({
-          type: TOKEN_SUCCESS,
-          payload: json,
-      })})
+      .then(json => dispatch({
+        type: TOKEN_SUCCESS,
+        payload: json,
+      }))
       .catch(reason => {
         console.log(reason);
         dispatch({
           type: TOKEN_FAILURE,
           payload: reason,
-      })});
+        })
+      });
   }
 }
 
-// console.log('token', validateToken());
-// const token = Auth.validateToken()
-//   .then(response => console.log(response));
-
 const initialState = {
-  isAuthenticated: tokenIsValid,
+  isAuthenticated: !!token,
   email: null,
   firstName: null,
   lastName: null,
@@ -187,7 +188,6 @@ const actionsMap = {
       image: action.payload.image.url,
     }
   },
-
 
 }
 
