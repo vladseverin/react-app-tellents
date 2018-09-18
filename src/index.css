@@ -846,37 +846,38 @@ img {
   font-weight: normal;
 }
 
-/* .root, html {
-  height: 100%;
-} */
+.home-page-header {
+  background-color: #FFFFFF;
+  width: 100%;
+  background-color: white;
+  min-height: 75px;
+  border-bottom: 1px solid #d9dada;
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  -ms-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
 
 .home-page .link-wrap {
-  display: flex;
-  justify-content: space-between;
-  background-color: #FFFFFF;
-  border-radius: 4px;
-  padding: 20px 40px;
-  margin: 20px 0;
-  -webkit-box-shadow: 1px 22px 94px -36px rgba(0,0,0,0.75);
-  -moz-box-shadow: 1px 22px 94px -36px rgba(0,0,0,0.75);
-  box-shadow: 1px 22px 94px -36px rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    box-shadow: 1px 22px 94px -36px rgba(0,0,0,0.75);
 }
 
 .home-page .link-item {
-    width: 100%;
-    max-width: 400px;
-    height: 200px;
     border: 2px solid;
     display: -ms-flexbox;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #dadee1;
-    border-radius: 4px;
+    border: none;
 }
 
-.home-page .link-item > .btn {
-    background-color: #1293E1;
-    color: #fff;
+.home-page .link-item-btn {
+    color: #768b98;
     font-weight: bold;
 }
