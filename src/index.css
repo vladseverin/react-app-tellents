@@ -448,6 +448,14 @@ img {
   background-size: 100%;
 }
 
+.btn-blue {
+  background-color: #15a4fa;
+  color: #fff;
+  border-color: #15a4fa;
+  outline: none;
+}
+
+
 .header {
   display: flex;
   flex-direction: row;
@@ -1026,11 +1034,313 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/* JOBS */
+
+.jobs-wrap {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.filter-title {
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.checkbox-block {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-block label {
+  margin-bottom: 0;
+}
+
+.checkbox-block-item {
+  margin-right: 5px;
+}
+
+.checkbox-block-text {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.checkbox-list {
+  display: flex;
+}
+
+.jobs-wrap .filter-block {
+  width: 100%;
+  padding: 15px 5px;
+  border-bottom: 1px solid #d8dcdf;
+}
+
+/* SKILLS */
+
+.skills {
+  position: relative;
+  margin-bottom: 15px;
+  background-color: #fff;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+}
+
+.skills .right-col {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-flex-shrink: 0;
+  -moz-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  width: auto;
+}
+
+.skills .left-col{
+  width: 100%;
+}
+
+.skills .my-sidebar {
+  border-right: 1px solid #d8dcdf;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.skills .my-sidebar > li > a{
+  color: #7f7f7f;
+  font-size: 12px;
+  background-color: #fff;
+  text-decoration: none;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  -ms-border-radius: 1px;
+  border-radius: 1px;
+  text-align: center;
+  -webkit-transition: all ease 0.25s;
+  transition: all ease 0.25s;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px;
+}
+
+.skills .my-sidebar > li > a .icon{
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.skills .my-sidebar > li.active > a {
+  background-color: #1293E1;
+  color: #fff;
+}
+
+.skills .my-sidebar > li:hover > a {
+  background-color: #1293E1;
+  color: #fff;
+}
+
+.skills .header {
+  padding: 25px 30px;
+  border-bottom: 1px solid #dadee1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skills .header-title {
+  font-size: 20px;
+  letter-spacing: -.25px;
+  color: #15a4fa;
+  font-weight: normal;
+}
+
+.skills .skill-subcat {
+  margin: 0 30px;
+  padding-top: 23px;
+  padding-bottom: 23px;
+}
+
+.skills .skill-block-title {
+    font-size: 16px;
+    letter-spacing: -.25px;
+    color: #15a4fa;
+    padding: 7px 0;
+}
+
+.skills .checkbox-circle {
+    width: 13px;
+    height: 13px;
+    border: 1px solid #15a4fa;
+    display: inline-block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -6px;
+    padding: 2px;
+}
+
+.skills .checkbox-block label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skills .checkbox-block input {
+  visibility: hidden;
+  position: absolute;
+  z-index: -99999;
+}
+
+.skills .checkbox-block .checkbox-text {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 13px;
+  color: #7f7f7f;
+  font-weight: normal;
+}
+
+.checkbox-circle .icon {
+  font-size: 8px;
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.skills span.icon.icon-check-mark {
+  position: absolute;
+}
+
+.skills .skill-tag{
+    margin: 7px 2px;
+    padding: 5px;
+    font-size: 10px;
+    line-height: 11px;
+    color: #15a4fa;
+    border: 1px solid #15a4fa;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    float: left;
+    cursor: pointer;
+}
+
+.skills .skill-tags-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.skills .skill-block-footer a {
+  display: block;
+  color: #15a4fa;
+  font-size: 13px;
+  line-height: 20px;
+  text-decoration: underline;
+  padding: 0 8px;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transition: all ease 0.25s;
+  transition: all ease 0.25s;
+}
+
+.skills .skill-block-footer a:first-child {
+  border-right: 1px solid #15a4fa;
+}
+
+.skills .skill-list-block {
+  padding: 23px 30px;
+}
+
+.skills .skill-list-title {
+    font-size: 16px;
+    letter-spacing: -.25px;
+    color: #15a4fa;
+    padding: 7px 0;
+}
+
+.skills .checkbox-text {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #7f7f7f;
+    font-weight: normal;
+    padding-left: 12px;
+}
+
+.skills .skill-list-body label {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.skills .radio-wrap {
+  margin: 10px 0 15px;
+}
+
+.skills .skill-list-body .btn {
+  font-weight: bold;
+}
+
+.skills .search-tags {
+  background-color: transparent !important;
+  border: none;
+  outline: none;
+  height: 1.666666em;
+  margin-bottom: 3px;
+}
+
+.skills .skill-tags {
+  display: block;
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9dada;
+  border-radius: 30px;
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  margin: 20px 0;
 }

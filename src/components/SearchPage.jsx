@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import Jobs from './Jobs';
+import Talants from './Talants';
 
 class SearchPage extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isGoing: true,
+      data: [],
     };
   }
 
   componentDidMount() {
-    console.log("Search page");
+    axios.get('https://floating-atoll-63112.herokuapp.com/api/v1/tellents/search?q=%7B%7D')
+      .then(response => {
+        if (response.status === 200) {
+          return response
+        }
+
+        throw new Error(response.errors);
+      })
+      .then(json => {
+        console.log(json.data.users)
+        this.setState({
+          data: json.data.users
+        })
+        return json;
+      })
+      .catch(reason => console.log(reason));
   }
 
    handleInputChange = (event) => {
@@ -54,7 +74,7 @@ class SearchPage extends Component {
 
 
   render() {
-    const { dataUser, validateToken } = this.props;
+    const { dataUser, validateToken, match } = this.props;
     const { isGoing } = this.state;
 
     const getFullName = `${dataUser.firstName} ${dataUser.lastName}`;
@@ -85,9 +105,14 @@ class SearchPage extends Component {
                   type="text"
                   placeholder="Search for ..."
                 />
+
                 <div className="search-filter">
-                  <button name="jobs" onClick={this.handleChangeFilter} className={isGoing ? "serch-filter-item" : "serch-filter-item radio-text"} > Jobs </button>
-                  <button name="talants" onClick={this.handleChangeFilter} className={isGoing ? "serch-filter-item radio-text" : "serch-filter-item"} > Talants </button>
+                  <button name="jobs" onClick={this.handleChangeFilter} className={isGoing ? "serch-filter-item" : "serch-filter-item radio-text"} >
+                    Jobs 
+                  </button>
+                  <button name="talants" onClick={this.handleChangeFilter} className={isGoing ? "serch-filter-item radio-text" : "serch-filter-item"} > 
+                   Talants
+                  </button>
                 </div>
 
                 <button type="submit" className="btn-search">
@@ -123,6 +148,12 @@ class SearchPage extends Component {
               Sort By
             </div>
           </div>
+        </div>
+
+        <div className="row contant-body">
+          {isGoing
+            ? <Talants />
+            : <Jobs />}
         </div>
       </div>
     );

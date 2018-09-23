@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import SearchPage from '../containers/SearchPage';
 import SkillsPage from './SkillsPage';
 
@@ -34,7 +34,7 @@ class HomePage extends Component {
                 </Link>
               </div>
               <div className="link-item">
-                <button className="link-item-btn" onClick={this.handleLogOut}>
+                <button className="btn btn-blue link-item-btn" style={{color: '#fff'}} onClick={this.handleLogOut}>
                   Logout
                 </button>
               </div>
@@ -48,6 +48,7 @@ class HomePage extends Component {
           <Route path={`${match.url}/search`} component={SearchPage} />
           <Route path={`${match.url}/skills`} component={SkillsPage} />
         </div>
+
       </div>
     );
   }

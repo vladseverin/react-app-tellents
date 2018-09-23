@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
   Switch,
   Redirect,
@@ -9,16 +9,17 @@ import PrivateRoute from './PrivateRoute';
 import LandingPage from '../containers/LandingPage';
 import HomePage from '../containers/HomePage';
 
+import history from '../utils/history';
+
 class App extends Component {
   render() {
     const { isAuthenticated } = this.props;
 
     return (
-      <Router >
+      <Router history={history}>
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <PrivateRoute isAuthenticated={isAuthenticated} path="/home" component={HomePage} />
-          <Redirect to="/" />
         </Switch>
       </Router>
     );

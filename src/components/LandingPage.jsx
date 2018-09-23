@@ -12,10 +12,11 @@ class LandingPage extends Component {
   }
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: "/home" } };
     const { login, signup, isAuthenticated} = this.props;
 
     if (isAuthenticated) {
-      return <Redirect to='/home' />
+      return <Redirect to={from} />
     }
 
     return (
