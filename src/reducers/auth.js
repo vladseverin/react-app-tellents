@@ -1,5 +1,6 @@
 import Auth from 'j-toker';
 import getCookie from '../utils/getCookies';
+import axios from 'axios';
 
 const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
@@ -24,35 +25,14 @@ Auth.configure({
   storage: 'localStorage',
 });
 
-export function signup(fistName, lastName, email, password) {
-  return (dispatch) => {
-    dispatch({
-      type: SIGNUP_REQUEST,
-    });
+const getLocalStorage = JSON.parse(localStorage.getItem('authHeaders'));
 
-    Auth.emailSignUp({
-      email: email,
-      first_name: fistName,
-      last_name: lastName,
-      password: password,
-    })
-      .then((response) => {
-        if (response.status === 'success') {
-          return response;
-        }
-
-        throw new Error(response.errors);
-      })
-      .then((json) => dispatch({
-        type: SIGNUP_SUCCESS,
-        payload: json,
-      }))
-      .catch(reason => dispatch({
-        type: SIGNUP_FAILURE,
-        payload: reason,
-      }));
-
-  };
+if (getLocalStorage) {
+  axios.defaults.headers.common['access-token'] = getLocalStorage['access-token'];
+  axios.defaults.headers.common['client'] = getLocalStorage['client'];
+  axios.defaults.headers.common['expiry'] = getLocalStorage['expiry'];
+  axios.defaults.headers.common['token-type'] = getLocalStorage['token-type'];
+  axios.defaults.headers.common['uid'] = getLocalStorage['uid'];
 }
 
 export function login(email, password) {
@@ -82,6 +62,41 @@ export function login(email, password) {
       }));
   }
 }
+
+export function signup(fistName, lastName, email, password) {
+  return (dispatch) => {
+    dispatch({
+      type: SIGNUP_REQUEST,
+    });
+
+    Auth.emailSignUp({
+      email: email,
+      first_name: fistName,
+      last_name: lastName,
+      password: password,
+    })
+      .then((response) => {
+        if (response.status === 'success') {
+          return response;
+        }
+
+        throw new Error(response.errors);
+      })
+      .then((json) => {
+        dispatch({
+          type: SIGNUP_SUCCESS,
+          payload: json,
+        });
+        return json;
+      })
+      .catch(reason => dispatch({
+        type: SIGNUP_FAILURE,
+        payload: reason,
+      }));
+  };
+}
+
+
 
 export function logout() {
   return (dispatch) => {
@@ -118,7 +133,7 @@ export function validateToken() {
 
     Auth.validateToken()
       .then(user => {
-        let token = getCookie("authHeaders")
+        token = getCookie("authHeaders")
           ? JSON.parse(getCookie("authHeaders"))['access-token']
           : null;
         if (token) {
@@ -132,7 +147,6 @@ export function validateToken() {
         payload: json,
       }))
       .catch(reason => {
-        console.log(reason);
         dispatch({
           type: TOKEN_FAILURE,
           payload: reason,

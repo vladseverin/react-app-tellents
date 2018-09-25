@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 
 class Skill extends Component {
+  handleClickDelete = () => {
+    const { handleClickDelete } = this.props;
+
+    handleClickDelete();
+  }
+
   render() {
     const { title, skillCategories, skillTags} = this.props;
+
     const filterCategories = skillCategories.filter(element => element.selected === true);
 
     return (
@@ -50,7 +57,7 @@ class Skill extends Component {
         </div>
 
         <div className="skill-block-footer">
-          <a href="javascript:void(0);">Delete</a>
+          <a href="javascript:void(0);" onClick={this.handleClickDelete}>Delete</a>
           <a href="javascript:void(0);">Edit</a>
         </div>
       </div>

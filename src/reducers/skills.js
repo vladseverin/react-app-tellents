@@ -1,9 +1,14 @@
-// import axios from 'axios';
+import axios from 'axios';
 import {instance} from '../utils/coll-axios';
 
 const SKILLS_REQUEST = 'SKILLS_REQUEST';
 const SKILLS_SUCCESS = 'SKILLS_SUCCESS';
 const SKILLS_FAILURE = 'SKILLS_FAILURE';
+
+const DELETE_REQUEST = 'DELETE_REQUEST';
+const DELETE_SUCCESS = 'DELETE_SUCCESS';
+const DELETE_FAILURE = 'DELETE_FAILURE';
+
 
 export function getSkills() {
   return (dispatch) => {
@@ -11,22 +16,52 @@ export function getSkills() {
       type: SKILLS_REQUEST,
     });
 
-    instance.get(`/profile/skills/user`)
-    .then(response => {
-      if(response.status === 200) {
-        return response;
-      }
+    axios.get(`https://floating-atoll-63112.herokuapp.com/api/v1/profile/skills/user`)
+      .then(response => {
+        if(response.status === 200) {
+          // console.log(response.data.profession_categories);
+          return response;
+        }
 
-      throw new Error(response.errors);
+        throw new Error(response.errors);
+      })
+      .then(json => dispatch({
+        type: SKILLS_SUCCESS,
+        payload: json.data,
+      }))
+      .catch(reason => dispatch({
+        type: SKILLS_FAILURE,
+        payload: reason
+      }));
+  }
+}
+
+// return full object
+export function deleteSkill(data) {
+  return (dispatch) => {
+    dispatch({
+      type: DELETE_REQUEST,
+    });
+
+    axios.post('https://floating-atoll-63112.herokuapp.com/api/v1/profile/skills', {
+      categories: data,
     })
-    .then(json => dispatch({
-      type: SKILLS_SUCCESS,
-      payload: json.data,
-    }))
-    .catch(reason => dispatch({
-      type: SKILLS_FAILURE,
-      payload: reason
-    }));
+      .then(response => {
+        if (response.status === 200) {
+          // console.log(response);
+          return response;
+        }
+
+        throw new Error(response.errors);
+      })
+      .then(json => dispatch({
+        type: DELETE_SUCCESS,
+        payload: json.data,
+      }))
+      .catch(reason => dispatch({
+        type: DELETE_FAILURE,
+        payload: reason
+      }));
   }
 }
 
@@ -39,6 +74,12 @@ const actionsMap = {
     return {
       ...state,
       userSkills: action.payload.profession_categories,
+    }
+  },
+  [SKILLS_FAILURE]: (state, action) => {
+    return {
+      ...state,
+      userSkills: [],
     }
   }
 }

@@ -6,14 +6,14 @@ import LoginForm from './LoginForm';
 
 class LandingPage extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     const { validateToken } = this.props;
     validateToken();
   }
 
   render() {
     const { from } = this.props.location.state || { from: { pathname: "/home" } };
-    const { login, signup, isAuthenticated} = this.props;
+    const { login, signup, isAuthenticated, validateToken } = this.props;
 
     if (isAuthenticated) {
       return <Redirect to={from} />
@@ -69,7 +69,7 @@ class LandingPage extends Component {
               </div>
 
               <div className="modal fade login-modal" id="loginModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <LoginForm login={login} />
+                <LoginForm validateToken={validateToken} login={login} />
               </div>
               
             </div>

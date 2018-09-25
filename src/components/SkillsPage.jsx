@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Skill from './Skill';
 import SkillAdd from './SkillAdd';
 import SubSkillsAdd from './SubSkillsAdd';
+import Auth from 'j-toker';
 
 import { data } from '../utils/data.js';
 
@@ -17,10 +18,15 @@ class SkillsPage extends Component {
   }
 
   componentDidMount(){
-    const { getSkills } = this.props;
-
+    const { getSkills, validateToken } = this.props;
+    validateToken();
     getSkills();
   }
+
+  // componentWillReceiveProps() {
+  //   const { validateToken } = this.props;
+  //   validateToken();
+  // }
 
   handleTabChange = (value) => {
     this.setState({ activeTab: value });
@@ -76,6 +82,37 @@ class SkillsPage extends Component {
         {name: this.state.skills, subSkills: data}
       ]
     });
+  }
+
+  handleClickDelete = (id) => {
+    const { userSkills, deleteSkill, getSkills } = this.props;
+    const filterSelectedElements = userSkills.filter(element => element.selected === true);
+
+    if (filterSelectedElements.length === 1) {
+      deleteSkill([]);
+      getSkills();
+      return null;
+    }
+
+    const newFilter = userSkills
+      .filter(el => el.id !== id)
+      .filter(el => el.selected === true)
+      .map(el => {
+        return {
+          id: el.id,
+          skill_tags: [
+            ...el.skill_tags
+          ],
+          skill_categories: [
+            ...el.skill_categories
+              .filter(el => el.selected === true)
+              .map(el => el.id)
+          ],
+        }
+      });
+
+    deleteSkill(newFilter);
+    getSkills();
   }
 
   render() {
@@ -164,6 +201,7 @@ class SkillsPage extends Component {
                                     title={element.name}
                                     skillCategories={element.skill_categories}
                                     skillTags={element.skill_tags}
+                                    handleClickDelete={() => this.handleClickDelete(element.id)}
                                   />
                                 );
                                 

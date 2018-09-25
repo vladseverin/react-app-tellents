@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from "react-router-dom";
 import SearchPage from '../containers/SearchPage';
 import SkillsPage from '../containers/SkillsPage';
+import Auth from 'j-toker';
 
 class HomePage extends Component {
   handleLogOut = () => {
@@ -9,7 +10,7 @@ class HomePage extends Component {
     logout();
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { validateToken } = this.props;
     validateToken();
   }
