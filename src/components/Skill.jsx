@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 class Skill extends Component {
   render() {
-    const {title} = this.props;
+    const { title, skillCategories, skillTags} = this.props;
+    const filterCategories = skillCategories.filter(element => element.selected === true);
+
     return (
       <div className='skill-subcat'>
         <div className='skill-block'>
@@ -10,25 +12,23 @@ class Skill extends Component {
             {title}
           </div>
           <div className="skill-block-list">
-            <div className="checkbox-block">
-              <label>
-                <input type="checkbox" disabled="disabled"/>
-                <span className="checkbox-circle">
-                  <span className="icon icon-check-mark"></span>
-                </span>
-                <span className="checkbox-text ng-binding">Creative Writing</span>
-              </label>
-            </div>
 
-            <div className="checkbox-block">
-              <label>
-                <input type="checkbox" disabled="disabled" />
-                <span className="checkbox-circle">
-                  <span className="icon icon-check-mark"></span>
-                </span>
-                <span className="checkbox-text ng-binding">Creative Writing</span>
-              </label>
-            </div>
+            {
+              filterCategories.map(element => {
+                return (
+                  <div key={element.id} className="checkbox-block">
+                    <label>
+                      <input type="checkbox" disabled="disabled" />
+                      <span className="checkbox-circle">
+                        <span className="icon icon-check-mark"></span>
+                      </span>
+                      <span className="checkbox-text ng-binding">{element.name}</span>
+                    </label>
+                  </div>
+                );
+              })
+            }
+
           </div>
         </div>
 
@@ -37,12 +37,15 @@ class Skill extends Component {
             Skills
           </div>
           <div className="skill-tags-block">
-            <div className='skill-tag'>
-              3D Animation
-            </div>
-            <div className='skill-tag'>
-              Motion Design
-            </div>
+            {
+              skillTags.map(element => {
+                return (
+                  <div key={element.id} className='skill-tag'>
+                    {element.name}
+                  </div>
+                );
+              })
+            }
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from "react-router-dom";
 import SearchPage from '../containers/SearchPage';
-import SkillsPage from './SkillsPage';
+import SkillsPage from '../containers/SkillsPage';
 
 class HomePage extends Component {
   handleLogOut = () => {

@@ -16,6 +16,12 @@ class SkillsPage extends Component {
     mainData: [],
   }
 
+  componentDidMount(){
+    const { getSkills } = this.props;
+
+    getSkills();
+  }
+
   handleTabChange = (value) => {
     this.setState({ activeTab: value });
   };
@@ -59,7 +65,6 @@ class SkillsPage extends Component {
     console.log('Skills', this.state.skills);
     console.log('SubSkills', data);
 
-
     this.setState({
       ...this.state,
       isActiveAdd: false,
@@ -75,6 +80,10 @@ class SkillsPage extends Component {
 
   render() {
     const { activeTab, isActiveAdd, nextStap } = this.state;
+    const { userSkills } = this.props;
+
+    const filterSelectedElements = userSkills.filter(element => element.selected === true);
+
     return (
       <div className="container-fluid">
         <div className="skills">
@@ -147,8 +156,19 @@ class SkillsPage extends Component {
                               data={data}/>}
                         </React.Fragment> 
                         : <React.Fragment> 
-                            <Skill title="Skill-title" />
-                            <Skill title="2 Skill-title" /> 
+                            {
+                              filterSelectedElements.map(element => {
+                                return (
+                                  <Skill
+                                    key={element.id}
+                                    title={element.name}
+                                    skillCategories={element.skill_categories}
+                                    skillTags={element.skill_tags}
+                                  />
+                                );
+                                
+                              })
+                            }
                           </React.Fragment>
                       }
                     </div>  

@@ -21,6 +21,7 @@ let token = null;
 
 Auth.configure({
   apiUrl: 'https://floating-atoll-63112.herokuapp.com/api',
+  storage: 'localStorage',
 });
 
 export function signup(fistName, lastName, email, password) {
