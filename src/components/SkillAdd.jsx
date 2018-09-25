@@ -5,23 +5,15 @@ class SkillAdd extends Component {
     selectedOption: null,
   }
 
-  handleOptionChange = (event) => {
-    this.setState({
-      selectedOption: event.target.value,
-    });
-  }
-
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const { handleChangeStap } = this.props;
+    const { nextClick } = this.props;
 
-    handleChangeStap(this.state.selectedOption);
+    nextClick();
   }
 
   render() {
     const { selectedOption } = this.state;
-    const { data } = this.props;
-    
 
     return (
       <div className="skill-list-block">
@@ -32,21 +24,26 @@ class SkillAdd extends Component {
 
           <form onSubmit={this.handleFormSubmit}>
             <div className="radio-wrap">
-              {data.map((element, id) => (
-                <div className="radio" key={id}>
+              
+                <div className="radio">
                   <label>
                     <input
                       type="radio"
-                      value={element.mainSkill}
-                      onChange={this.handleOptionChange}
-                      checked={selectedOption === element.mainSkill} />
-                    <span className='checkbox-text'>{element.mainSkill}</span>
+                      // value={element.mainSkill}
+                      // onChange={this.handleOptionChange}
+                      // checked={selectedOption === element.mainSkill} 
+                    />
+                    <span className='checkbox-text'>Text</span>
                   </label>
                 </div>
-              ))}
+
             </div>
             
-            <button className="btn btn-blue btn-default" disabled={selectedOption !== null ? '' : 'disabled'} type="submit">NEXT</button>
+            <button 
+              className="btn btn-blue btn-default" 
+              type="submit">
+              NEXT
+            </button>
           </form>
 
         </div>

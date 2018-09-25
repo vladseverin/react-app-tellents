@@ -2,19 +2,11 @@ import React, { Component } from 'react';
 import Skill from './Skill';
 import SkillAdd from './SkillAdd';
 import SubSkillsAdd from './SubSkillsAdd';
-import Auth from 'j-toker';
-
-import { data } from '../utils/data.js';
 
 class SkillsPage extends Component {
   state = {
     activeTab: 0,
-    isActiveAdd: false,
-    nextStap: false,
-    skills: {
-      mainSkill: null,
-    },
-    mainData: [],
+    isActiveStep: 0,
   }
 
   componentDidMount(){
@@ -23,66 +15,9 @@ class SkillsPage extends Component {
     getSkills();
   }
 
-  // componentWillReceiveProps() {
-  //   const { validateToken } = this.props;
-  //   validateToken();
-  // }
-
   handleTabChange = (value) => {
     this.setState({ activeTab: value });
   };
-
-  handleAddClick = (event) => {
-    this.setState({
-      isActiveAdd: true,
-    })
-  }
-
-  handleBackClick = (event) => {
-    const { nextStap } = this.state;
-    if (nextStap === true) {
-      this.setState({
-        nextStap: false,
-      })
-
-      return null;
-    }
-
-    this.setState({
-      isActiveAdd: false,
-      skills: {
-        mainSkill: null,
-        subSkills: [],
-        tags: [],
-      }
-    })
-  }
-
-  handleChangeStap = (mainSkill) => {
-    this.setState({
-      nextStap: true,
-      skills: {
-        mainSkill,
-      }
-    });
-  }
- 
-  handleButtonDone = (data) => {
-    console.log('Skills', this.state.skills);
-    console.log('SubSkills', data);
-
-    this.setState({
-      ...this.state,
-      isActiveAdd: false,
-      nextStap: false,
-      skills: {
-        mainSkill: null,
-      },
-      mainData: [
-        {name: this.state.skills, subSkills: data}
-      ]
-    });
-  }
 
   handleClickDelete = (id) => {
     const { userSkills, deleteSkill, getSkills } = this.props;
@@ -116,7 +51,7 @@ class SkillsPage extends Component {
   }
 
   render() {
-    const { activeTab, isActiveAdd, nextStap } = this.state;
+    const { activeTab, isActiveStep } = this.state;
     const { userSkills } = this.props;
 
     const filterSelectedElements = userSkills.filter(element => element.selected === true);
@@ -159,61 +94,57 @@ class SkillsPage extends Component {
                       </div>
                       <div className="header-btn">
                         {
-                          isActiveAdd
+                          isActiveStep !== 0
                           ? <div className="btn-group"> 
                               <button 
                                 className="btn btn-blue" 
-                                onClick={this.handleBackClick}>
+                                onClick={() => this.setState({isActiveStep: isActiveStep - 1})}>
                                 BACK
                               </button>
-                              {/* <button 
+                              <button 
                                 className="btn btn-blue" 
                                 onClick={this.handleButtonDone}
-                                disabled={ nextStap ? "" : "disabled"}>
+                                disabled={isActiveStep == 2 ? "" : "disabled"}
+                              >
                                 DONE
-                              </button> */}
+                              </button>
                             </div>
-                          : <button className="btn btn-blue" onClick={this.handleAddClick}>
+                          : <button 
+                              className="btn btn-blue" 
+                              onClick={() => this.setState({ isActiveStep: isActiveStep + 1})}>
                               ADD
                             </button>
                         }
                       </div>
                     </div>
                     <div className="body">
-                      {isActiveAdd 
-                      ? <React.Fragment>
-                        {nextStap 
-                          ? <SubSkillsAdd
-                              data={data}
-                              selectedSkill={this.state.skills.mainSkill}
-                              onDoneButton={(data) => this.handleButtonDone(data)}
+                      { isActiveStep === 0 &&
+                        filterSelectedElements.map(element => {
+                          return (
+                            <Skill
+                              key={element.id}
+                              title={element.name}
+                              skillCategories={element.skill_categories}
+                              skillTags={element.skill_tags}
+                              handleClickDelete={() => this.handleClickDelete(element.id)}
                             />
-                          : <SkillAdd 
-                              handleChangeStap={this.handleChangeStap} 
-                              data={data}/>}
-                        </React.Fragment> 
-                        : <React.Fragment> 
-                            {
-                              filterSelectedElements.map(element => {
-                                return (
-                                  <Skill
-                                    key={element.id}
-                                    title={element.name}
-                                    skillCategories={element.skill_categories}
-                                    skillTags={element.skill_tags}
-                                    handleClickDelete={() => this.handleClickDelete(element.id)}
-                                  />
-                                );
-                                
-                              })
-                            }
-                          </React.Fragment>
+                          );
+                          
+                        })
+                      }
+                      { isActiveStep === 1 &&
+                        <SkillAdd 
+                          nextClick={() => this.setState({ isActiveStep: isActiveStep + 1 })}
+                        />
+                      }
+                      { isActiveStep === 2 &&
+                        <SubSkillsAdd />
                       }
                     </div>  
-                  </React.Fragment>
+                  </React.Fragment> 
                 }
                 { activeTab === 1 && <div>Saved</div>}
-                { activeTab === 2 && <div>My Media</div>}
+                { activeTab === 2 && <div>My Media</div>} 
 
               </div>
             </div>
