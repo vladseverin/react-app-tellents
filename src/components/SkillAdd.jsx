@@ -5,15 +5,32 @@ class SkillAdd extends Component {
     selectedOption: null,
   }
 
+  handleOptionChange = (event) => {
+    this.setState({
+      selectedOption: event.target.value,
+    });
+  }
+
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const { nextClick } = this.props;
+    const { dataUserSkills, nextClick } = this.props;
+    const { selectedOption } = this.state;
+    
+    // возвращаем новый массив на основе полученных данных
+    const newArrayData = dataUserSkills.map(el => el.name === selectedOption ? { ...el, selected: true } : el);
 
-    nextClick();
+    //фильтруем и возвращаем id выбранного скила
+    const selectedId = dataUserSkills
+      .filter(el => el.name === selectedOption)
+      .map(el => el.id)[0];
+
+    //устанавливаем стэйт из полученных данных в внешнем компоненте
+    nextClick(newArrayData, selectedId);
   }
 
   render() {
     const { selectedOption } = this.state;
+    const { dataUserSkills } = this.props;
 
     return (
       <div className="skill-list-block">
@@ -24,19 +41,21 @@ class SkillAdd extends Component {
 
           <form onSubmit={this.handleFormSubmit}>
             <div className="radio-wrap">
-              
-                <div className="radio">
-                  <label>
-                    <input
-                      type="radio"
-                      // value={element.mainSkill}
-                      // onChange={this.handleOptionChange}
-                      // checked={selectedOption === element.mainSkill} 
-                    />
-                    <span className='checkbox-text'>Text</span>
-                  </label>
-                </div>
-
+              {
+                dataUserSkills.map(el => (
+                  <div className="radio" key={el.id}>
+                    <label>
+                      <input
+                        type="radio"
+                        onChange={this.handleOptionChange}
+                        value={el.name}
+                        checked={selectedOption === el.name} 
+                      />
+                      <span className='checkbox-text'>{el.name}</span>
+                    </label>
+                  </div>
+                ))
+              }
             </div>
             
             <button 

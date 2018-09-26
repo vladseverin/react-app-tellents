@@ -6,103 +6,76 @@ class SubSkillsAdd extends Component {
     arr: [],
     skillsTag: [],
     isOpen: false,
+
+    userSkills: [],
   }
 
-  // componentDidMount() {
-  //   const { data, selectedSkill } = this.props;
-  //   const getFilterData = data.filter((skill) => skill.mainSkill === selectedSkill)[0];
-    
-  //   const newArray = getFilterData.subSkills.map( (element) => {
-  //     return {
-  //       name: element,
-  //       isGoing: false,
-  //     };
-  //   }); 
+  componentWillMount() {
+    const { dataUserSkills } = this.props;
 
-  //   getFilterData.subSkills.map( element => (
-  //     this.setState({
-  //       arr: newArray,
-  //     })
-  //   ));
-  // }
+    this.setState({ userSkills: dataUserSkills});
+  }
 
-  // handleCheckboxChange = (event) => {
-  //   const { name } = event.target;
-  //   const { arr } = this.state;
+  handleOptionChange = (id) => {
+    const { selectedId } = this.props;
+    const { userSkills } = this.state;
 
-  //   this.setState({
-  //     arr: arr.map(element => element.name === name 
-  //       ? { ...element, isGoing: !element.isGoing, } 
-  //       : element)
-  //   });
-  // }
+    // обрабатываем чекед и добавлем в локальный state
+    const newArrayData = userSkills
+      .map(el => el.id === selectedId
+        ? {
+            ...el,
+            skill_categories: el.skill_categories
+              .map(sub => sub.id === id 
+                ? { ...sub, selected: !sub.selected}
+                : sub
+              )
+          }
+        : el);
 
-  // handleFormSubmit = (event) => {
-  //   event.preventDefault();
-  //   const { onDoneButton } = this.props;
+    this.setState({ userSkills: newArrayData });
 
-  //   const filterArr = this.state.arr.filter( element => element.isGoing === true);
-
-  //   onDoneButton(filterArr);
-  // }
-
-  // handleAddTag = (event) => {
-  //   const { value } = event.target;
-
-  //   axios.get(`https://floating-atoll-63112.herokuapp.com/api/v1/profile/skills/search?q=${value}`)
-  //     .then(response => {
-  //       if (response.status === 200){
-  //         return response;
-  //       }
-
-  //       throw new Error(response.errors);
-  //     })
-  //     .then(json => {
-  //       this.setState({
-  //         skillsTag: json.data.skills
-  //       })
-  //       console.log(json.data.skills.length);
-  //       if (json.data.skills.length === 0) {
-  //         this.setState({isOpen: false})
-  //         return json;
-  //       } 
-
-  //       this.setState({isOpen: true});
-  //       return json;
-  //     })
-  //     .catch(reason => {
-  //       this.setState({isOpen: false});
-  //       console.log(reason);
-  //       return reason;
-  //     });
-
-  //   console.log(this.state)
-  // }
+    console.log('new arr', newArrayData);
+  }
   
   render() {
-    const { data, selectedSkill } = this.props;
-    // const getFilterData = data.filter((skill) => skill.mainSkill === selectedSkill)[0];
+    const { selectedId } = this.props;
+    const { userSkills } = this.state;
+
+    // console.log('из сабскилс', dataUserSkills);
+    // console.log('ID из сабскилс', selectedId);
+    const selectedSkill = userSkills
+      .filter(el => el.id === selectedId);
+
+    const title = selectedSkill.map(el => el.name)[0];
+    const categories = selectedSkill[0].skill_categories;
+
     return (
       <div className="skill-list-block">
         <div className="skill-list-title">
-            {/* {getFilterData.mainSkill} */}
-            Title
+          {title}
         </div>
 
         <div className="skill-list-body">
           <form onSubmit={this.handleFormSubmit}>
             <div className="radio-wrap">
-
-                  <div className="radio" >
-                      <label>
-                        <input
-                            type="checkbox"
-                            // name={subSkill}
-                            // onChange={this.handleCheckboxChange}
-                            />  
-                        <span className='checkbox-text'>Text</span>
-                      </label>
+              {
+                categories.map(el => (
+                  <div className="radio" key={el.id} >
+                    <label>
+                      <input
+                        type="checkbox"
+                        onChange={() => this.handleOptionChange(el.id)}
+                        checked={el.selected}
+                        
+                      />
+                      <span className='checkbox-text'>
+                        {el.name}
+                      </span>
+                    </label>
                   </div>
+                ))
+              }  
 
             </div>
             <div className="skill-tags">
@@ -111,7 +84,6 @@ class SubSkillsAdd extends Component {
               placeholder="Write new skill"/>
             </div>
 
-            {/* <button className="btn btn-blue btn-default" type="submit">NEXT</button> */}
           </form>
         </div>
 

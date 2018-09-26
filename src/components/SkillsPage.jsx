@@ -7,6 +7,8 @@ class SkillsPage extends Component {
   state = {
     activeTab: 0,
     isActiveStep: 0,
+    newArrData: [],
+    selectedId: null,
   }
 
   componentDidMount(){
@@ -51,7 +53,7 @@ class SkillsPage extends Component {
   }
 
   render() {
-    const { activeTab, isActiveStep } = this.state;
+    const { activeTab, isActiveStep, newArrData, selectedId } = this.state;
     const { userSkills } = this.props;
 
     const filterSelectedElements = userSkills.filter(element => element.selected === true);
@@ -134,11 +136,21 @@ class SkillsPage extends Component {
                       }
                       { isActiveStep === 1 &&
                         <SkillAdd 
-                          nextClick={() => this.setState({ isActiveStep: isActiveStep + 1 })}
+                          dataUserSkills={userSkills}
+                          nextClick={
+                            (newArrData, selectedId) => this.setState({ 
+                              isActiveStep: isActiveStep + 1,
+                              newArrData,
+                              selectedId,
+                            })
+                          }
                         />
                       }
                       { isActiveStep === 2 &&
-                        <SubSkillsAdd />
+                        <SubSkillsAdd 
+                          dataUserSkills={newArrData}
+                          selectedId={selectedId}
+                        />
                       }
                     </div>  
                   </React.Fragment> 
