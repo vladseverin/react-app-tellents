@@ -8,7 +8,6 @@ class SubSkillsAdd extends Component {
     isOpenDropDown: false,
     searchText: '',
     tags: [],
-    selectTags: [],
   }
 
   componentWillMount() {
@@ -77,11 +76,6 @@ class SubSkillsAdd extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { handleGetTags } = this.props;
-    console.log(nextProps.skillTags);
-    console.log(nextProps.skillTags.length);
-    
-
     if (nextProps.skillTags.length === 0) {
       this.setState({
         tags: [],
@@ -97,32 +91,43 @@ class SubSkillsAdd extends Component {
   }
 
   handleClickOnTag = (id) => {
-    const { tags, selectTags } = this.state;
+    const { userSkills, tags } = this.state;
+    const { selectedId } = this.props;
 
+    //выбранный тэг из запроса
     const pointOnTag = tags.filter(el => el.id === id)[0];
 
-    console.log(pointOnTag);
+    //добавление в локальное состояние тэгов
+    const addTag = userSkills.map(el => (
+      el.id === selectedId
+        ? { 
+            ...el,
+            skill_tags: [
+              ...el.skill_tags.filter(el => el.id !== pointOnTag.id),
+              pointOnTag
+            ],
+          }
+        : el
+    ));
+
+    // установить исчисленный массив данных с новыми тэгами
     this.setState({
+      userSkills: addTag,
       isOpenDropDown: false,
       searchText: '',
-      selectTags: [
-        ...selectTags,
-        pointOnTag
-      ]
     });
   }
   
   render() {
     const { selectedId } = this.props;
-    const { userSkills, isOpenDropDown, tags, selectTags } = this.state;
+    const { userSkills, isOpenDropDown, tags } = this.state;
 
-    // console.log('из сабскилс', dataUserSkills);
-    // console.log('ID из сабскилс', selectedId);
     const selectedSkill = userSkills
       .filter(el => el.id === selectedId);
 
     const title = selectedSkill.map(el => el.name)[0];
     const categories = selectedSkill[0].skill_categories;
+    const tagList = selectedSkill[0].skill_tags;
 
     return (
       <div className="skill-list-block">
@@ -178,12 +183,17 @@ class SubSkillsAdd extends Component {
               }
 
             </div>
-            {
-              selectTags.length !== 0 &&
-                selectTags.map(el => (
-                  <span key={el.id}>{el.name}</span>
+
+            <div className="skill-tags-block">
+              {
+                tagList.length !== 0 &&
+                tagList.map(el => (
+                  <div key={el.id} className='skill-tag'>
+                    {el.name}
+                  </div>
                 ))
-            }
+              }
+            </div>
 
             <button
               className="btn btn-blue btn-default"
