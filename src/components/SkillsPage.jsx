@@ -54,6 +54,16 @@ class SkillsPage extends Component {
     deleteSkill(newFilter);
   }
 
+  handleClickEdit = (id) => {
+    const { userSkills } = this.props;
+
+    this.setState({
+      selectedId: id,
+      isActiveStep: 2,
+      newArrData: userSkills,
+    });
+  }
+
   render() {
     const { activeTab, isActiveStep, newArrData, selectedId } = this.state;
     const { userSkills, addSkill, getTags, skillTags } = this.props;
@@ -130,7 +140,12 @@ class SkillsPage extends Component {
                               title={element.name}
                               skillCategories={element.skill_categories}
                               skillTags={element.skill_tags}
-                              handleClickDelete={() => this.handleClickDelete(element.id)}
+                              handleClickDelete={() => (
+                                this.handleClickDelete(element.id))
+                              }
+                              handleClickEdit={() => (
+                                this.handleClickEdit(element.id))
+                              }
                             />
                           );
                           

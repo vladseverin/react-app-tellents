@@ -7,6 +7,12 @@ class Skill extends Component {
     handleClickDelete();
   }
 
+  handleClickEdit = () => {
+    const { handleClickEdit } = this.props;
+
+    handleClickEdit();
+  }
+
   render() {
     const { title, skillCategories, skillTags} = this.props;
 
@@ -57,8 +63,12 @@ class Skill extends Component {
         </div>
 
         <div className="skill-block-footer">
-          <a href="javascript:void(0);" onClick={this.handleClickDelete}>Delete</a>
-          <a href="javascript:void(0);">Edit</a>
+          <a 
+            href="javascript:void(0);" 
+            onClick={this.handleClickDelete}>Delete</a>
+          <a 
+            href="javascript:void(0);"
+            onClick={this.handleClickEdit}>Edit</a>
         </div>
       </div>
     );

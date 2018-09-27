@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
 
 class SubSkillsAdd extends Component {
   state = {
@@ -66,7 +64,6 @@ class SubSkillsAdd extends Component {
   handleChangeInput = (event) => {
     const { handleGetTags } = this.props;
     const { value } = event.target;
-    const { searchText } = this.state;
 
     this.setState({
       searchText: value,
@@ -124,7 +121,6 @@ class SubSkillsAdd extends Component {
 
     const selectedSkill = userSkills
       .filter(el => el.id === selectedId);
-
     const title = selectedSkill.map(el => el.name)[0];
     const categories = selectedSkill[0].skill_categories;
     const tagList = selectedSkill[0].skill_tags;
