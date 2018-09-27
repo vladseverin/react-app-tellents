@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Link } from "react-router-dom";
 import SearchPage from '../containers/SearchPage';
 import SkillsPage from '../containers/SkillsPage';
-import Auth from 'j-toker';
 
 class HomePage extends Component {
   handleLogOut = () => {
@@ -25,8 +24,8 @@ class HomePage extends Component {
 
             <div className="link-wrap">
               <div className="link-item">
-                <Link to={`${match.url}/search`} className="link-item-btn">
-                  Search
+                <Link to={`${match.url}/find`} className="link-item-btn">
+                  Find
                 </Link>
               </div>
               <div className="link-item">
@@ -46,7 +45,7 @@ class HomePage extends Component {
 
         <div className="home-page-body">
           <Route exact path={`${match.url}`} component={() => <h1> Choose what you need</h1>} />
-          <Route path={`${match.url}/search`} component={SearchPage} />
+          <Route path={`${match.url}/find`} component={SearchPage} />
           <Route path={`${match.url}/skills`} component={SkillsPage} />
         </div>
 

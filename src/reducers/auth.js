@@ -35,6 +35,36 @@ if (getLocalStorage) {
   axios.defaults.headers.common['uid'] = getLocalStorage['uid'];
 }
 
+export function validateToken() {
+  return (dispatch) => {
+    dispatch({
+      type: TOKEN_REQUEST,
+    });
+
+    Auth.validateToken()
+      .then(user => {
+        token = getCookie("authHeaders")
+          ? JSON.parse(getCookie("authHeaders"))['access-token']
+          : null;
+        if (token) {
+          return user;
+        }
+
+        throw new Error(user);
+      })
+      .then(json => dispatch({
+        type: TOKEN_SUCCESS,
+        payload: json,
+      }))
+      .catch(reason => {
+        dispatch({
+          type: TOKEN_FAILURE,
+          payload: reason,
+        })
+      });
+  }
+}
+
 export function login(email, password) {
   return (dispatch) => {
     dispatch({
@@ -52,10 +82,13 @@ export function login(email, password) {
 
         throw new Error(response.errors);
       })
-      .then(json => dispatch({
-        type: LOGIN_SUCCESS,
-        payload: json,
-      }))
+      .then(json => {
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: json,
+        });
+        dispatch(validateToken());
+      })
       .catch(reason => dispatch({
         type: LOGIN_FAILURE,
         payload: reason,
@@ -125,35 +158,7 @@ export function logout() {
   }
 }
 
-export function validateToken() {
-  return (dispatch) => {
-    dispatch({
-      type: TOKEN_REQUEST,
-    });
 
-    Auth.validateToken()
-      .then(user => {
-        token = getCookie("authHeaders")
-          ? JSON.parse(getCookie("authHeaders"))['access-token']
-          : null;
-        if (token) {
-          return user;
-        }
-
-        throw new Error(user);
-      })
-      .then(json => dispatch({
-        type: TOKEN_SUCCESS,
-        payload: json,
-      }))
-      .catch(reason => {
-        dispatch({
-          type: TOKEN_FAILURE,
-          payload: reason,
-        })
-      });
-  }
-}
 
 const initialState = {
   isAuthenticated: !!token,

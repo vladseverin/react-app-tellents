@@ -11,9 +11,8 @@ class SkillsPage extends Component {
     selectedId: null,
   }
 
-  componentWillMount(){
+  componentDidMount(){
     const { getSkills, validateToken } = this.props;
-    validateToken();
     getSkills();
   }
 

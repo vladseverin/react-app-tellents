@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from '../reducers/index';
 import { getTags } from '../reducers/skills';
+import { getJobs, getTalents } from '../reducers/search';
 
 export default function configureStore() {
   if (process.env.NODE_ENV === 'production') {
@@ -13,7 +14,8 @@ export default function configureStore() {
   const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
 
   window.store = store;
-  window.getTags = getTags;
+  window.getJobs = getJobs;
+  window.getTalents = getTalents;
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {
