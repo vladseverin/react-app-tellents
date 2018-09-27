@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {instance} from '../utils/coll-axios';
+import history from '../utils/history';
 
 const SKILLS_REQUEST = 'SKILLS_REQUEST';
 const SKILLS_SUCCESS = 'SKILLS_SUCCESS';
@@ -9,6 +9,21 @@ const DELETE_REQUEST = 'DELETE_REQUEST';
 const DELETE_SUCCESS = 'DELETE_SUCCESS';
 const DELETE_FAILURE = 'DELETE_FAILURE';
 
+const ADD_SKILL_REQUEST = 'ADD_SKILL_REQUEST';
+const ADD_SKILL_SUCCESS = 'ADD_SKILL_SUCCESS';
+const ADD_SKILL_FAILURE = 'ADD_SKILL_FAILURE';
+
+const REDIRECT = 'REDIRECT';
+
+export function redirect(to) {
+  return (dispatch) => {
+    history.push(`${process.env.PUBLIC_URL}${to}`);
+    dispatch({
+      type: REDIRECT,
+      payload: { to },
+    });
+  };
+}
 
 export function getSkills() {
   return (dispatch) => {
@@ -19,7 +34,6 @@ export function getSkills() {
     axios.get(`https://floating-atoll-63112.herokuapp.com/api/v1/profile/skills/user`)
       .then(response => {
         if(response.status === 200) {
-          // console.log(response.data.profession_categories);
           return response;
         }
 
@@ -48,18 +62,52 @@ export function deleteSkill(data) {
     })
       .then(response => {
         if (response.status === 200) {
-          // console.log(response);
           return response;
         }
 
         throw new Error(response.errors);
       })
-      .then(json => dispatch({
-        type: DELETE_SUCCESS,
-        payload: json.data,
-      }))
+      .then(json => {       
+        dispatch({
+          type: DELETE_SUCCESS,
+          payload: json.data,
+        });
+        dispatch(getSkills());
+        return json;
+      })
       .catch(reason => dispatch({
         type: DELETE_FAILURE,
+        payload: reason
+      }));
+  }
+}
+
+export function addSkill(data) {
+  return (dispatch) => {
+    dispatch({
+      type: ADD_SKILL_REQUEST,
+    });
+
+    axios.post('https://floating-atoll-63112.herokuapp.com/api/v1/profile/skills', {
+      categories: data,
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response;
+        }
+
+        throw new Error(response.errors);
+      })
+      .then(json => {
+        dispatch({
+          type: ADD_SKILL_SUCCESS,
+          payload: json.data,
+        })
+        dispatch(getSkills());
+        return json;
+      })
+      .catch(reason => dispatch({
+        type: ADD_SKILL_FAILURE,
         payload: reason
       }));
   }

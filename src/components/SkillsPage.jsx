@@ -11,7 +11,7 @@ class SkillsPage extends Component {
     selectedId: null,
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const { getSkills, validateToken } = this.props;
     validateToken();
     getSkills();
@@ -21,13 +21,16 @@ class SkillsPage extends Component {
     this.setState({ activeTab: value });
   };
 
+  handleActiveStepChange = (value) => {
+    this.setState({ isActiveStep: value });
+  };
+
   handleClickDelete = (id) => {
-    const { userSkills, deleteSkill, getSkills } = this.props;
+    const { userSkills, deleteSkill } = this.props;
     const filterSelectedElements = userSkills.filter(element => element.selected === true);
 
     if (filterSelectedElements.length === 1) {
       deleteSkill([]);
-      getSkills();
       return null;
     }
 
@@ -49,12 +52,11 @@ class SkillsPage extends Component {
       });
 
     deleteSkill(newFilter);
-    getSkills();
   }
 
   render() {
     const { activeTab, isActiveStep, newArrData, selectedId } = this.state;
-    const { userSkills } = this.props;
+    const { userSkills, addSkill } = this.props;
 
     const filterSelectedElements = userSkills.filter(element => element.selected === true);
 
@@ -150,6 +152,8 @@ class SkillsPage extends Component {
                         <SubSkillsAdd 
                           dataUserSkills={newArrData}
                           selectedId={selectedId}
+                          handleAddSkill={addSkill}
+                          handleTabChange={(value) => this.handleActiveStepChange(value)}
                         />
                       }
                     </div>  

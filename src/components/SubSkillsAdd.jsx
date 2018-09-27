@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+
 class SubSkillsAdd extends Component {
   state = {
-    arr: [],
-    skillsTag: [],
-    isOpen: false,
-
     userSkills: [],
   }
 
@@ -36,6 +33,33 @@ class SubSkillsAdd extends Component {
     this.setState({ userSkills: newArrayData });
 
     console.log('new arr', newArrayData);
+  }
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    const { userSkills } = this.state;
+    const { handleAddSkill, handleTabChange } = this.props;
+
+    //формируем объект для сервера
+    const newFilter = userSkills
+      .filter(el => el.selected === true)
+      .map(el => {
+        return {
+          id: el.id,
+          skill_tags: [
+            ...el.skill_tags
+          ],
+          skill_categories: [
+            ...el.skill_categories
+              .filter(el => el.selected === true)
+              .map(el => el.id)
+          ],
+        }
+      });
+    
+    handleAddSkill(newFilter);
+    handleTabChange(0);
   }
   
   render() {
@@ -67,7 +91,6 @@ class SubSkillsAdd extends Component {
                         type="checkbox"
                         onChange={() => this.handleOptionChange(el.id)}
                         checked={el.selected}
-                        
                       />
                       <span className='checkbox-text'>
                         {el.name}
@@ -83,6 +106,12 @@ class SubSkillsAdd extends Component {
               // onChange={this.handleAddTag} 
               placeholder="Write new skill"/>
             </div>
+
+            <button
+              className="btn btn-blue btn-default"
+              type="submit">
+              NEXT
+            </button>
 
           </form>
         </div>
