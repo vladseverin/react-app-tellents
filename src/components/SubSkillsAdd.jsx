@@ -114,6 +114,26 @@ class SubSkillsAdd extends Component {
       searchText: '',
     });
   }
+
+  handleDeleteTag = (id) => {
+    const { userSkills } = this.state;
+    const { selectedId } = this.props;
+
+    const addTag = userSkills.map(el => (
+      el.id === selectedId
+        ? {
+          ...el,
+          skill_tags: [
+            ...el.skill_tags.filter(el => el.id !== id),
+          ],
+        }
+        : el
+    ));
+
+    this.setState({
+      userSkills: addTag,
+    });
+  }
   
   render() {
     const { selectedId } = this.props;
@@ -184,9 +204,16 @@ class SubSkillsAdd extends Component {
               {
                 tagList.length !== 0 &&
                 tagList.map(el => (
-                  <div key={el.id} className='skill-tag'>
-                    {el.name}
-                  </div>
+                  <React.Fragment>
+                    <div key={el.id} className='skill-tag'>
+                      {el.name}
+                      <span 
+                        className="skill-tag-btn" 
+                        onClick={() => this.handleDeleteTag(el.id)}
+                      >x</span>
+                    </div>
+                    
+                  </React.Fragment>
                 ))
               }
             </div>
