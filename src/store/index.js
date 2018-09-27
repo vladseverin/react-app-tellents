@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from '../reducers/index';
-import { getSkills, deleteSkill } from '../reducers/skills';
+import { getTags } from '../reducers/skills';
 
 export default function configureStore() {
   if (process.env.NODE_ENV === 'production') {
@@ -13,9 +13,7 @@ export default function configureStore() {
   const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
 
   window.store = store;
-  window.getSkills = getSkills;
-  window.deleteSkill = deleteSkill;
-
+  window.getTags = getTags;
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {

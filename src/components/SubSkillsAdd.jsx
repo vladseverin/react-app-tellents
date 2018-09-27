@@ -5,6 +5,10 @@ import axios from 'axios';
 class SubSkillsAdd extends Component {
   state = {
     userSkills: [],
+    isOpenDropDown: false,
+    searchText: '',
+    tags: [],
+    selectTags: [],
   }
 
   componentWillMount() {
@@ -31,8 +35,6 @@ class SubSkillsAdd extends Component {
         : el);
 
     this.setState({ userSkills: newArrayData });
-
-    console.log('new arr', newArrayData);
   }
 
   handleFormSubmit = (event) => {
@@ -61,10 +63,58 @@ class SubSkillsAdd extends Component {
     handleAddSkill(newFilter);
     handleTabChange(0);
   }
+
+  handleChangeInput = (event) => {
+    const { handleGetTags } = this.props;
+    const { value } = event.target;
+    const { searchText } = this.state;
+
+    this.setState({
+      searchText: value,
+    });
+
+    handleGetTags(value);    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { handleGetTags } = this.props;
+    console.log(nextProps.skillTags);
+    console.log(nextProps.skillTags.length);
+    
+
+    if (nextProps.skillTags.length === 0) {
+      this.setState({
+        tags: [],
+        isOpenDropDown: false,
+      })
+
+      return null;
+    }
+    this.setState({
+      tags: nextProps.skillTags,
+      isOpenDropDown: true,
+    })
+  }
+
+  handleClickOnTag = (id) => {
+    const { tags, selectTags } = this.state;
+
+    const pointOnTag = tags.filter(el => el.id === id)[0];
+
+    console.log(pointOnTag);
+    this.setState({
+      isOpenDropDown: false,
+      searchText: '',
+      selectTags: [
+        ...selectTags,
+        pointOnTag
+      ]
+    });
+  }
   
   render() {
     const { selectedId } = this.props;
-    const { userSkills } = this.state;
+    const { userSkills, isOpenDropDown, tags, selectTags } = this.state;
 
     // console.log('из сабскилс', dataUserSkills);
     // console.log('ID из сабскилс', selectedId);
@@ -101,11 +151,39 @@ class SubSkillsAdd extends Component {
               }  
 
             </div>
-            <div className="skill-tags">
-              <input className="search-tags" type="search" 
-              // onChange={this.handleAddTag} 
-              placeholder="Write new skill"/>
+            <div className="wrap-skill-tags">
+              <div className="skill-tags">
+                <input
+                  className="search-tags"
+                  type="search"
+                  onChange={this.handleChangeInput}
+                  placeholder="Write new skill"
+                  value={this.state.searchText}
+                />
+              </div>
+
+              {isOpenDropDown &&
+                <ul className="list-tags">
+                  {
+                    tags.map(el => (
+                      <li 
+                        key={el.id}
+                        onClick={() => this.handleClickOnTag(el.id)}
+                      >
+                        {el.name}
+                      </li>
+                    ))
+                  }
+                </ul>
+              }
+
             </div>
+            {
+              selectTags.length !== 0 &&
+                selectTags.map(el => (
+                  <span key={el.id}>{el.name}</span>
+                ))
+            }
 
             <button
               className="btn btn-blue btn-default"

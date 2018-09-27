@@ -1,11 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { validateToken } from '../reducers/auth';
-import { getSkills, deleteSkill, addSkill } from '../reducers/skills';
+import { getSkills, deleteSkill, addSkill, getTags } from '../reducers/skills';
 import SkillsPage from '../components/SkillsPage';
 
 const mapStateToProps = state => ({
   userSkills: state.skills.userSkills,
+  skillTags: state.skills.skillTags,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -13,7 +14,8 @@ const mapDispatchToProps = dispatch => {
     validateToken,
     getSkills,
     deleteSkill,
-    addSkill
+    addSkill,
+    getTags
   }, dispatch)
 }
 

@@ -56,7 +56,7 @@ class SkillsPage extends Component {
 
   render() {
     const { activeTab, isActiveStep, newArrData, selectedId } = this.state;
-    const { userSkills, addSkill } = this.props;
+    const { userSkills, addSkill, getTags, skillTags } = this.props;
 
     const filterSelectedElements = userSkills.filter(element => element.selected === true);
 
@@ -105,13 +105,13 @@ class SkillsPage extends Component {
                                 onClick={() => this.setState({isActiveStep: isActiveStep - 1})}>
                                 BACK
                               </button>
-                              <button 
+                              {/* <button 
                                 className="btn btn-blue" 
                                 onClick={this.handleButtonDone}
                                 disabled={isActiveStep == 2 ? "" : "disabled"}
                               >
                                 DONE
-                              </button>
+                              </button> */}
                             </div>
                           : <button 
                               className="btn btn-blue" 
@@ -154,6 +154,8 @@ class SkillsPage extends Component {
                           selectedId={selectedId}
                           handleAddSkill={addSkill}
                           handleTabChange={(value) => this.handleActiveStepChange(value)}
+                          handleGetTags={getTags}
+                          skillTags={skillTags}
                         />
                       }
                     </div>  

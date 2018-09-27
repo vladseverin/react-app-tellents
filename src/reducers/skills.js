@@ -13,6 +13,10 @@ const ADD_SKILL_REQUEST = 'ADD_SKILL_REQUEST';
 const ADD_SKILL_SUCCESS = 'ADD_SKILL_SUCCESS';
 const ADD_SKILL_FAILURE = 'ADD_SKILL_FAILURE';
 
+const GET_TAGS_REQUEST = 'GET_TAGS_REQUEST';
+const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
+const GET_TAGS_FAILURE = 'GET_TAGS_FAILURE';
+
 const REDIRECT = 'REDIRECT';
 
 export function redirect(to) {
@@ -113,8 +117,38 @@ export function addSkill(data) {
   }
 }
 
+export function getTags(point){
+  return (dispatch) => {
+    dispatch({
+      type: GET_TAGS_REQUEST,
+    });
+
+    axios.get(`https://floating-atoll-63112.herokuapp.com/api/v1/profile/skills/search`, {
+      params: {
+        q: point,
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response;
+        }
+
+        throw new Error(response.errors);
+      })
+      .then(json => dispatch({
+        type: GET_TAGS_SUCCESS,
+        payload: json.data.skills,
+      }))
+      .catch(reason => dispatch({
+        type: GET_TAGS_FAILURE,
+        payload: reason
+      }));
+  }
+}
+
 const initialState = {
   userSkills: [],
+  skillTags: []
 }
 
 const actionsMap = {
@@ -128,6 +162,12 @@ const actionsMap = {
     return {
       ...state,
       userSkills: [],
+    }
+  },
+  [GET_TAGS_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      skillTags: action.payload,
     }
   }
 }
