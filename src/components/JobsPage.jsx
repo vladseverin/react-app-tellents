@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import history from '../utils/history';
+
 class Jobs extends Component {
   state = {
     isGoing: false,
@@ -8,6 +10,10 @@ class Jobs extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+  }
+
+  handleChangeLocation = () => {
+    history.push('/home/find/talents');
   }
 
   render() {
@@ -45,15 +51,11 @@ class Jobs extends Component {
                 <div className="search-filter">
                   <Link
                     to={`/home/find/jobs`}
-                    name="jobs"
-                    onClick={this.handleChangeFilter}
                     className={"serch-filter-item radio-text"}>
                     Jobs
                   </Link>
                   <Link
                     to={`/home/find/talents`}
-                    name="jobs"
-                    onClick={this.handleChangeFilter}
                     className={"serch-filter-item "}>
                     Talants
                   </Link>
@@ -79,7 +81,7 @@ class Jobs extends Component {
                     name="isGoing"
                     checked={isGoing}
                     type="checkbox"
-                    onChange={this.handleInputChange} />
+                    onChange={this.handleChangeLocation} />
                   <span className="slider round"></span>
                 </label>
                 <span className={"panel-radio"}>Talants</span>

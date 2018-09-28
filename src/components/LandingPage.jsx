@@ -5,7 +5,6 @@ import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 
 class LandingPage extends Component {
-
   componentDidMount() {
     const { validateToken } = this.props;
     validateToken();

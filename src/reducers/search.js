@@ -1,5 +1,4 @@
 import axios from 'axios';
-import history from '../utils/history';
 
 const TALENTS_REQUEST = 'TALENTS_REQUEST';
 const TALENTS_SUCCESS = 'TALENTS_SUCCESS';

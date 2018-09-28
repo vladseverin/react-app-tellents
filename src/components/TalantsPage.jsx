@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
+import history from '../utils/history';
+
 class Talants extends Component {
   state = {
-    isGoing: true
+    isGoing: true,
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+  }
+
+  handleChangeLocation = () => {
+    history.push('/home/find/jobs');
   }
 
   render() {
@@ -17,7 +23,7 @@ class Talants extends Component {
       <div className='container-fluid'>  
 
         <div className="row contant-header">
-          <div className="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12">
+          <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
             Talants
             <div className="greating">
               <div className="greating-name">
@@ -29,7 +35,7 @@ class Talants extends Component {
             </div>
           </div>
 
-          <div className="col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12">
+          <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
             <div className="search-form">
               <form 
                 className="my-form-search" 
@@ -65,7 +71,7 @@ class Talants extends Component {
         </div>
 
         <div className="row contant-body">
-          <div className="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12">
+          <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
             <div className="job-switcher">
               <div className="panel">
 
@@ -75,7 +81,7 @@ class Talants extends Component {
                     name="isGoing"
                     checked={isGoing}
                     type="checkbox" 
-                    onChange={this.handleInputChange}/>
+                    onChange={this.handleChangeLocation}/>
                   <span className="slider round"></span>
                 </label>
                 <span className={"radio-text panel-radio"}>Talants</span>  
@@ -84,7 +90,7 @@ class Talants extends Component {
             </div>
           </div>
           
-          <div className="col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12">
+          <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
             <div className="panel">
               Sort By
             </div>

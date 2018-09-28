@@ -3,7 +3,6 @@ import {
   Router,
   Route,
   Switch,
-  Redirect,
 } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import LandingPage from '../containers/LandingPage';

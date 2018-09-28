@@ -12,7 +12,7 @@ class SkillsPage extends Component {
   }
 
   componentDidMount(){
-    const { getSkills, validateToken } = this.props;
+    const { getSkills } = this.props;
     getSkills();
   }
 
@@ -77,19 +77,19 @@ class SkillsPage extends Component {
             <div className="right-col">
               <ul className="nav my-sidebar">
                 <li className={activeTab === 0 ? "nav-item active" : "nav-item" } >
-                  <a href="javascript:void(0)" onClick={() => this.handleTabChange(0)}>
+                  <a onClick={() => this.handleTabChange(0)}>
                     <span className="icon icon-skills"></span>
                     My Skills
                   </a>
                 </li>
                 <li className={activeTab === 1 ? "nav-item active" : "nav-item"}>
-                  <a href="javascript:void(0)" onClick={() => this.handleTabChange(1)} >
+                  <a onClick={() => this.handleTabChange(1)} >
                     <span className="icon icon-saved"></span>
                     Saved
                   </a>
                 </li>
                 <li className={activeTab === 2 ? "nav-item active" : "nav-item"}>
-                  <a href="javascript:void(0)" onClick={() => this.handleTabChange(2)} >
+                  <a onClick={() => this.handleTabChange(2)} >
                     <span className="icon icon-media"></span>
                     My Media
                   </a>
