@@ -5,13 +5,41 @@ import JobsPage from './JobsPage';
 
 class SearchPage extends Component {
   render() {
-    const { match } = this.props;
+    const { 
+      match,
+      dataUser,
+      dataJobs,
+      dataUsers,
+      getTalents,
+      getJobs,
+    } = this.props;
 
     return (
       <Switch> 
-        <Route path={`${match.url}/talents`} render={() => <TalentsPage />} />
-        <Route path={`${match.url}/jobs`} render={() => <JobsPage />} />
-        <Redirect from={`${match.url}`} to={`${match.url}/talents`} />
+        <Route 
+          path={`${match.url}/talents`}
+          render={() => (
+            <TalentsPage 
+              user={dataUser}
+              data={dataUsers}
+              getTalents={getTalents}
+            />
+          )} 
+        />
+        <Route 
+          path={`${match.url}/jobs`} 
+          render={() => (
+            <JobsPage 
+              user={dataUser}
+              data={dataJobs}
+              getJobs={getJobs}
+            />
+          )} 
+        />
+        <Redirect 
+          from={`${match.url}`} 
+          to={`${match.url}/talents`} 
+        />
       </Switch>
     )
   }

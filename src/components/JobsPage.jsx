@@ -24,7 +24,6 @@ class Jobs extends Component {
 
         <div className="row contant-header">
           <div className="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12">
-            Talants
             <div className="greating">
               <div className="greating-name">
                 Hi
@@ -90,9 +89,14 @@ class Jobs extends Component {
             </div>
           </div>
 
-          <div className="col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12">
-            <div className="panel">
-              Sort By
+          <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
+            <div className="sort-panel">
+              <span className="sort-panel-text">Sort By</span>
+              <button className="btn">
+                <span className="text">Relevance</span>
+                <span className="icon icon-down-arrow"></span>
+              </button>
+              <span className="sort-panel-result">Result: </span>
             </div>
           </div>
         </div>

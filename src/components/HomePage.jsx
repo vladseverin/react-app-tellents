@@ -44,7 +44,7 @@ class HomePage extends Component {
         </div>
 
         <div className="home-page-body">
-          <Route exact path={`${match.url}`} component={() => <h1> Choose what you need</h1>} />
+          <Route exact path={`${match.url}`} component={() => <h1 style={{ textAlign: "center" }}>Welcome to the Tallents</h1>} />
           <Route path={`${match.url}/find`} component={SearchPage} />
           <Route path={`${match.url}/skills`} component={SkillsPage} />
         </div>

@@ -86,7 +86,7 @@ const actionsMap = {
       dataJobs: {
         ...state.dataJobs,
         jobs: [
-          ...state.dataJobs.jobs,
+          // ...state.dataJobs.jobs,
           ...action.payload.data.jobs,
         ],
         meta: action.payload.data.meta,
@@ -99,7 +99,7 @@ const actionsMap = {
       dataUsers: {
         ...state.dataUsers,
         users: [
-          ...state.dataUsers.users,
+          // ...state.dataUsers.users,
           ...action.payload.data.users,
         ],
         meta: action.payload.data.meta,

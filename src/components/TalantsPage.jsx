@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-
 import history from '../utils/history';
+import JobBox from './JobBox';
 
 class Talants extends Component {
   state = {
     isGoing: true,
   }
 
-  handleSubmit = (event) => {
+  componentWillMount() {
+    const { getTalents } = this.props;
+
+    getTalents(1, {});
+  }
+
+  handleSubmitForm = (event) => {
     event.preventDefault();
+    const { data } = this.props;
+    console.log('send Request', data);
   }
 
   handleChangeLocation = () => {
@@ -18,13 +26,21 @@ class Talants extends Component {
 
   render() {
     const { isGoing } = this.state;
+    const { 
+      data: {
+        meta, 
+        users
+      }, 
+    } = this.props;
+
+    console.log('meta', meta);
+    console.log('users', users);
     
     return ( 
       <div className='container-fluid'>  
 
         <div className="row contant-header">
           <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
-            Talants
             <div className="greating">
               <div className="greating-name">
                 Hi 
@@ -40,7 +56,7 @@ class Talants extends Component {
               <form 
                 className="my-form-search" 
                 onKeyDown={this.onKeyPressed}  
-                onSubmit={this.handleSubmit}>
+                onSubmit={this.handleSubmitForm}>
 
                 <input
                   className="form-control"
@@ -74,8 +90,8 @@ class Talants extends Component {
           <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
             <div className="job-switcher">
               <div className="panel">
-
-                <span className={"panel-radio"}>Jobs</span>
+        
+                <span className="panel-radio">Jobs</span>
                 <label className="switch">
                   <input 
                     name="isGoing"
@@ -91,12 +107,45 @@ class Talants extends Component {
           </div>
           
           <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
-            <div className="panel">
-              Sort By
+            <div className="sort-panel">
+              <span className="sort-panel-text">Sort By</span>
+              <button className="btn">
+                <span className="text">Relevance</span>
+                <span className="icon icon-down-arrow"></span>
+              </button>
+              <span className="sort-panel-result">Result: {meta.total_count}</span>
             </div>
           </div>
         </div>
 
+        <div className="row main-content">
+          <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
+            <div className="filter-tellent">
+              you
+            </div>
+          </div>
+
+          <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
+            <div className="container-fluid job-boxes">
+              <div className="flexbox row margin-none">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 padding-none">
+                  <div className="job-boxes-wrapper margin-none">
+                    
+                    {
+                      users.map(el => (
+                        <JobBox data={el} key={el.id} />
+                      ))
+                    }
+                  
+                  </div>
+                </div>
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 padding-none-right">
+                  <button className="button-box" >Start new project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
