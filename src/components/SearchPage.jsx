@@ -12,6 +12,7 @@ class SearchPage extends Component {
       dataUsers,
       getTalents,
       getJobs,
+      unmountTalents,
     } = this.props;
 
     return (
@@ -23,6 +24,7 @@ class SearchPage extends Component {
               user={dataUser}
               data={dataUsers}
               getTalents={getTalents}
+              unmountTalents={unmountTalents}
             />
           )} 
         />

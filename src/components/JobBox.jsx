@@ -56,8 +56,8 @@ class JobBox extends Component {
                 //в редьюсе фильтруем повторные объекты
                 data.skill_tags
                   .reduce((obj, e1) => {
-                    const matches = obj.filter(e2 => e1.id == e2.id);
-                    matches.length == 0 ? obj.push(e1) : null;
+                    const matches = obj.filter(e2 => e1.id === e2.id);
+                    matches.length === 0 ? obj.push(e1) : null;
                     return obj;
                   }, [])
                   .map(el => {

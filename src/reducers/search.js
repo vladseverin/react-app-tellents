@@ -4,9 +4,19 @@ const TALENTS_REQUEST = 'TALENTS_REQUEST';
 const TALENTS_SUCCESS = 'TALENTS_SUCCESS';
 const TALENTS_FAILURE = 'TALENTS_FAILURE';
 
+const TALENTS_UNMOUNTING = 'TALENTS_UNMOUNTING';
+
 const JOBS_REQUEST = 'JOBS_REQUEST';
 const JOBS_SUCCESS = 'JOBS_SUCCESS';
 const JOBS_FAILURE = 'JOBS_FAILURE';
+
+export function unmountTalents() {
+  return (dispatch) => {
+    dispatch({
+      type: TALENTS_UNMOUNTING,
+    })
+  };
+}
 
 export function getJobs(pageNumber, obj) {
   return (dispatch) => {
@@ -86,7 +96,7 @@ const actionsMap = {
       dataJobs: {
         ...state.dataJobs,
         jobs: [
-          // ...state.dataJobs.jobs,
+          ...state.dataJobs.jobs,
           ...action.payload.data.jobs,
         ],
         meta: action.payload.data.meta,
@@ -99,11 +109,20 @@ const actionsMap = {
       dataUsers: {
         ...state.dataUsers,
         users: [
-          // ...state.dataUsers.users,
+          ...state.dataUsers.users,
           ...action.payload.data.users,
         ],
         meta: action.payload.data.meta,
       }
+    }
+  },
+  [TALENTS_UNMOUNTING]: (state, action) => {
+    return {
+      ...state,
+      dataUsers: {
+        users: [],
+        meta: {}
+      },
     }
   }
 }

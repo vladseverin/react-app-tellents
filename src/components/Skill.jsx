@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 class Skill extends Component {
-  handleClickDelete = () => {
+  handleClickDelete = (event) => {
+    event.preventDefault();
     const { handleClickDelete } = this.props;
 
     handleClickDelete();
   }
 
-  handleClickEdit = () => {
+  handleClickEdit = (event) => {
+    event.preventDefault();
     const { handleClickEdit } = this.props;
 
     handleClickEdit();
@@ -63,11 +65,9 @@ class Skill extends Component {
         </div>
 
         <div className="skill-block-footer">
-          <a 
-            href="javascript:void(0);" 
+          <a  
             onClick={this.handleClickDelete}>Delete</a>
-          <a 
-            href="javascript:void(0);"
+          <a
             onClick={this.handleClickEdit}>Edit</a>
         </div>
       </div>

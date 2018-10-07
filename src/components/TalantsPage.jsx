@@ -8,10 +8,16 @@ class Talants extends Component {
     isGoing: true,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { getTalents } = this.props;
 
     getTalents(1, {});
+  }
+
+  componentWillUnmount() {
+    const { unmountTalents } = this.props;
+    unmountTalents();
+
   }
 
   handleSubmitForm = (event) => {
@@ -22,6 +28,24 @@ class Talants extends Component {
 
   handleChangeLocation = () => {
     history.push('/home/find/jobs');
+  }
+
+  handleButtonLoaadMore = (event) => {
+    event.preventDefault();
+    const { 
+      data: {
+        meta,
+        users,
+      },
+      getTalents,
+    } = this.props;
+
+    if (meta.total_count > users.length) {
+      getTalents(meta.next_page, {});
+      return null;
+    }
+    
+    console.log('Not more');
   }
 
   render() {
@@ -137,6 +161,14 @@ class Talants extends Component {
                       ))
                     }
                   
+                  </div>
+                  <div className="load-more">
+                    <a 
+                      className="btn load-more-btn" 
+                      href="javascript:void(0)"
+                      onClick={this.handleButtonLoaadMore}>
+                      Load More
+                    </a>
                   </div>
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 padding-none-right">

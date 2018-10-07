@@ -1610,6 +1610,22 @@ label {
   width: 100%;
 }
 
+.load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 25px;
+}
+
+.load-more-btn {
+  color: #15a4fa;
+  font-weight: bold;
+}
+
+.load-more-btn:hover {
+  color: #15a4fa;
+}
+
 /* job-box-footer */
 .job-box .job-box-footer {
   min-height: 72px;
