@@ -9,6 +9,9 @@ class Talants extends Component {
     isGoing: true,
     searchText: '',
     parsed: {},
+    dropDownSort: false,
+    sort: 'relevance',
+    sortName: 'Relevance',
   }
 
   componentDidMount() {
@@ -54,7 +57,6 @@ class Talants extends Component {
 
   handleSubmitForm = (event) => {
     event.preventDefault();
-    const { data, getTalents } = this.props;
     const { searchText } = this.state;
 
     if (!searchText) {
@@ -66,7 +68,7 @@ class Talants extends Component {
     };
 
     history.push({
-      search: `q=${searchText}`,
+      search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { q: searchText })),
     });
   }
 
@@ -81,9 +83,69 @@ class Talants extends Component {
     } 
   }
 
+  handleDropDownSort = () => {
+    const { dropDownSort } = this.state;
+    this.setState({ 
+      dropDownSort: !dropDownSort,
+    });
+  }
+
+  handleClickRadioItem = (event) => {
+    const { textContent } = event.target;
+
+    if (textContent === 'Relevance') {
+      this.setState({
+        sort: 'relevance',
+        sortName: 'Relevance'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'relevance' })),
+      });
+    }
+
+    if (textContent === 'Most saved') {
+      this.setState({
+        sort: 'saved',
+        sortName: 'Most saved'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'saved' })),
+      });
+    }
+
+    if (textContent === 'Highest Score') {
+      this.setState({
+        sort: 'rate',
+        sortName: 'Highest Score'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'rate' })),
+      });
+    }
+
+    if (textContent === 'Most Hired') {
+      this.setState({
+        sort: 'hired',
+        sortName: 'Most Hired'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'hired' })),
+      });
+    } 
+
+
+    console.log(this.props.location)
+    // console.dir(this.props.location.search);
+
+
+
+    // console.log(this.state);
+  }
+
   render() {
-    const { isGoing, searchText } = this.state;
+    const { isGoing, searchText, sort, dropDownSort, sortName } = this.state;
     const { 
+      user,
       data: {
         meta, 
         users
@@ -97,7 +159,7 @@ class Talants extends Component {
           <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
             <div className="greating">
               <div className="greating-name">
-                Hi 
+                {`Hi ${user.firstName} ${user.lastName}`}
               </div>
               <div className="greating-text">
                 WHAT ARE YOU LOOKING FOR TODAY?
@@ -165,9 +227,39 @@ class Talants extends Component {
           <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
             <div className="sort-panel">
               <span className="sort-panel-text">Sort By</span>
-              <button className="btn">
-                <span className="text">Relevance</span>
+              <button 
+                className="btn" 
+                onClick={this.handleDropDownSort}
+              >
+                <span className="text">{sortName}</span>
                 <span className="icon icon-down-arrow"></span>
+                {
+                  dropDownSort 
+                  ? <div className="drop-down-sort">
+                      <div className="caret-block">
+                        <span className="caret-top"></span>
+                      </div>
+                      <div className="radio-block">
+                        <div 
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Relevance</div>
+                        <div 
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Most saved</div>
+                        <div 
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Highest Score</div>
+                        <div
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Most Hired</div>
+                      </div>
+                    </div>
+                  : null
+                } 
               </button>
               <span className="sort-panel-result">Result: {meta.total_count}</span>
             </div>

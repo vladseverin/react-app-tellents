@@ -26,6 +26,7 @@ class SearchPage extends Component {
               getTalents={getTalents}
               unmountTalents={unmountTalents}
               {...props}
+              preserveQueryString 
             />
           )} 
         />
@@ -42,7 +43,8 @@ class SearchPage extends Component {
         />
         <Redirect 
           from={`${match.url}`} 
-          to={`${match.url}/talents`} 
+          to={`${match.url}/talents`}
+          preserveQueryString 
         />
       </Switch>
     )
