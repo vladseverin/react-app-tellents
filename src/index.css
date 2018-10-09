@@ -1645,7 +1645,10 @@ label {
   color: #15a4fa;
 }
 
-
+.job-box-footer .description {
+  font-size: 13px;
+  color: #4b5053;
+}
 
 
 

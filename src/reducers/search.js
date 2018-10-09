@@ -10,6 +10,10 @@ const JOBS_REQUEST = 'JOBS_REQUEST';
 const JOBS_SUCCESS = 'JOBS_SUCCESS';
 const JOBS_FAILURE = 'JOBS_FAILURE';
 
+const SEARCH_REQUEST = 'SEARCH_REQUEST';
+const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
+const SEARCH_FAILURE = 'SEARCH_FAILURE';
+
 export function unmountTalents() {
   return (dispatch) => {
     dispatch({
@@ -48,7 +52,7 @@ export function getJobs(pageNumber, obj) {
   }
 }
 
-export function getTalents(pageNumber, obj) {
+export function getTalents(pageNumber, obj, isSearch) {
   return (dispatch) => {
     dispatch({
       type: TALENTS_REQUEST,
@@ -67,10 +71,21 @@ export function getTalents(pageNumber, obj) {
 
         throw new Error(response.errors);
       })
-      .then(json => dispatch({
-        type: TALENTS_SUCCESS,
-        payload: json,
-      }))
+      .then(json => {
+        if (isSearch) {
+          dispatch({
+            type: SEARCH_REQUEST,
+            payload: json,
+          });
+          return json;
+        } else {
+          dispatch({
+            type: TALENTS_SUCCESS,
+            payload: json,
+          });
+          return json;
+        }
+      })
       .catch(reason => dispatch({
         type: TALENTS_FAILURE,
         payload: reason,
@@ -123,6 +138,18 @@ const actionsMap = {
         users: [],
         meta: {}
       },
+    }
+  },
+  [SEARCH_REQUEST]: (state, action) => {
+    return {
+      ...state,
+      dataUsers: {
+        ...state.dataUsers,
+        users: [
+          ...action.payload.data.users,
+        ],
+        meta: action.payload.data.meta,
+      }
     }
   }
 }

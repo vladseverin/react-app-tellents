@@ -19,7 +19,7 @@ class JobBox extends Component {
           </div>
           <div className="job-box-rate">
             <span className="icon icon-star-full"></span>
-            <span>N/A</span>
+            <span>{data.total_rate !== 0 ? data.total_rate : 'N/A'}</span>
           </div>
         </div>
 
@@ -75,7 +75,13 @@ class JobBox extends Component {
 
         <div className="job-box-footer">
           <div className="additional-info">
-            The user has not promoted…
+            {data.promotions.length !== 0 
+              ? <React.Fragment>
+                  <div>{data.promotions[0].title} </div>
+                  <div className="description">{data.promotions[0].description}</div>
+                </React.Fragment> 
+              : 'The user has not promoted himself yet'
+            }
           </div>
           <button className='btn btn-skill-test btn-blue'>Free</button>
         </div>

@@ -34,7 +34,6 @@ if (getLocalStorage) {
   axios.defaults.headers.common['token-type'] = getLocalStorage['token-type'];
   axios.defaults.headers.common['uid'] = getLocalStorage['uid'];
 }
-
 export function validateToken() {
   return (dispatch) => {
     dispatch({
@@ -43,10 +42,10 @@ export function validateToken() {
 
     Auth.validateToken()
       .then(user => {
-        token = getCookie("authHeaders")
-          ? JSON.parse(getCookie("authHeaders"))['access-token']
-          : null;
-        if (token) {
+        token = localStorage.getItem('authHeaders');
+        const parseToken = JSON.parse(token);
+        
+        if (parseToken["access-token"]) {
           return user;
         }
 
@@ -157,8 +156,6 @@ export function logout() {
       }));
   }
 }
-
-
 
 const initialState = {
   isAuthenticated: !!token,

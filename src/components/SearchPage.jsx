@@ -19,22 +19,24 @@ class SearchPage extends Component {
       <Switch> 
         <Route 
           path={`${match.url}/talents`}
-          render={() => (
+          render={(props) => (
             <TalentsPage 
               user={dataUser}
               data={dataUsers}
               getTalents={getTalents}
               unmountTalents={unmountTalents}
+              {...props}
             />
           )} 
         />
         <Route 
           path={`${match.url}/jobs`} 
-          render={() => (
+          render={(props) => (
             <JobsPage 
               user={dataUser}
               data={dataJobs}
               getJobs={getJobs}
+              {...props}
             />
           )} 
         />

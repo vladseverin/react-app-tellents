@@ -2,28 +2,25 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import history from '../utils/history';
 import JobBox from './JobBox';
+import queryString from 'query-string';
 
 class Talants extends Component {
   state = {
     isGoing: true,
+    searchText: '',
+    parsed: {},
   }
 
   componentDidMount() {
     const { getTalents } = this.props;
+    const parsed = queryString.parse(this.props.location.search);
 
-    getTalents(1, {});
+    getTalents(1, parsed, true);
   }
 
   componentWillUnmount() {
     const { unmountTalents } = this.props;
     unmountTalents();
-
-  }
-
-  handleSubmitForm = (event) => {
-    event.preventDefault();
-    const { data } = this.props;
-    console.log('send Request', data);
   }
 
   handleChangeLocation = () => {
@@ -41,24 +38,57 @@ class Talants extends Component {
     } = this.props;
 
     if (meta.total_count > users.length) {
-      getTalents(meta.next_page, {});
+      getTalents(meta.next_page, this.state.parsed);
       return null;
     }
     
     console.log('Not more');
   }
 
+  handleChangeSearchText = (event) => {
+    const { value } = event.target;
+    this.setState({
+      searchText: value,
+    });
+  }
+
+  handleSubmitForm = (event) => {
+    event.preventDefault();
+    const { data, getTalents } = this.props;
+    const { searchText } = this.state;
+
+    if (!searchText) {
+      history.push({
+        search: '',
+      });
+
+      return null;
+    };
+
+    history.push({
+      search: `q=${searchText}`,
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { getTalents } = this.props;
+
+    if (nextProps.location.search !== this.props.location.search) {
+      const parsed = queryString.parse(nextProps.location.search);
+
+      this.setState({ parsed });
+      getTalents(1, parsed, true);
+    } 
+  }
+
   render() {
-    const { isGoing } = this.state;
+    const { isGoing, searchText } = this.state;
     const { 
       data: {
         meta, 
         users
       }, 
     } = this.props;
-
-    console.log('meta', meta);
-    console.log('users', users);
     
     return ( 
       <div className='container-fluid'>  
@@ -83,6 +113,8 @@ class Talants extends Component {
                 onSubmit={this.handleSubmitForm}>
 
                 <input
+                  value={searchText}
+                  onChange={this.handleChangeSearchText}
                   className="form-control"
                   type="text"
                   placeholder="Search for ..."
