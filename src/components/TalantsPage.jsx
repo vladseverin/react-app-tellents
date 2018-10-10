@@ -12,6 +12,12 @@ class Talants extends Component {
     dropDownSort: false,
     sort: 'relevance',
     sortName: 'Relevance',
+    experience: [
+      { name: 'intern', value: false },
+      { name: 'senior', value: false },
+      { name: 'junior', value: false },
+      { name: 'expert', value: false },
+    ],  
   }
 
   componentDidMount() {
@@ -57,11 +63,12 @@ class Talants extends Component {
 
   handleSubmitForm = (event) => {
     event.preventDefault();
-    const { searchText } = this.state;
+    const { searchText, parsed } = this.state;
 
     if (!searchText) {
+      delete parsed['q'];
       history.push({
-        search: '',
+        search: queryString.stringify(parsed),
       });
 
       return null;
@@ -72,7 +79,7 @@ class Talants extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextState) {
     const { getTalents } = this.props;
 
     if (nextProps.location.search !== this.props.location.search) {
@@ -81,6 +88,7 @@ class Talants extends Component {
       this.setState({ parsed });
       getTalents(1, parsed, true);
     } 
+
   }
 
   handleDropDownSort = () => {
@@ -132,18 +140,41 @@ class Talants extends Component {
         search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'hired' })),
       });
     } 
+  }
 
+  handleInputExperienceChange = (event) => {
+    const { parsed, experience } = this.state;
+    const { name, type, checked, value } = event.target;
+    const isClicked = type === 'checkbox' ? checked : value || '';
 
-    console.log(this.props.location)
-    // console.dir(this.props.location.search);
+    this.setState({
+      ...experience.map(el => el.name === name ? el.value = isClicked : el)
+    });
 
+    const sortExpIsSelected = experience
+      .filter(el => el.value)
+      .map(el => el.name);
 
-
-    // console.log(this.state);
+    if (sortExpIsSelected.length !== 0) {
+      history.push({
+        search: queryString.stringify(Object.assign({}, parsed, { exp: `${sortExpIsSelected}` })),
+      });
+    } else {
+      delete parsed['exp'];
+      history.push({
+        search: queryString.stringify(parsed),
+      });
+    }
   }
 
   render() {
-    const { isGoing, searchText, sort, dropDownSort, sortName } = this.state;
+    const { 
+      isGoing, 
+      searchText, 
+      dropDownSort, 
+      sortName, 
+    } = this.state;
+
     const { 
       user,
       data: {
@@ -268,8 +299,121 @@ class Talants extends Component {
 
         <div className="row main-content">
           <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
-            <div className="filter-tellent">
-              you
+            <div className="wrap-filter-block">
+              <div className="filter-block">
+                <div className='filter-title col-12'>Experience:</div>
+                <div className="checkbox-list">
+                  <div className="checkbox-block col-6">
+                    <input 
+                      name="intern"
+                      // checked={experience.intern}
+                      onChange={this.handleInputExperienceChange}
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> Intern</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      name="senior"
+                      // checked={experience.senior}
+                      onChange={this.handleInputExperienceChange}
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> Senior</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      name="junior"
+                      // checked={experience.junior}
+                      onChange={this.handleInputExperienceChange}
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> Junior</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      name="expert"
+                      // checked={experience.expert}
+                      onChange={this.handleInputExperienceChange}
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> Expert</label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="filter-block">
+                <div className='filter-title col-12'>Job Done Success:</div>
+                <div className="checkbox-list">
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> 100%</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> > 95%</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> 85-95%</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> {'< 85%'} </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="filter-block">
+                <div className='filter-title col-12'>Skill Test Score:</div>
+                <div className="checkbox-list">
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> Best (5)</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> 5-4.6</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> 4.6-4</label>
+                  </div>
+                  <div className="checkbox-block col-6">
+                    <input 
+                      className="checkbox-block-item" 
+                      type="checkbox" 
+                    />
+                    <label className="checkbox-block-text"> {'< 4'} </label>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
