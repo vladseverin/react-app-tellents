@@ -1707,6 +1707,9 @@ label {
 /* main content */
 .main-content .filter-block {
   padding: 25px 5px;
+}
+
+.main-content .filter-block:not(:last-child) {
   border-bottom: 1px solid #d8dcdf;
 }
 
@@ -1714,8 +1717,92 @@ label {
   background-color: #fff;
   border-radius: 6px;
   padding: 10px 15px;
+  margin-bottom: 15px;
 }
 
+.filter-block .btn.dropdown-toggle-btn {
+  background-color: #fff;
+  padding: 3px 10px;
+  width: 100%;
+  border: 1px solid #c2c6c8;
+  text-transform: none;
+}
+
+.filter-block .btn.dropdown-toggle-btn:focus {
+  outline: 0;
+  box-shadow: none;
+  background-color: #d4d4d4;
+}
+
+.filter-block .btn-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-block .btn-inner .text {
+  padding-left: 5px;
+}
+
+.filter-block .filter-dropdown-block .caret-block {
+  position: absolute;
+  top: -24px;
+  border-width: 15px;
+  width: 100%;
+  text-align: center;
+  right: 0;
+}
+
+.filter-block .filter-dropdown-block .dropdown-list {
+  border-radius: 15px;
+  display: block;
+  position: relative;
+  top: 15px;
+  margin-bottom: 15px;
+  right: 0;
+  width: 100%;
+  min-width: auto;
+  z-index: 1000;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, .1);
+  background-color: #f0f1f2;
+}
+
+.filter-block .filter-dropdown-block .caret-block .caret-top {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  margin-left: -2px;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid\9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-width: 15px;
+  border-bottom-color: #f0f1f2;
+  z-index: -1;
+}
+
+.filter-block .filter-dropdown-block .dropdown-list .dropdown-list-wrapper {
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.filter-block .filter-dropdown-block .dropdown-list .checkbox-list-block {
+  max-height: 210px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.filter-block .filter-dropdown-block .chekbox-item {
+  padding: 2px 5px 2px 5px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.filter-block .filter-dropdown-block .chekbox-item span.name {
+  padding-left: 5px;
+}
 
 
 /* media query */

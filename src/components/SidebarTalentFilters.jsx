@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import history from '../utils/history';
+import { 
+  dataExperience, 
+  dataLocations,
+  dataLanguages, 
+  dataAvailability,
+  dataPlaceOfWork
+} from '../utils/data-talents';
 
 class SidebarTalentFilters extends Component {
   state = {
-    experience: [
-      { name: 'intern', value: false },
-      { name: 'senior', value: false },
-      { name: 'junior', value: false },
-      { name: 'expert', value: false },
-    ],
     doneSuccess: '',
     skillScore: '',
     frilancerRate: '',
+    isPressContry: false,
+    isPressLanguage: false,
+    experience: dataExperience,
+    locations: dataLocations,
+    languages: dataLanguages,
+    availability: dataAvailability,
+    placeOfWork: dataPlaceOfWork,
   }
 
   handleInputExperienceChange = (event) => {
@@ -111,11 +119,123 @@ class SidebarTalentFilters extends Component {
     }
   }
 
+  handleLocationChange = (event) => {
+    const { locations } = this.state;
+    const { parsed } = this.props;
+    const { name, type, checked, value } = event.target;
+
+    const isClicked = type === 'checkbox' ? checked : value || '';
+
+    this.setState({
+      ...locations.map(el => el.name === name ? el.selected = isClicked : el)
+    });
+
+    const sortLocationIsSelected = locations
+      .filter(el => el.selected)
+      .map(el => el.name);
+
+    if (sortLocationIsSelected.length !== 0) {
+      history.push({
+        search: queryString.stringify(Object.assign({}, parsed, { loc: sortLocationIsSelected.join(',') })),
+      });
+    } else {
+      delete parsed['loc'];
+      history.push({
+        search: queryString.stringify(parsed),
+      });
+    }
+  }
+
+  handleLanguageChange = (event) => {
+    const { languages } = this.state;
+    const { parsed } = this.props;
+    const { name, type, checked, value } = event.target;
+
+    const isClicked = type === 'checkbox' ? checked : value || '';
+
+    this.setState({
+      ...languages.map(el => el.name === name ? el.selected = isClicked : el)
+    });
+
+    const sortLanguagesIsSelected = languages
+      .filter(el => el.selected)
+      .map(el => el.name);
+
+    if (sortLanguagesIsSelected.length !== 0) {
+      history.push({
+        search: queryString.stringify(Object.assign({}, parsed, { lang: sortLanguagesIsSelected.join(',') })),
+      });
+    } else {
+      delete parsed['lang'];
+      history.push({
+        search: queryString.stringify(parsed),
+      });
+    }
+  }
+
+  handleAvailabilityChange = (event) => {
+    const { availability } = this.state;
+    const { parsed } = this.props;
+    const { name, type, checked, value } = event.target;
+    const isClicked = type === 'checkbox' ? checked : value || '';
+
+    this.setState({
+      ...availability.map(el => el.name === name ? el.value = isClicked : el)
+    });
+
+    const sortExpIsSelected = availability
+      .filter(el => el.value)
+      .map(el => el.name);
+
+    if (sortExpIsSelected.length !== 0) {
+      history.push({
+        search: queryString.stringify(Object.assign({}, parsed, { avl: sortExpIsSelected.join(',') })),
+      });
+    } else {
+      delete parsed['avl'];
+      history.push({
+        search: queryString.stringify(parsed),
+      });
+    }
+  }
+
+  handlePlaceOfWorkChange = (event) => {
+    const { placeOfWork } = this.state;
+    const { parsed } = this.props;
+    const { name, type, checked, value } = event.target;
+    const isClicked = type === 'checkbox' ? checked : value || '';
+
+    this.setState({
+      ...placeOfWork.map(el => el.name === name ? el.value = isClicked : el)
+    });
+
+    const sortExpIsSelected = placeOfWork
+      .filter(el => el.value)
+      .map(el => el.name);
+
+    if (sortExpIsSelected.length !== 0) {
+      history.push({
+        search: queryString.stringify(Object.assign({}, parsed, { place: sortExpIsSelected.join(',') })),
+      });
+    } else {
+      delete parsed['place'];
+      history.push({
+        search: queryString.stringify(parsed),
+      });
+    }
+  }
+
   render() {
     const {
       doneSuccess,
       skillScore,
       frilancerRate,
+      isPressContry,
+      locations,
+      isPressLanguage,
+      languages,
+      availability,
+      placeOfWork
     } = this.state;
 
     return (
@@ -301,6 +421,136 @@ class SidebarTalentFilters extends Component {
               />
               <label className="checkbox-block-text"> {'< 4.5'} </label>
             </div>
+          </div>
+        </div>
+      
+        {/* Location SECTION */}
+        <div className="filter-block">
+          <div className='filter-title col-12'>Location:</div>
+
+          <div className="filter-dropdown-block col-12">
+            <button 
+              className="btn dropdown-toggle-btn" 
+              type="button"
+              onClick={() => this.setState({isPressContry: !isPressContry})}  
+            >
+              <div className="btn-inner">
+                <span className="text">Contry (All)</span>
+                <span className="icon icon-down-arrow"></span>
+              </div>
+            </button>
+
+            {isPressContry && <div className="dropdown-list">
+              <div className="caret-block">
+                <span className="caret-top"></span>
+              </div>
+
+              <div className="dropdown-list-wrapper">
+                <div className="checkbox-list-block">
+                  {
+                    locations
+                      .map((el, id) => (
+                        <div className="checkbox-block" key={id}>
+                          <label className="chekbox-item">
+                            <input 
+                              type="checkbox"
+                              name={el.name}
+                              onChange={this.handleLocationChange}
+                            />
+                            <span className="name">{el.name}</span>
+                          </label>
+                        </div>
+                      ))
+                  }
+                </div>
+              </div>
+            </div>}
+          </div>
+
+        </div>
+      
+        {/* Location SECTION */}
+        <div className="filter-block">
+          <div className='filter-title col-12'>Languages:</div>
+
+          <div className="filter-dropdown-block col-12">
+            <button
+              className="btn dropdown-toggle-btn"
+              type="button"
+              onClick={() => this.setState({ isPressLanguage: !isPressLanguage })}
+            >
+              <div className="btn-inner">
+                <span className="text">Languages (All)</span>
+                <span className="icon icon-down-arrow"></span>
+              </div>
+            </button>
+
+            {isPressLanguage && <div className="dropdown-list">
+              <div className="caret-block">
+                <span className="caret-top"></span>
+              </div>
+
+              <div className="dropdown-list-wrapper">
+                <div className="checkbox-list-block">
+                  {
+                    languages
+                      .map((el, id) => (
+                        <div className="checkbox-block" key={id}>
+                          <label className="chekbox-item">
+                            <input
+                              type="checkbox"
+                              name={el.name}
+                              onChange={this.handleLanguageChange}
+                            />
+                            <span className="name">{el.name}</span>
+                          </label>
+                        </div>
+                      ))
+                  }
+                </div>
+              </div>
+            </div>}
+          </div>
+
+        </div>
+      
+        {/* Availability SECTION */}
+        <div className="filter-block">
+          <div className='filter-title col-12'>Availability:</div>
+          <div className="checkbox-list">
+            {
+              availability.map((el, id) => (
+                <div className="checkbox-block col-6" key={id}>
+                  <input
+                    name={el.name}
+                    onChange={this.handleAvailabilityChange}
+                    className="checkbox-block-item"
+                    type="checkbox"
+                  />
+                  <label className="checkbox-block-text">{el.text}</label>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        {/* Place Work SECTION */}
+        <div className="filter-block">
+          <div className='filter-title col-12'>Place of Work:</div>
+          <div className="checkbox-list">
+            {
+              placeOfWork.map((el, id) => (
+                <div className="checkbox-block col-6" key={id}>
+                  <input
+                    name={el.name}
+                    onChange={this.handlePlaceOfWorkChange}
+                    className="checkbox-block-item"
+                    type="checkbox"
+                  />
+                  <label className="checkbox-block-text">{el.text}</label>
+                </div>
+              ))
+            }
           </div>
         </div>
       </React.Fragment>
