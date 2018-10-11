@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-
 import history from '../utils/history';
+import queryString from 'query-string';
+import JobBox from './JobBox';
 
 class Jobs extends Component {
   state = {
     isGoing: false,
+    searchText: '',
+    parsed: {},
+    dropDownSort: false,
+    sort: 'relevance',
+    sortName: 'Relevance',
+  }
+
+  componentWillMount() {
+    const { getJobs } = this.props;
+    const parsed = queryString.parse(this.props.location.search);
+
+    getJobs(1, parsed, true);
+  }
+
+  componentWillUnmount() {
+    const { unmountJobs } = this.props;
+    unmountJobs();
   }
 
   handleSubmit = (event) => {
@@ -16,17 +34,67 @@ class Jobs extends Component {
     history.push('/home/find/talents');
   }
 
+  handleChangeSearchText = (event) => {
+    const { value } = event.target;
+    this.setState({
+      searchText: value,
+    });
+  }
+
+  handleSubmitForm = (event) => {
+    event.preventDefault();
+    const { searchText, parsed } = this.state;
+    const { data } = this.props;
+
+    if (!searchText) {
+      delete parsed['q'];
+      history.push({
+        search: queryString.stringify(parsed),
+      });
+
+      return null;
+    };
+
+    history.push({
+      search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { q: searchText })),
+    });
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    const { getJobs } = this.props;
+
+    if (nextProps.location.search !== this.props.location.search) {
+      const parsed = queryString.parse(nextProps.location.search);
+
+      this.setState({ parsed });
+      getJobs(1, parsed, true);
+    }
+  }
+
   render() {
-    const { isGoing } = this.state;
+    const { 
+      isGoing,
+      searchText,
+      parsed,
+    } = this.state;
+
+    const {
+      user,
+      data: {
+        meta,
+        jobs
+      },
+    } = this.props;
     
+    console.log(jobs);
     return (
       <div className='container-fluid'>
 
         <div className="row contant-header">
-          <div className="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12">
+          <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
             <div className="greating">
               <div className="greating-name">
-                Hi
+                {`Hi ${user.firstName} ${user.lastName}`}
               </div>
               <div className="greating-text">
                 WHAT ARE YOU LOOKING FOR TODAY?
@@ -34,14 +102,16 @@ class Jobs extends Component {
             </div>
           </div>
 
-          <div className="col-xl-9 col-lg-9 col-md-8 col-sm-7 col-12">
+          <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
             <div className="search-form">
               <form
                 className="my-form-search"
                 onKeyDown={this.onKeyPressed}
-                onSubmit={this.handleSubmit}>
+                onSubmit={this.handleSubmitForm}>
 
                 <input
+                  value={searchText}
+                  onChange={this.handleChangeSearchText}
                   className="form-control"
                   type="text"
                   placeholder="Search for ..."
@@ -70,7 +140,7 @@ class Jobs extends Component {
         </div>
 
         <div className="row contant-body">
-          <div className="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12">
+          <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
             <div className="job-switcher">
               <div className="panel">
 
@@ -96,78 +166,45 @@ class Jobs extends Component {
                 <span className="text">Relevance</span>
                 <span className="icon icon-down-arrow"></span>
               </button>
-              <span className="sort-panel-result">Result: </span>
+              <span className="sort-panel-result">Result: {meta.total_count}</span>
             </div>
           </div>
         </div>
 
-        {/* <div className="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-12">
-          <div className="panel jobs-wrap">
-
-            <div className="filter-block">
-              <div className='filter-title'>Experience:</div>
-
-              <div className="checkbox-list row">
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> Intern</label>
-                </div>
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> Senior</label>
-                </div>
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> Junior</label>
-                </div>
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> Expert</label>
-                </div>
-              </div>
-            </div>
-
-            <div className="filter-block">
-              <div className='filter-title'>Posted:</div>
-
-              <div className="checkbox-list row">
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> 24h</label>
-                </div>
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> 3d</label>
-                </div>
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> 1w</label>
-                </div>
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> > 1w</label>
-                </div>
-              </div>
-            </div>
-
-            <div className="filter-block">
-              <div className='filter-title'>Place:</div>
-
-              <div className="checkbox-list row">
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> On-line</label>
-                </div>
-                <div className="checkbox-block col-6">
-                  <input className="checkbox-block-item" type="checkbox" />
-                  <label className="checkbox-block-text"> On-site</label>
-                </div>
-              </div>
-            </div>
-            
-
+        <div className="row main-content">
+          <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
+            Sidebar
           </div>
-        </div> */}
+
+          <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
+            <div className="container-fluid job-boxes">
+              <div className="flexbox row margin-none">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 padding-none">
+                  <div className="job-boxes-wrapper margin-none">
+
+                    {
+                      jobs.map(el => (
+                        <JobBox data={el} key={el.id} />
+                      ))
+                    }
+
+                  </div>
+                  <div className="load-more">
+                    <a
+                      className="btn load-more-btn"
+                      href="javascript:void(0)"
+                      onClick={this.handleButtonLoaadMore}>
+                      Load More
+                    </a>
+                  </div>
+                </div>
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 padding-none-right">
+                  <button className="button-box" >Start new project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

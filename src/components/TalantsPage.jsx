@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import history from '../utils/history';
-import JobBox from './JobBox';
 import queryString from 'query-string';
 
+import TalentBox from './TalentBox';
 import SidebarTalentFilters from './SidebarTalentFilters';
 
 class Talants extends Component {
@@ -84,7 +84,6 @@ class Talants extends Component {
       this.setState({ parsed });
       getTalents(1, parsed, true);
     } 
-
   }
 
   handleDropDownSort = () => {
@@ -286,7 +285,7 @@ class Talants extends Component {
     
                     {
                       users.map(el => (
-                        <JobBox data={el} key={el.id} />
+                        <TalentBox data={el} key={el.id} />
                       ))
                     }
                   

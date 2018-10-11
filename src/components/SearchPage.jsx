@@ -13,6 +13,7 @@ class SearchPage extends Component {
       getTalents,
       getJobs,
       unmountTalents,
+      unmountJobs,
     } = this.props;
 
     return (
@@ -26,7 +27,6 @@ class SearchPage extends Component {
               getTalents={getTalents}
               unmountTalents={unmountTalents}
               {...props}
-              preserveQueryString 
             />
           )} 
         />
@@ -37,6 +37,7 @@ class SearchPage extends Component {
               user={dataUser}
               data={dataJobs}
               getJobs={getJobs}
+              unmountJobs={unmountJobs}
               {...props}
             />
           )} 

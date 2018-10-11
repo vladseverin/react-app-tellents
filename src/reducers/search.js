@@ -3,16 +3,14 @@ import axios from 'axios';
 const TALENTS_REQUEST = 'TALENTS_REQUEST';
 const TALENTS_SUCCESS = 'TALENTS_SUCCESS';
 const TALENTS_FAILURE = 'TALENTS_FAILURE';
-
 const TALENTS_UNMOUNTING = 'TALENTS_UNMOUNTING';
+const SEARCH_REQUEST_TALLENTS = 'SEARCH_REQUEST_TALLENTS';
 
 const JOBS_REQUEST = 'JOBS_REQUEST';
 const JOBS_SUCCESS = 'JOBS_SUCCESS';
 const JOBS_FAILURE = 'JOBS_FAILURE';
-
-const SEARCH_REQUEST = 'SEARCH_REQUEST';
-const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
-const SEARCH_FAILURE = 'SEARCH_FAILURE';
+const JOBS_UNMOUNTING = 'JOBS_UNMOUNTING';
+const SEARCH_REQUEST_JOBS = 'SEARCH_REQUEST_JOBS';
 
 export function unmountTalents() {
   return (dispatch) => {
@@ -22,7 +20,15 @@ export function unmountTalents() {
   };
 }
 
-export function getJobs(pageNumber, obj) {
+export function unmountJobs() {
+  return (dispatch) => {
+    dispatch({
+      type: JOBS_UNMOUNTING,
+    })
+  };
+}
+
+export function getJobs(pageNumber, obj, isSearch) {
   return (dispatch) => {
     dispatch({
       type: JOBS_REQUEST,
@@ -41,10 +47,21 @@ export function getJobs(pageNumber, obj) {
 
         throw new Error(response.errors);
       })
-      .then(json => dispatch({
-        type: JOBS_SUCCESS,
-        payload: json,
-      }))
+      .then(json => {
+        if (isSearch) {
+          dispatch({
+            type: SEARCH_REQUEST_JOBS,
+            payload: json,
+          });
+          return json;
+        } else {
+          dispatch({
+            type: JOBS_SUCCESS,
+            payload: json,
+          });
+          return json;
+        }
+      })
       .catch(reason => dispatch({
         type: JOBS_FAILURE,
         payload: reason,
@@ -74,7 +91,7 @@ export function getTalents(pageNumber, obj, isSearch) {
       .then(json => {
         if (isSearch) {
           dispatch({
-            type: SEARCH_REQUEST,
+            type: SEARCH_REQUEST_TALLENTS,
             payload: json,
           });
           return json;
@@ -140,7 +157,7 @@ const actionsMap = {
       },
     }
   },
-  [SEARCH_REQUEST]: (state, action) => {
+  [SEARCH_REQUEST_TALLENTS]: (state, action) => {
     return {
       ...state,
       dataUsers: {
@@ -151,10 +168,31 @@ const actionsMap = {
         meta: action.payload.data.meta,
       }
     }
-  }
-}
+  },
+  [JOBS_UNMOUNTING]: (state, action) => {
+    return {
+      ...state,
+      dataJobs: {
+        jobs: [],
+        meta: {}
+      },
+    }
+  },
+  [SEARCH_REQUEST_JOBS]: (state, action) => {
+    return {
+      ...state,
+      dataJobs: {
+        ...state.dataJobs,
+        jobs: [
+          ...action.payload.data.jobs,
+        ],
+        meta: action.payload.data.meta,
+      }
+    }
+  },
+};
 
 export default function search(state = initialState, action) {
   const reduceFn = actionsMap[action.type];
   return reduceFn ? reduceFn(state, action) : state;
-}
+};
