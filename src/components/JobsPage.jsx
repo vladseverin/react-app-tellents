@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import history from '../utils/history';
 import queryString from 'query-string';
 import JobBox from './JobBox';
+import SidebarJobsFilters from './SidebarJobsFilters';
 
 class Jobs extends Component {
   state = {
@@ -24,10 +25,6 @@ class Jobs extends Component {
   componentWillUnmount() {
     const { unmountJobs } = this.props;
     unmountJobs();
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
   }
 
   handleChangeLocation = () => {
@@ -144,10 +141,9 @@ class Jobs extends Component {
     const { 
       isGoing,
       searchText,
-      parsed,
       dropDownSort,
-      sort,
       sortName,
+      parsed,
     } = this.state;
 
     const {
@@ -156,7 +152,6 @@ class Jobs extends Component {
         meta,
         jobs
       },
-      data,
     } = this.props;
     
     return (
@@ -275,7 +270,9 @@ class Jobs extends Component {
 
         <div className="row main-content">
           <div className="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-3">
-            Sidebar
+            <div className="wrap-filter-block">
+              <SidebarJobsFilters parsed={parsed} />
+            </div>
           </div>
 
           <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
@@ -283,7 +280,6 @@ class Jobs extends Component {
               <div className="flexbox row margin-none">
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 padding-none">
                   <div className="job-boxes-wrapper margin-none">
-
                     {
                       jobs
                         .reduce((obj, e1) => {
@@ -302,7 +298,6 @@ class Jobs extends Component {
                           );
                         })
                     }
-
                   </div>
                   <div className="load-more">
                     <a

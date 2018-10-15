@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import history from '../utils/history';
 import queryString from 'query-string';
-
 import TalentBox from './TalentBox';
 import SidebarTalentFilters from './SidebarTalentFilters';
 
