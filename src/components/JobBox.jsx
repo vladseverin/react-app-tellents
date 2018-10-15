@@ -4,6 +4,12 @@ import moment from 'moment';
 class JobBox extends Component {
   render() {
     const { data } = this.props;
+    const timeType = data.time_type ? data.time_type.split('_').join(' ') : false;
+    const periodType = data.period_type 
+      ? '1' + data.period_type.slice(0, 1).toUpperCase() 
+      : false;
+    const level = data.level ? data.level.slice(0, 3) : false;
+
     return (
       <div className="job-box">
 
@@ -52,23 +58,23 @@ class JobBox extends Component {
             </div>
             <div className="tip">
               <span className="icon icon-award"></span>
-              <span className="text">95%</span>
+              <span className="text">{level || 'N/A'}</span>
             </div>
 
 
             <div className="tip">
               <span className="icon icon-timer"></span>
-              <span className="text">N/A</span>
+              <span className="text">{periodType || 'N/A'}</span>
             </div>
             <div className="tip">
               <span className="icon icon-clock-1"></span>
-              <span className="text">N/A</span>
+              <span className="text">{timeType || 'N/A'}</span>
             </div>
 
           </div>
           <div className="job-box-deskr">
             <div className="text">
-              No Introduction set yet
+              {data.description}
             </div>
 
             <div className="skill-tags-block">
@@ -95,13 +101,13 @@ class JobBox extends Component {
 
         <div className="job-box-footer">
           <div className="additional-info">
-            {/* {data.promotions.length !== 0
-              ? <React.Fragment>
-                <div>{data.promotions[0].title} </div>
-                <div className="description">{data.promotions[0].description}</div>
+            {data.promotion_title ?
+              <React.Fragment>
+                <div className="title">{data.promotion_title} </div>
+                <div className="description">{data.promotion_description}</div>
               </React.Fragment>
-              : 'The user has not promoted himself yet'
-            } */}
+              : 'There is no skill test'
+            }
           </div>
           <button className='btn btn-skill-test btn-blue'>Free</button>
         </div>

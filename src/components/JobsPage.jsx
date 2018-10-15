@@ -71,6 +71,24 @@ class Jobs extends Component {
     }
   }
 
+  handleButtonLoaadMore = (event) => {
+    event.preventDefault();
+    const {
+      data: {
+        meta,
+        jobs,
+      },
+      getJobs,
+    } = this.props;
+
+    if (meta.total_count > jobs.length) {
+      getJobs(meta.next_page, this.state.parsed);
+      return null;
+    }
+
+    console.log('Not more');
+  }
+
   render() {
     const { 
       isGoing,
@@ -84,9 +102,9 @@ class Jobs extends Component {
         meta,
         jobs
       },
+      data,
     } = this.props;
     
-    console.log(jobs);
     return (
       <div className='container-fluid'>
 
