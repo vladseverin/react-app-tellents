@@ -4,6 +4,7 @@ import history from '../utils/history';
 import queryString from 'query-string';
 import TalentBox from './TalentBox';
 import SidebarTalentFilters from './SidebarTalentFilters';
+import noresult from '../img/a1113369111a8503fedd5f699137f5a6.png';
 
 class Talants extends Component {
   state = {
@@ -280,23 +281,32 @@ class Talants extends Component {
             <div className="container-fluid job-boxes">
               <div className="flexbox row margin-none">
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 padding-none">
-                  <div className="job-boxes-wrapper margin-none">
-    
-                    {
-                      users.map(el => (
-                        <TalentBox data={el} key={el.id} />
-                      ))
-                    }
-                  
-                  </div>
-                  <div className="load-more">
-                    <a 
-                      className="btn load-more-btn" 
-                      href="javascript:void(0)"
-                      onClick={this.handleButtonLoaadMore}>
-                      Load More
-                    </a>
-                  </div>
+                  { users.length !== 0
+                  ? <React.Fragment>
+                      <div className="job-boxes-wrapper margin-none">
+
+                        {
+                          users.map(el => (
+                            <TalentBox data={el} key={el.id} />
+                          ))
+                        }
+
+                      </div>
+                      <div className="load-more">
+                        <a
+                          className="btn load-more-btn"
+                          href="javascript:void(0)"
+                          onClick={this.handleButtonLoaadMore}>
+                          Load More
+                      </a>
+                      </div>
+                    </React.Fragment>
+                  : <div className="noresults">
+                      <img src={noresult} />
+                      <h2 className="blue-color">We didn’t find anybody</h2>
+                      <p>Please try modifying your search to get more results.</p>
+                    </div>
+                  }
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 padding-none-right">
                   <button className="button-box" >Start new project</button>

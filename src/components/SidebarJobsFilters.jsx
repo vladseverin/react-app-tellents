@@ -8,6 +8,7 @@ import {
 class SidebarJobsFilters extends Component {
   state = {
     experience: dataExperience,
+    posted: '',
   }
 
   handleInputExperienceChange = (event) => {
@@ -36,7 +37,30 @@ class SidebarJobsFilters extends Component {
     }
   }
 
+  handlePostedChange = (event) => {
+    const { posted } = this.state;
+    const { parsed } = this.props;
+    const { value, checked } = event.target;
+
+    if (posted === value) {
+      this.setState({ posted: '' });
+    } else {
+      this.setState({ posted: value });
+    };
+
+    if (checked) {
+      history.push({
+        search: queryString.stringify(Object.assign({}, parsed, { post: value }))
+      });
+    } else {
+      delete parsed['post'];
+      history.push({
+        search: queryString.stringify(parsed),
+      });
+    }
+  }
   render() {
+    const { posted } = this.state;
     const { parsed } = this.props;
 
     console.log(parsed);
@@ -81,6 +105,53 @@ class SidebarJobsFilters extends Component {
                 type="checkbox"
               />
               <label className="checkbox-block-text"> Expert</label>
+            </div>
+          </div>
+        </div>
+      
+        {/* Posted SECTION */}
+        <div className="filter-block">
+          <div className='filter-title col-12'>Posted:</div>
+          <div className="checkbox-list">
+            <div className="checkbox-block col-6">
+              <input
+                className="checkbox-block-item"
+                type="checkbox"
+                value="i24"
+                checked={posted === 'i24' ? true : false}
+                onChange={this.handlePostedChange}
+              />
+              <label className="checkbox-block-text"> 24h</label>
+            </div>
+            <div className="checkbox-block col-6">
+              <input
+                className="checkbox-block-item"
+                type="checkbox"
+                value="i3d"
+                checked={posted === 'i3d'}
+                onChange={this.handlePostedChange}
+              />
+              <label className="checkbox-block-text"> 3d</label>
+            </div>
+            <div className="checkbox-block col-6">
+              <input
+                className="checkbox-block-item"
+                type="checkbox"
+                value="i1w"
+                checked={posted === 'i1w'}
+                onChange={this.handlePostedChange}
+              />
+              <label className="checkbox-block-text"> 1w</label>
+            </div>
+            <div className="checkbox-block col-6">
+              <input
+                className="checkbox-block-item"
+                type="checkbox"
+                value="m_1w"
+                checked={posted === 'm_1w'}
+                onChange={this.handlePostedChange}
+              />
+              <label className="checkbox-block-text"> {'> 1w'} </label>
             </div>
           </div>
         </div>

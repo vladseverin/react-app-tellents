@@ -6,7 +6,7 @@ class JobBox extends Component {
     const { data } = this.props;
     const timeType = data.time_type ? data.time_type.split('_').join(' ') : false;
     const periodType = data.period_type 
-      ? '1' + data.period_type.slice(0, 1).toUpperCase() 
+      ? data.period + data.period_type.slice(0, 1).toUpperCase() 
       : false;
     const level = data.level ? data.level.slice(0, 3) : false;
 

@@ -33,7 +33,16 @@ img {
 }
 
 .img-circle {
-    border-radius: 50%;
+  border-radius: 50%;
+}
+
+.noresults {
+  text-align: center;
+  padding: 60px;
+}
+
+.blue-color {
+  color: #15a4fa;
 }
 
 @font-face {
@@ -1898,6 +1907,27 @@ label {
 
 .job-boxes-wrapper .job-box-body .rotate-tips .tip .icon {
   font-size: 16px;
+}
+
+.noresults img {
+  width: 27%;
+  min-width: 255px;
+  max-width: 300px;
+  height: auto;
+  margin-bottom: 35px;
+}
+
+.noresults h2 {
+  font-size: 30px;
+  font-weight: 300;
+  margin-bottom: 18px;
+}
+
+.noresults p {
+  opacity: 0.6;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1.2;
 }
 
 /* media query */

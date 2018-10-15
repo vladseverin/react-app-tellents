@@ -4,6 +4,7 @@ import history from '../utils/history';
 import queryString from 'query-string';
 import JobBox from './JobBox';
 import SidebarJobsFilters from './SidebarJobsFilters';
+import noresult from '../img/2695f284d4f5795cff24f0dcb0320358.png';
 
 class Jobs extends Component {
   state = {
@@ -279,34 +280,43 @@ class Jobs extends Component {
             <div className="container-fluid job-boxes">
               <div className="flexbox row margin-none">
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-9 padding-none">
-                  <div className="job-boxes-wrapper margin-none">
-                    {
-                      jobs
-                        .reduce((obj, e1) => {
-                          const matches = obj.filter(e2 => e1.id === e2.id);
-                          matches.length === 0 ? obj.push(e1) : null;
-                          return obj;
-                        }, [])
-                        .reduce((obj, e1) => {
-                          const matches = obj.filter(e2 => e1.title === e2.title);
-                          matches.length === 0 ? obj.push(e1) : null;
-                          return obj;
-                        }, [])
-                        .map(el => {
-                          return (
-                            <JobBox data={el} key={el.id} />
-                          );
-                        })
-                    }
-                  </div>
-                  <div className="load-more">
-                    <a
-                      className="btn load-more-btn"
-                      href="javascript:void(0)"
-                      onClick={this.handleButtonLoaadMore}>
-                      Load More
-                    </a>
-                  </div>
+                  {jobs.length !== 0 
+                  ? <React.Fragment>
+                      <div className="job-boxes-wrapper margin-none">
+                        {
+                          jobs
+                            .reduce((obj, e1) => {
+                              const matches = obj.filter(e2 => e1.id === e2.id);
+                              matches.length === 0 ? obj.push(e1) : null;
+                              return obj;
+                            }, [])
+                            .reduce((obj, e1) => {
+                              const matches = obj.filter(e2 => e1.title === e2.title);
+                              matches.length === 0 ? obj.push(e1) : null;
+                              return obj;
+                            }, [])
+                            .map(el => {
+                              return (
+                                <JobBox data={el} key={el.id} />
+                              );
+                            })
+                          }
+                        </div>
+                        <div className="load-more">
+                          <a
+                            className="btn load-more-btn"
+                            href="javascript:void(0)"
+                            onClick={this.handleButtonLoaadMore}>
+                            Load More
+                          </a>
+                        </div>
+                      </React.Fragment>
+                    : <div className="noresults">
+                        <img src={noresult} />
+                        <h2 className="blue-color">We didn’t find any job</h2>
+                        <p>Please try modifying your search to get more results.</p>
+                      </div>
+                  }
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 padding-none-right">
                   <button className="button-box" >Start new project</button>
