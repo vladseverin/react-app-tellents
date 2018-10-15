@@ -1930,6 +1930,50 @@ label {
   line-height: 1.2;
 }
 
+.filter-block .wrap-find-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-block  .wrap-find-block button {
+  background-color: #15a4fa;
+  color: #fff;
+}
+
+.filter-block  .wrap-find-block button:hover {
+  background-color: #1dd459;
+}
+
+.filter-block .filter-inputs {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+
+.filter-block .filter-inputs > input[type="text"] {
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9dada;
+  border-radius: 30px;
+  outline: none;
+}
+
+.filter-block .filter-inputs > span {
+  margin: auto 10px;
+  font-size: 14px;
+}
+
+.filter-block .filter-inputs > input[type="text"]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
 /* media query */
 @media (max-width: 1200px) {
   .padding-none-right {

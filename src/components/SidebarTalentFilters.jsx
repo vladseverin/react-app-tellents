@@ -469,7 +469,7 @@ class SidebarTalentFilters extends Component {
 
         </div>
       
-        {/* Location SECTION */}
+        {/* Languages SECTION */}
         <div className="filter-block">
           <div className='filter-title col-12'>Languages:</div>
 
