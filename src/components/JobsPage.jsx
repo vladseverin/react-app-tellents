@@ -89,11 +89,65 @@ class Jobs extends Component {
     console.log('Not more');
   }
 
+  handleDropDownSort = () => {
+    const { dropDownSort } = this.state;
+    this.setState({
+      dropDownSort: !dropDownSort,
+    });
+  }
+
+  handleClickRadioItem = (event) => {
+    const { textContent } = event.target;
+
+    if (textContent === 'Newest') {
+      this.setState({
+        sort: 'newest',
+        sortName: 'Newest'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'newest' })),
+      });
+    }
+
+    if (textContent === 'Highest budget') {
+      this.setState({
+        sort: 'budget',
+        sortName: 'Highest budget'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'budget' })),
+      });
+    }
+
+    if (textContent === 'Relevance') {
+      this.setState({
+        sort: 'relevance',
+        sortName: 'Relevance'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'relevance' })),
+      });
+    }
+
+    if (textContent === 'Long term') {
+      this.setState({
+        sort: 'longterm',
+        sortName: 'Long term'
+      });
+      history.push({
+        search: queryString.stringify(Object.assign({}, queryString.parse(this.props.location.search), { sort: 'longterm' })),
+      });
+    }
+  }
+
   render() {
     const { 
       isGoing,
       searchText,
       parsed,
+      dropDownSort,
+      sort,
+      sortName,
     } = this.state;
 
     const {
@@ -180,9 +234,39 @@ class Jobs extends Component {
           <div className="col-12 col-sm-7 col-md-8 col-lg-9 col-xl-9">
             <div className="sort-panel">
               <span className="sort-panel-text">Sort By</span>
-              <button className="btn">
-                <span className="text">Relevance</span>
+              <button
+                className="btn"
+                onClick={this.handleDropDownSort}
+              >
+                <span className="text">{sortName}</span>
                 <span className="icon icon-down-arrow"></span>
+                {
+                  dropDownSort
+                    ? <div className="drop-down-sort">
+                      <div className="caret-block">
+                        <span className="caret-top"></span>
+                      </div>
+                      <div className="radio-block">
+                        <div
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Newest</div>
+                        <div
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Highest budget</div>
+                        <div
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Relevance</div>
+                        <div
+                          onClick={this.handleClickRadioItem}
+                          className="radio-block-item"
+                        >Long term</div>
+                      </div>
+                    </div>
+                    : null
+                }
               </button>
               <span className="sort-panel-result">Result: {meta.total_count}</span>
             </div>
@@ -201,9 +285,22 @@ class Jobs extends Component {
                   <div className="job-boxes-wrapper margin-none">
 
                     {
-                      jobs.map(el => (
-                        <JobBox data={el} key={el.id} />
-                      ))
+                      jobs
+                        .reduce((obj, e1) => {
+                          const matches = obj.filter(e2 => e1.id === e2.id);
+                          matches.length === 0 ? obj.push(e1) : null;
+                          return obj;
+                        }, [])
+                        .reduce((obj, e1) => {
+                          const matches = obj.filter(e2 => e1.title === e2.title);
+                          matches.length === 0 ? obj.push(e1) : null;
+                          return obj;
+                        }, [])
+                        .map(el => {
+                          return (
+                            <JobBox data={el} key={el.id} />
+                          );
+                        })
                     }
 
                   </div>
