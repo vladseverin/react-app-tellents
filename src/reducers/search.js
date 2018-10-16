@@ -12,6 +12,10 @@ const JOBS_FAILURE = 'JOBS_FAILURE';
 const JOBS_UNMOUNTING = 'JOBS_UNMOUNTING';
 const SEARCH_REQUEST_JOBS = 'SEARCH_REQUEST_JOBS';
 
+const SKILLS_REQUEST = 'SKILLS_REQUEST';
+const SKILLS_SUCCESS = 'SKILLS_SUCCESS';
+const SKILLS_FAILURE = 'SKILLS_FAILURE';
+
 export function unmountTalents() {
   return (dispatch) => {
     dispatch({
@@ -110,6 +114,31 @@ export function getTalents(pageNumber, obj, isSearch) {
   }
 }
 
+export function getSkills(){
+  return (dispatch) => {
+    dispatch({
+      type: SKILLS_REQUEST,
+    });
+
+    axios.get('https://floating-atoll-63112.herokuapp.com/api/v1/profile/skills')
+      .then(response => {
+        if (response.status === 200) {
+          return response;
+        }
+
+        throw new Error(response.errors);
+      })
+      .then(json => dispatch({
+        type: SKILLS_SUCCESS,
+        payload: json.data,
+      }))
+      .catch(reason => dispatch({
+        type: SKILLS_FAILURE,
+        payload: reason
+      }));
+  }
+}
+
 const initialState = {
   dataJobs: {
     jobs: [],
@@ -119,6 +148,7 @@ const initialState = {
     users: [],
     meta: {}
   },
+  dataSkills: [],
 }
 
 const actionsMap = {
@@ -190,6 +220,18 @@ const actionsMap = {
       }
     }
   },
+  [SKILLS_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      dataSkills: action.payload.profession_categories,
+    }
+  },
+  [SKILLS_FAILURE]: (state, action) => {
+    return {
+      ...state,
+      skills:[],
+    }
+  }
 };
 
 export default function search(state = initialState, action) {

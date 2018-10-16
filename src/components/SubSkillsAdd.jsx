@@ -204,16 +204,13 @@ class SubSkillsAdd extends Component {
               {
                 tagList.length !== 0 &&
                 tagList.map(el => (
-                  <React.Fragment>
-                    <div key={el.id} className='skill-tag'>
-                      {el.name}
-                      <span 
-                        className="skill-tag-btn" 
-                        onClick={() => this.handleDeleteTag(el.id)}
-                      >x</span>
-                    </div>
-                    
-                  </React.Fragment>
+                  <div key={el.id} className='skill-tag'>
+                    {el.name}
+                    <span 
+                      className="skill-tag-btn" 
+                      onClick={() => this.handleDeleteTag(el.id)}
+                    >x</span>
+                  </div>
                 ))
               }
             </div>

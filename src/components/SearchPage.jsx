@@ -14,6 +14,10 @@ class SearchPage extends Component {
       getJobs,
       unmountTalents,
       unmountJobs,
+      getSkills,
+      dataSkills,
+      getTags,
+      skillTags,
     } = this.props;
 
     return (
@@ -26,6 +30,10 @@ class SearchPage extends Component {
               data={dataUsers}
               getTalents={getTalents}
               unmountTalents={unmountTalents}
+              getSkills={getSkills}
+              dataSkills={dataSkills}
+              getTags={getTags}
+              skillTags={skillTags}
               {...props}
             />
           )} 
@@ -38,6 +46,10 @@ class SearchPage extends Component {
               data={dataJobs}
               getJobs={getJobs}
               unmountJobs={unmountJobs}
+              getSkills={getSkills}
+              dataSkills={dataSkills}
+              getTags={getTags}
+              skillTags={skillTags}
               {...props}
             />
           )} 

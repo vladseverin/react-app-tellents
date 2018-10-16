@@ -4,6 +4,7 @@ import history from '../utils/history';
 import queryString from 'query-string';
 import TalentBox from './TalentBox';
 import SidebarTalentFilters from './SidebarTalentFilters';
+import StartNewProject from './StartNewProject';
 import noresult from '../img/a1113369111a8503fedd5f699137f5a6.png';
 
 class Talants extends Component {
@@ -137,6 +138,12 @@ class Talants extends Component {
     } 
   }
 
+  handleCreateProject = () => {
+    const { getSkills } = this.props;
+
+    getSkills();
+  }
+
   render() {
     const { 
       isGoing, 
@@ -148,6 +155,9 @@ class Talants extends Component {
 
     const { 
       user,
+      dataSkills,
+      getTags,
+      skillTags,
       data: {
         meta, 
         users
@@ -309,7 +319,18 @@ class Talants extends Component {
                   }
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 padding-none-right">
-                  <button className="button-box" >Start new project</button>
+                  {/* <!-- Button trigger modal --> */}
+                  <button 
+                    data-target="#startNewProject"
+                    data-toggle="modal"
+                    type="button"
+                    onClick={this.handleCreateProject}
+                    className="button-box" >
+                    Start new project
+                  </button>
+
+                  {/* <!-- Modal --> */}
+                  <StartNewProject dataSkills={dataSkills} getTags={getTags} skillTags={skillTags}/>
                 </div>
               </div>
             </div>
