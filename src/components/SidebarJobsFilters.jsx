@@ -314,8 +314,7 @@ class SidebarJobsFilters extends Component {
       dataProposals,
       proposals
     } = this.state;
-    const { parsed } = this.props;
-    console.log(dataProposals);
+
     return (
       <React.Fragment>
         {/* EXPERIENCE SECTION */}
@@ -638,7 +637,7 @@ class SidebarJobsFilters extends Component {
 
             {
               dataProposals.map((el, id) => (
-                <div className="checkbox-block col-6">
+                <div className="checkbox-block col-6" key={id}>
                   <input
                     className="checkbox-block-item"
                     type="checkbox"

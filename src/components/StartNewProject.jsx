@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import { dataAvailability } from '../utils/data-jobs';
+import { Object } from 'core-js';
 
 class StartNewProject extends Component {
   state = {
@@ -11,6 +12,15 @@ class StartNewProject extends Component {
     skillTestTitle: '', 
     skillTestDescr: '',
     selectedPromo: null,
+    jobPayment: '',
+    completeJobNum: 1,
+    completeJobUnits: 'DAY',
+    level: '',
+    commitment: '',
+    time_type: '',
+    hourly_price: '',
+    contract_general_notes: '',
+    terms: false,
 
     promoBlock: '',
     isSelectedCategory: null,
@@ -22,15 +32,9 @@ class StartNewProject extends Component {
     tags: [],
     createSkillTest: true,
     chooseExistingSkillTest: false,
-    radioIsSelected: 'CreateSkillTest'
+    radioIsSelected: 'CreateSkillTest',
+    isSelectedJobPay: '',
   }
-
-  // componentWillReceiveProps(nextState) {
-  //   const {selectedPromo} = this.state;
-  //   if (selectedPromo) {
-  //     this.setState({ radioIsSelected: 'ChooseExistingSkill'});
-  //   }
-  // }
   
   handleControlInputChange = (event) => {
     const { name, value } = event.target;
@@ -164,7 +168,105 @@ class StartNewProject extends Component {
       promoBlock: el.id,
       selectedPromo: el,
       radioIsSelected: 'ChooseExistingSkill',
+      skillTestDescr: '',
+      skillTestTitle: '',
     })
+  }
+
+  handleChangePrice = (event) => {
+    const { name } = event.target;
+
+    if( name === 'fix') {
+      this.setState({
+        isSelectedJobPay: name,
+        hourly_price: '',
+      })
+      return null;
+    }
+    this.setState({
+      isSelectedJobPay: name,
+    });
+  }
+
+  handleSubmitForm = (event) => {
+    event.preventDefault();
+    const { addNewJob } = this.props;
+
+    const {
+      jobTitle,
+      jobDescr,
+      category,
+      skill_tags,
+      skillTestTitle,
+      skillTestDescr,
+      selectedPromo,
+      jobPayment,
+      completeJobNum,
+      completeJobUnits,
+      level,
+      commitment,
+      time_type,
+      hourly_price,
+      contract_general_notes,
+      isSelectedJobPay,
+    } = this.state;
+
+    const sendObj = {
+      category,
+      skill_tags,
+      commitment,
+      contract_general_notes,
+      description: jobDescr,
+      hourly_price,
+      level,
+      payment: isSelectedJobPay,
+      period: completeJobNum,
+      period_type: completeJobUnits.toLocaleLowerCase(),
+      price: parseInt(jobPayment),
+      promotion_description: skillTestDescr,
+      promotion_title: skillTestTitle,
+      time_type,
+      title: jobTitle,
+      promotion: selectedPromo,
+    };
+
+    document.getElementById("closeNewProject").click();
+
+    Object.keys(sendObj).forEach((key) => (sendObj[key] === '' || sendObj[key] === null ) && delete sendObj[key]);
+
+    addNewJob(sendObj);
+
+    this.setState({
+      jobTitle: '',
+      jobDescr: '',
+      category: '',
+      skill_tags: [],
+      skillTestTitle: '',
+      skillTestDescr: '',
+      selectedPromo: null,
+      jobPayment: '',
+      completeJobNum: 1,
+      completeJobUnits: 'DAY',
+      level: '',
+      commitment: '',
+      time_type: '',
+      hourly_price: '',
+      contract_general_notes: '',
+      terms: false,
+
+      promoBlock: '',
+      isSelectedCategory: null,
+      isSelectedSubCategory: null,
+      // isSelectedSubCat: null,
+      selectedSkill: null,
+      isOpenDropDown: false,
+      searchText: '',
+      tags: [],
+      createSkillTest: true,
+      chooseExistingSkillTest: false,
+      radioIsSelected: 'CreateSkillTest',
+      isSelectedJobPay: '',
+    });
   }
 
   render() {
@@ -181,7 +283,17 @@ class StartNewProject extends Component {
       radioIsSelected,
       isSelectedCategory,
       isSelectedSubCategory,
-      promoBlock
+      promoBlock,
+      isSelectedJobPay,
+      completeJobUnits,
+      level,
+      commitment,
+      time_type,
+      hourly_price,
+      jobPayment,
+      contract_general_notes,
+      terms,
+      completeJobNum,
     } = this.state;
     const { dataSkills, dataPromotions } = this.props;
 
@@ -202,20 +314,21 @@ class StartNewProject extends Component {
       ? dataPromotions.promotions.filter(el => el.title === isSelectedCategory.name)
       : dataPromotions.promotions;
       
+    console.log(this.state);
     return (
       <div className="modal fade" id="startNewProject" tabIndex="-1" role="dialog" aria-labelledby="startNewProjectLabel" aria-hidden="false">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
               
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" id="closeNewProject" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
               <h5 className="modal-title" id="startNewProjectLabel">Post a Job</h5>
               <div className="post-job-form">
-                <form className="main-project-form">
+                <form onSubmit={this.handleSubmitForm} className="main-project-form">
                   
                   <div className="form-block">
                     <div className="form-block-wrapper">
@@ -433,13 +546,250 @@ class StartNewProject extends Component {
                     </div>
                   </div>
 
+                  <div className="form-block">
+                    <div className="form-block-wrapper wrapper-radio-section">
+                      <div className="form-block-section">
+                        <div className="form-block-title">
+                          Job Price
+                        </div>
+                        <div className="radio-block">
+                          <label className="fixed-price">
+                            <input
+                              onChange={this.handleChangePrice}
+                              checked={isSelectedJobPay === 'fix'}
+                              name="fix" 
+                              type="radio" />
+                            Fixed Price
+                          </label>
+                          <div className="hourly-block">
+                            <label className="fixed-price">
+                              <input
+                                onChange={this.handleChangePrice}
+                                checked={isSelectedJobPay === 'hourly'}
+                                name="hourly" 
+                                type="radio" />
+                              Hourly
+                            </label>
+                            <span>
+                              <input 
+                                value={hourly_price}
+                                onChange={(event) => this.setState({ hourly_price: event.target.value})}
+                                type="number" 
+                                disabled={isSelectedJobPay === 'fix' ? true : ''}/>
+                              $ / hour
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="form-block-section">
+                        <div className="form-block-title">
+                          Job Payment
+                        </div>
+                        <div className="hourly-block job-payment">    
+                          <span>
+                            <input
+                              value={jobPayment}
+                              onChange={(event) => this.setState({ jobPayment: event.target.value})} 
+                              type="number" 
+                              required/>
+                            $
+                          </span>
+                        </div>
+                        <div className="text">
+                          Enter here how much you think it should cost you..
+                        </div>
+                      </div>
+
+                      <div className="form-block-section">
+                      </div>
+                    </div>
+                    <div className="form-block-wrapper">
+                      <div className="form-block-title">
+                        Estimated time to complete the Job
+                      </div>
+                      <div className="btn-group" role="group">
+                        <input 
+                          value={completeJobNum}
+                          onChange={(event) => this.setState({ completeJobNum: event.target.value })}
+                          type="number" 
+                          className="time-complite"/>
+                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {completeJobUnits}
+                        </button>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a
+                            onClick={() => this.setState({ completeJobUnits: 'DAY'})} 
+                            className="dropdown-item">DAY</a>
+                          <a
+                            onClick={() => this.setState({ completeJobUnits: 'WEEK'})} 
+                            className="dropdown-item">WEEK</a>
+                          <a
+                            onClick={() => this.setState({ completeJobUnits: 'MONTH'})} 
+                            className="dropdown-item">MONTH</a>
+                          <a
+                            onClick={() => this.setState({ completeJobUnits: 'YEAR'})} 
+                            className="dropdown-item">YEAR</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-block-wrapper wrapper-talent">
+                      <div className="form-block-section">
+                        <div className="form-block-title">
+                          Talent Commitment
+                        </div>
+                        <div className="radio-block">
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({commitment: event.target.name})} 
+                              checked={commitment === 'decide_later'}
+                              name="decide_later"
+                              type="radio" />
+                            I will Decide Later
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({commitment: event.target.name})} 
+                              checked={commitment === 'per_week_10'}
+                              name="per_week_10"
+                              type="radio" />
+                            10 hrs per week
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({commitment: event.target.name})} 
+                              checked={commitment === 'per_week_up_to_30'}
+                              name="per_week_up_to_30"
+                              type="radio" />
+                            Up to 30 hrs per week
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({commitment: event.target.name})} 
+                              checked={commitment === 'per_week_more_than_30'}
+                              name="per_week_more_than_30"
+                              type="radio" />
+                            More than 30 hrs per week
+                          </label>
+                        </div>
+                      </div>
+                      
+                      <div className="form-block-section">
+                        <div className="form-block-title">
+                          Talent Level
+                        </div>
+                        <div className="radio-block">
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({level: event.target.name})}
+                              checked={level === 'intern'}
+                              name="intern"
+                              type="radio" />
+                            Intern
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({level: event.target.name})}
+                              checked={level === 'junior'}
+                              name="junior"
+                              type="radio" />
+                            Junior
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({level: event.target.name})}
+                              checked={level === 'senior'}
+                              name="senior"
+                              type="radio" />
+                            Senior
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({level: event.target.name})}
+                              checked={level === 'expert'}
+                              name="expert"
+                              type="radio" />
+                            Expert
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="form-block-section">
+                        <div className="form-block-title">
+                          Project type
+                        </div>
+                        <div className="radio-block">
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({ time_type: event.target.name})}
+                              checked={time_type === 'one_time'}
+                              name="one_time"
+                              type="radio" />
+                            One time
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({ time_type: event.target.name})}
+                              checked={time_type === 'long_term'}
+                              name="long_term"
+                              type="radio" />
+                            Long term
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({ time_type: event.target.name})}
+                              checked={time_type === 'short'}
+                              name="short"
+                              type="radio" />
+                            Short
+                          </label>
+                          <label className="fixed-price">
+                            <input
+                              onChange={(event) => this.setState({ time_type: event.target.name})}
+                              checked={time_type === 'not_sure'}
+                              name="not_sure"
+                              type="radio" />
+                            Not sure
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-block-wrapper">
+                      <div className="form-block-title">
+                        Contract General Notes
+                      </div>
+                      <textarea onChange={(event) => this.setState({contract_general_notes: event.target.value})} value={contract_general_notes} name="jobDescr" className="job-descr form-control has-validate" rows="4" placeholder="Enter here Comments for the contract"></textarea>
+                    </div>
+                    <div className="form-block-wrapper">
+                      <div className="form-block-title">
+                        Contract General Notes
+                      </div>
+                      <div className="form-block-body">
+                        <div className="form-itme-warning">
+                          You need to agree with terms of use to continue
+                        </div>
+                        <label className="fixed-price">
+                          <input
+                            onChange={() => this.setState({ terms: !terms })}
+                            checked={terms}
+                            type="checkbox" />
+                          <div>I agree for the <a className="terms-accept">terms of use</a></div> .
+                        </label>
+                      </div>
+                      <button 
+                        type="submit" 
+                        className="btn btn-primary submit-new-project" 
+                        // disabled={jobTitle && jobDescr && skillTestTitle && skillTestDescr && jobPayment && terms ? '' : true}
+                      >
+                        POST
+                      </button>
+                    </div>
+                  </div>
+                  
                 </form>
               </div>
             </div>
-            {/* <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
-            </div> */}
+
           </div>
         </div>
       </div>

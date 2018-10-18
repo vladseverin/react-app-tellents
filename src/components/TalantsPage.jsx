@@ -160,6 +160,7 @@ class Talants extends Component {
       getTags,
       skillTags,
       dataPromotions,
+      addNewJob,
       data: {
         meta, 
         users
@@ -336,7 +337,8 @@ class Talants extends Component {
                     dataSkills={dataSkills} 
                     getTags={getTags} 
                     skillTags={skillTags}
-                    dataPromotions={dataPromotions}/>
+                    dataPromotions={dataPromotions}
+                    addNewJob={addNewJob}/>
                 </div>
               </div>
             </div>

@@ -20,6 +20,10 @@ const PROMOTIONS_REQUEST = 'PROMOTIONS_REQUEST';
 const PROMOTIONS_SUCCESS = 'PROMOTIONS_SUCCESS';
 const PROMOTIONS_FAILURE = 'PROMOTIONS_FAILURE';
 
+const NEW_JOB_REQUEST = 'NEW_JOB_REQUEST';
+const NEW_JOB_SUCCESS = 'NEW_JOB_SUCCESS';
+const NEW_JOB_FAILURE = 'NEW_JOB_FAILURE';
+
 export function unmountTalents() {
   return (dispatch) => {
     dispatch({
@@ -168,6 +172,31 @@ export function getPromotions() {
   }
 }
 
+export function addNewJob(obj) {
+  return (dispatch) => {
+    dispatch({
+      type: NEW_JOB_REQUEST
+    });
+
+    axios.post('https://floating-atoll-63112.herokuapp.com/api/v1/client_jobs', obj)
+      .then(response => {
+        if (response.status === 200) {
+          return response;
+        }
+
+        throw new Error(response.errors);
+      })
+      .then(json => dispatch({
+        type: NEW_JOB_SUCCESS,
+        payload: json,
+      }))
+      .catch(reason => dispatch({
+        type: NEW_JOB_FAILURE,
+        payload: reason
+      }));
+  }
+}
+
 const initialState = {
   dataJobs: {
     jobs: [],
@@ -179,6 +208,7 @@ const initialState = {
   },
   dataSkills: [],
   dataPromotions: {},
+  addJob: {},
 }
 
 const actionsMap = {
@@ -266,6 +296,12 @@ const actionsMap = {
     return {
       ...state,
       dataPromotions: action.payload
+    }
+  },
+  [NEW_JOB_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      addJob: action.payload,
     }
   }
 };
