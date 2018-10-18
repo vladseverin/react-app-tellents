@@ -16,6 +16,10 @@ const SKILLS_REQUEST = 'SKILLS_REQUEST';
 const SKILLS_SUCCESS = 'SKILLS_SUCCESS';
 const SKILLS_FAILURE = 'SKILLS_FAILURE';
 
+const PROMOTIONS_REQUEST = 'PROMOTIONS_REQUEST';
+const PROMOTIONS_SUCCESS = 'PROMOTIONS_SUCCESS';
+const PROMOTIONS_FAILURE = 'PROMOTIONS_FAILURE';
+
 export function unmountTalents() {
   return (dispatch) => {
     dispatch({
@@ -139,6 +143,31 @@ export function getSkills(){
   }
 }
 
+export function getPromotions() {
+  return (dispatch) => {
+    dispatch({
+      type: PROMOTIONS_REQUEST,
+    });
+
+    axios.get('https://floating-atoll-63112.herokuapp.com/api/v1/profile/default_promotions')
+      .then(response => {
+        if (response.status === 200) {
+          return response;
+        }
+
+        throw new Error(response.errors);
+      })
+      .then(json => dispatch({
+        type: PROMOTIONS_SUCCESS,
+        payload: json.data,
+      }))
+      .catch(reason => dispatch({
+        type: PROMOTIONS_FAILURE,
+        payload: reason
+      }));
+  }
+}
+
 const initialState = {
   dataJobs: {
     jobs: [],
@@ -149,6 +178,7 @@ const initialState = {
     meta: {}
   },
   dataSkills: [],
+  dataPromotions: {},
 }
 
 const actionsMap = {
@@ -229,7 +259,13 @@ const actionsMap = {
   [SKILLS_FAILURE]: (state, action) => {
     return {
       ...state,
-      skills:[],
+      dataSkills:[],
+    }
+  },
+  [PROMOTIONS_SUCCESS]: (state, action) => {
+    return {
+      ...state,
+      dataPromotions: action.payload
     }
   }
 };

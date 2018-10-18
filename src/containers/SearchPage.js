@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { validateToken } from '../reducers/auth';
-import { getJobs, getTalents, unmountTalents, unmountJobs, getSkills } from '../reducers/search';
+import { getJobs, getTalents, unmountTalents, unmountJobs, getSkills, getPromotions } from '../reducers/search';
 import { getTags } from '../reducers/skills';
 import SearchPage from '../components/SearchPage';
 
@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   dataUsers: state.search.dataUsers,
   dataSkills: state.search.dataSkills,
   skillTags: state.skills.skillTags,
+  dataPromotions: state.search.dataPromotions,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -21,7 +22,8 @@ const mapDispatchToProps = dispatch => {
     unmountTalents,
     unmountJobs,
     getSkills,
-    getTags
+    getTags,
+    getPromotions,
   }, dispatch);
 };
 

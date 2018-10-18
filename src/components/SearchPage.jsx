@@ -18,6 +18,8 @@ class SearchPage extends Component {
       dataSkills,
       getTags,
       skillTags,
+      dataPromotions,
+      getPromotions,
     } = this.props;
 
     return (
@@ -34,6 +36,8 @@ class SearchPage extends Component {
               dataSkills={dataSkills}
               getTags={getTags}
               skillTags={skillTags}
+              dataPromotions={dataPromotions}
+              getPromotions={getPromotions}
               {...props}
             />
           )} 
@@ -50,6 +54,8 @@ class SearchPage extends Component {
               dataSkills={dataSkills}
               getTags={getTags}
               skillTags={skillTags}
+              dataPromotions={dataPromotions}
+              getPromotions={getPromotions}
               {...props}
             />
           )} 

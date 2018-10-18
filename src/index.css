@@ -2114,6 +2114,102 @@ label {
   margin-right: 5px;
 }
 
+.main-content .form-block .filter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.main-content .form-block .dropdown .btn {
+  display: block;
+  /* width: 100%; */
+  height: 35px;
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9dada;
+  border-radius: 30px;
+  color: #555;
+  text-transform: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px;
+  display: flex;
+  width: 200px;
+}
+
+.main-content .form-block .dropdown .dropdown-menu .dropdown-item {
+  cursor: pointer;
+  white-space: normal;
+  text-align: center;
+  font-weight: bold;
+  color: #4b5053;
+}
+
+.main-content .form-block .dropdown .btn:focus {
+  box-shadow: none;
+}
+
+.main-content .form-block .results-numb {
+    margin-left: auto;
+    color: #6f6f71;
+    font-size: 14px;
+}
+.main-content .promo-block-form-body {
+  max-height: 350px;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 30px;
+}
+
+.main-content .promo-block-form-body .promo-block-item-inner {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.main-content .promo-block-form-body .panel {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.main-content .promo-block-form-body .promo-block-item:nth-child(3n+2) .panel {
+  border: solid 1px #ffd79a;
+  color: #ffa51e;
+  background-color: #ffeecd;
+}
+
+.main-content .promo-block-form-body .promo-block-item:nth-child(3n) .panel {
+  background-color: #fae2ff;
+  border: solid 1px #cbb4cf;
+  color: #b774c5;
+}
+
+.main-content .promo-block-form-body .promo-block-item:nth-child(3n+1) .panel {
+  background-color: #e7f5fe;
+  border: solid 1px #aee1ff;
+  color: #15a4fa;
+}
+
+.main-content .promo-block-item .title {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.main-content .promo-block-item .description {
+  font-weight: normal;
+  margin-top: 28px;
+  font-size: 13px;
+  color: #4b5053;
+}
+
+
+
 /* media query */
 @media (max-width: 1200px) {
   .padding-none-right {

@@ -139,9 +139,10 @@ class Talants extends Component {
   }
 
   handleCreateProject = () => {
-    const { getSkills } = this.props;
+    const { getSkills, getPromotions } = this.props;
 
     getSkills();
+    getPromotions();
   }
 
   render() {
@@ -158,6 +159,7 @@ class Talants extends Component {
       dataSkills,
       getTags,
       skillTags,
+      dataPromotions,
       data: {
         meta, 
         users
@@ -330,7 +332,11 @@ class Talants extends Component {
                   </button>
 
                   {/* <!-- Modal --> */}
-                  <StartNewProject dataSkills={dataSkills} getTags={getTags} skillTags={skillTags}/>
+                  <StartNewProject 
+                    dataSkills={dataSkills} 
+                    getTags={getTags} 
+                    skillTags={skillTags}
+                    dataPromotions={dataPromotions}/>
                 </div>
               </div>
             </div>

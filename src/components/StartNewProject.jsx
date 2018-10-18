@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import { dataAvailability } from '../utils/data-jobs';
 
 class StartNewProject extends Component {
   state = {
@@ -9,7 +10,12 @@ class StartNewProject extends Component {
     skill_tags: [],
     skillTestTitle: '', 
     skillTestDescr: '',
+    selectedPromo: null,
 
+    promoBlock: '',
+    isSelectedCategory: null,
+    isSelectedSubCategory: null,
+    // isSelectedSubCat: null,
     selectedSkill: null,
     isOpenDropDown: false,
     searchText: '',
@@ -18,6 +24,13 @@ class StartNewProject extends Component {
     chooseExistingSkillTest: false,
     radioIsSelected: 'CreateSkillTest'
   }
+
+  // componentWillReceiveProps(nextState) {
+  //   const {selectedPromo} = this.state;
+  //   if (selectedPromo) {
+  //     this.setState({ radioIsSelected: 'ChooseExistingSkill'});
+  //   }
+  // }
   
   handleControlInputChange = (event) => {
     const { name, value } = event.target;
@@ -116,9 +129,41 @@ class StartNewProject extends Component {
 
   handleRadioChange = (event) => {
     const { name } = event.target;
-
+    if (name === 'CreateSkillTest') {
+      this.setState({
+        radioIsSelected: name,
+        promoBlock: '',
+        selectedPromo: null,
+      });
+      return null;
+    }
     this.setState({
       radioIsSelected: name,
+    })
+  }
+
+  handleCategoryItem = (el) => (event) => {
+    event.preventDefault();
+    
+    this.setState({
+      isSelectedCategory: el,
+    });
+    // console.log(el);
+  }
+
+  handleSubCategoryItem = (el) => (event) => {
+    event.preventDefault();
+
+    this.setState({
+      isSelectedSubCategory: el
+    });
+  }
+
+  handlSelectPromotion = (el) => {
+    this.setState({
+      promoBlock: el.id,
+      selectedPromo: el,
+      radioIsSelected: 'ChooseExistingSkill',
     })
   }
 
@@ -134,11 +179,29 @@ class StartNewProject extends Component {
       skillTestTitle, 
       skillTestDescr,
       radioIsSelected,
+      isSelectedCategory,
+      isSelectedSubCategory,
+      promoBlock
     } = this.state;
-    const { dataSkills } = this.props;
+    const { dataSkills, dataPromotions } = this.props;
 
     const getSkillCategories = selectedSkill && category.skill_categories;
-
+    const categories = dataPromotions && dataPromotions.categories;
+    const cutRowCat = isSelectedCategory !== null 
+      ? isSelectedCategory.name.length > 17 
+        ? isSelectedCategory.name.slice(0, 18) + '...'
+        : isSelectedCategory.name
+      : null;
+    const cutRowSubCat = isSelectedSubCategory !== null 
+      ? isSelectedSubCategory.name.length > 17 
+        ? isSelectedSubCategory.name.slice(0, 18) + '...'
+        : isSelectedSubCategory.name
+      : null;
+    const subCategories = isSelectedCategory && isSelectedCategory.skill_categories;
+    const promotions = isSelectedCategory !== null 
+      ? dataPromotions.promotions.filter(el => el.title === isSelectedCategory.name)
+      : dataPromotions.promotions;
+      
     return (
       <div className="modal fade" id="startNewProject" tabIndex="-1" role="dialog" aria-labelledby="startNewProjectLabel" aria-hidden="false">
         <div className="modal-dialog" role="document">
@@ -295,8 +358,77 @@ class StartNewProject extends Component {
                             or choose existing skill test
                           </label>
                         </div>
-                        <input onChange={this.handleControlInputChange} value={skillTestTitle} name="skillTestTitle" className="job-title form-control has-validate" type="text" placeholder="Skill Test Title" required disabled={radioIsSelected === 'ChooseExistingSkill' ? '' : true}/>
-                        <textarea onChange={this.handleControlInputChange} value={skillTestDescr} name="skillTestDescr" className="job-descr form-control has-validate" rows="4" placeholder="Skill Test Description" required disabled={radioIsSelected === 'ChooseExistingSkill' ? '' : true}></textarea>
+                        <div className="promo-block-form-header">
+                          <div className="filter">
+                            <div className="dropdown">
+                              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {isSelectedCategory !== null 
+                                  ? cutRowCat
+                                  : "Category"}
+                              </button>
+                              <div className="dropdown-menu" aria-labelledby="dropdownCategory">
+                                {
+                                  categories && categories.map(el => (
+                                    <a 
+                                      className="dropdown-item" 
+                                      onClick={this.handleCategoryItem(el)}
+                                      key={el.id}>
+                                      {el.name}
+                                    </a>
+                                  ))
+                                }
+                              </div>
+                            </div>
+                            <div className="dropdown">
+                              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownSubCategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {isSelectedSubCategory !== null
+                                  ? cutRowSubCat
+                                  : 'Sub Category'}
+                              </button>
+                              <div className="dropdown-menu" aria-labelledby="dropdownSubCategory">
+                                {
+                                  subCategories && subCategories.map(el => (
+                                    <a
+                                      className="dropdown-item"
+                                      onClick={this.handleSubCategoryItem(el)}
+                                      key={el.id}>
+                                      {el.name}
+                                    </a>
+                                  ))
+                                }
+                              </div>
+                              
+                            </div>
+                            <div className="results-numb">
+                              {promotions && promotions.length} results
+                            </div>
+                          </div>
+                        
+                          <div className="promo-block-form-body">
+                            {
+                              promotions && promotions.map(el => (
+                                <div className="promo-block-item" key={el.id}>
+                                  <label className="promo-block-item-inner">
+                                    <input 
+                                      type="radio" 
+                                      onChange={() => this.handlSelectPromotion(el)}
+                                      checked={promoBlock === el.id}
+                                    />
+                                    <div className="panel">
+                                      <div className="title">
+                                        {el.title}
+                                      </div>
+                                      <div className="description">
+                                        {el.description}
+                                      </div>
+                                    </div>
+                                  </label>
+                                </div>
+                              ))
+                            }
+                          </div>
+                        
+                        </div>
                       </div>
                     </div>
                   </div>
