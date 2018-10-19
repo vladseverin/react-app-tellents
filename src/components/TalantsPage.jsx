@@ -140,7 +140,6 @@ class Talants extends Component {
 
   handleCreateProject = () => {
     const { getSkills, getPromotions } = this.props;
-
     getSkills();
     getPromotions();
   }
@@ -329,6 +328,7 @@ class Talants extends Component {
                     type="button"
                     onClick={this.handleCreateProject}
                     className="button-box" >
+                    <i class="icon icon-hand"></i>
                     Start new project
                   </button>
 

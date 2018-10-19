@@ -5,6 +5,7 @@ import queryString from 'query-string';
 import JobBox from './JobBox';
 import SidebarJobsFilters from './SidebarJobsFilters';
 import noresult from '../img/2695f284d4f5795cff24f0dcb0320358.png';
+import StartNewProject from './StartNewProject';
 
 class Jobs extends Component {
   state = {
@@ -138,6 +139,12 @@ class Jobs extends Component {
     }
   }
 
+  handleCreateProject = () => {
+    const { getSkills, getPromotions } = this.props;
+    getSkills();
+    getPromotions();
+  }
+
   render() {
     const { 
       isGoing,
@@ -149,6 +156,11 @@ class Jobs extends Component {
 
     const {
       user,
+      dataSkills,
+      getTags,
+      skillTags,
+      dataPromotions,
+      addNewJob,
       data: {
         meta,
         jobs
@@ -319,7 +331,23 @@ class Jobs extends Component {
                   }
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3 padding-none-right">
-                  <button className="button-box" >Start new project</button>
+                  {/* <!-- Button trigger modal --> */}
+                  <button
+                    data-target="#startNewProject"
+                    data-toggle="modal"
+                    type="button"
+                    onClick={this.handleCreateProject}
+                    className="button-box" >
+                    Start new project
+                  </button>
+
+                  {/* <!-- Modal --> */}
+                  <StartNewProject
+                    dataSkills={dataSkills}
+                    getTags={getTags}
+                    skillTags={skillTags}
+                    dataPromotions={dataPromotions}
+                    addNewJob={addNewJob} />
                 </div>
               </div>
             </div>

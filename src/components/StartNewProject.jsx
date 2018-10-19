@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import { dataAvailability } from '../utils/data-jobs';
 import { Object } from 'core-js';
 
 class StartNewProject extends Component {
@@ -314,7 +313,6 @@ class StartNewProject extends Component {
       ? dataPromotions.promotions.filter(el => el.title === isSelectedCategory.name)
       : dataPromotions.promotions;
       
-    console.log(this.state);
     return (
       <div className="modal fade" id="startNewProject" tabIndex="-1" role="dialog" aria-labelledby="startNewProjectLabel" aria-hidden="false">
         <div className="modal-dialog" role="document">
@@ -766,7 +764,7 @@ class StartNewProject extends Component {
                       </div>
                       <div className="form-block-body">
                         <div className="form-itme-warning">
-                          You need to agree with terms of use to continue
+                          {terms ? null : 'You need to agree with terms of use to continue'}
                         </div>
                         <label className="fixed-price">
                           <input

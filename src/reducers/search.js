@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toastr from 'toastr';
 
 const TALENTS_REQUEST = 'TALENTS_REQUEST';
 const TALENTS_SUCCESS = 'TALENTS_SUCCESS';
@@ -186,14 +187,24 @@ export function addNewJob(obj) {
 
         throw new Error(response.errors);
       })
-      .then(json => dispatch({
-        type: NEW_JOB_SUCCESS,
-        payload: json,
-      }))
-      .catch(reason => dispatch({
-        type: NEW_JOB_FAILURE,
-        payload: reason
-      }));
+      .then(json => {
+        dispatch({
+          type: NEW_JOB_SUCCESS,
+          payload: json,
+        });
+
+        toastr.success(json.data.meta.messages[0]);
+        return json;
+      })
+      .catch(reason => {
+        dispatch({
+          type: NEW_JOB_FAILURE,
+          payload: reason,
+        });
+
+        toastr.success(reason.data.meta.messages[0]);
+        return reason;
+      });
   }
 }
 
@@ -301,9 +312,9 @@ const actionsMap = {
   [NEW_JOB_SUCCESS]: (state, action) => {
     return {
       ...state,
-      addJob: action.payload,
+      addJob: action.payload.data,
     }
-  }
+  },
 };
 
 export default function search(state = initialState, action) {
