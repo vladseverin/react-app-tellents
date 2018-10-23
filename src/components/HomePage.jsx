@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { Route, Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 import SearchPage from '../containers/SearchPage';
 import SkillsPage from '../containers/SkillsPage';
 
 class HomePage extends Component {
+  static propTypes = {
+    logout: PropTypes.func,
+    validateToken: PropTypes.func,
+    match: PropTypes.shape({
+      path: PropTypes.string.isRequired, 
+      url: PropTypes.string.isRequired, 
+      isExact: PropTypes.bool.isRequired,
+      params: PropTypes.object.isRequired
+    }),
+  }
+
   handleLogOut = () => {
     const { logout } = this.props;
     logout();
@@ -16,7 +28,7 @@ class HomePage extends Component {
 
   render() {
     const { match } = this.props;
-    
+
     return (
       <div className='home-page'>
         <div className="home-page-header">

@@ -1,7 +1,35 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 class JobBox extends Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      categories: PropTypes.oneOfType([
+        PropTypes.arrayOf(
+          PropTypes.object
+        ),
+        PropTypes.bool,
+      ]).isRequired,
+      created_at: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      have_bid: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
+      offers: PropTypes.array.isRequired,
+      owner: PropTypes.bool.isRequired,
+      period: PropTypes.number,
+      period_type: PropTypes.string,
+      price: PropTypes.number,
+      privacy: PropTypes.string,
+      promotion_description: PropTypes.string,
+      promotion_title: PropTypes.string,
+      skill_tags: PropTypes.array.isRequired,
+      status: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      user: PropTypes.object.isRequired,
+    }).isRequired,
+  }
+
   render() {
     const { data } = this.props;
     const timeType = data.time_type ? data.time_type.split('_').join(' ') : false;

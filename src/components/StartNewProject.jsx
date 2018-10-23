@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import { Object } from 'core-js';
+import PropTypes from 'prop-types';
 
 class StartNewProject extends Component {
+  static propTypes = {
+    addNewJob: PropTypes.func,
+  }
+
   state = {
     jobTitle: '',
     jobDescr: '',

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
+import PropTypes from 'prop-types';
 
 class LoginForm extends Component {
+  static propTypes = {
+    login: PropTypes.func,
+  }
+
   handleSubmitFinal = (value) => {
     const { email, password } = value;
     const { login } = this.props;
@@ -89,8 +94,8 @@ class LoginForm extends Component {
                       </span>
                     </button>
 
-                    {console.log('value', values)}
-                    {console.log('error', errors)}
+                    {/* {console.log('value', values)}
+                    {console.log('error', errors)} */}
                   </form>
                 )}
               />

@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class SkillAdd extends Component {
+  static propTypes = {
+    dataUserSkills: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }
+
   state = {
     selectedOption: null,
   }

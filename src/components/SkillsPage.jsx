@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Skill from './Skill';
 import SkillAdd from './SkillAdd';
 import SubSkillsAdd from './SubSkillsAdd';
 
 class SkillsPage extends Component {
+  static propTypes = {
+    deleteSkill: PropTypes.func,
+    addSkill: PropTypes.func,
+    getTags: PropTypes.func,
+    userSkills: PropTypes.arrayOf(PropTypes.object).isRequired,
+    skillTags: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }
+
   state = {
     activeTab: 0,
     isActiveStep: 0,
@@ -114,13 +123,6 @@ class SkillsPage extends Component {
                                 onClick={() => this.setState({isActiveStep: isActiveStep - 1})}>
                                 BACK
                               </button>
-                              {/* <button 
-                                className="btn btn-blue" 
-                                onClick={this.handleButtonDone}
-                                disabled={isActiveStep == 2 ? "" : "disabled"}
-                              >
-                                DONE
-                              </button> */}
                             </div>
                           : <button 
                               className="btn btn-blue" 

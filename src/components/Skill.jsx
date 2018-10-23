@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Skill extends Component {
+  static propTypes = {
+    handleClickDelete: PropTypes.func,
+    handleClickEdit: PropTypes.func,
+    title: PropTypes.string.isRequired,
+    skillCategories: PropTypes.array.isRequired,
+    skillTags: PropTypes.array.isRequired,
+  }
+
   handleClickDelete = (event) => {
     event.preventDefault();
     const { handleClickDelete } = this.props;

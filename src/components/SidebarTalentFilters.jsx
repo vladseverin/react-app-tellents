@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
+import PropTypes from 'prop-types';
 import history from '../utils/history';
 import { 
   dataExperience, 
@@ -10,6 +11,24 @@ import {
 } from '../utils/data-talents';
 
 class SidebarTalentFilters extends Component {
+  static propTypes = { 
+    history: PropTypes.object.isRequired,
+    dataExperience: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataLocations: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataLanguages: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataAvailability: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataPlaceOfWork: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }
+
+  static defaultProps = {
+    history: {},
+    dataExperience: [],
+    dataLocations: [],
+    dataLanguages: [],
+    dataAvailability: [],
+    dataPlaceOfWork: [],
+  }
+
   state = {
     doneSuccess: '',
     skillScore: '',

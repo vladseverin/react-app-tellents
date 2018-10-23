@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form';
 import classNames from 'classnames';
-
-import validateEmail from '../utils/validateEmail';
+import PropTypes from 'prop-types';
 
 class RegisterForm extends Component {
+  static propTypes = {
+    signup: PropTypes.func,
+  }
+
   handleSubmitFinal = (value) => {
     const { firstName, lastName, email, password } = value;
     const { signup } = this.props;
@@ -137,8 +140,8 @@ class RegisterForm extends Component {
                       </span>
                     </button>
 
-                    {console.log('value', values)}
-                    {console.log('error', errors)}
+                    {/* {console.log('value', values)}
+                    {console.log('error', errors)} */}
                   </form>
                 )}
               />

@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Logo from '../img/brand.png';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 
 class LandingPage extends Component {
+  static propTypes = {
+    login: PropTypes.func,
+    signup: PropTypes.func,
+    validateToken: PropTypes.func,
+    isAuthenticated: PropTypes.bool.isRequired,
+  }
+
   componentDidMount() {
     const { validateToken } = this.props;
     validateToken();

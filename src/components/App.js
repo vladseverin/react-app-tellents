@@ -4,13 +4,22 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import PrivateRoute from './PrivateRoute';
 import LandingPage from '../containers/LandingPage';
 import HomePage from '../containers/HomePage';
-
 import history from '../utils/history';
 
 class App extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+  }
+
+  static defaultProps = {
+    history: {}
+  }
+
   render() {
     const { isAuthenticated } = this.props;
 

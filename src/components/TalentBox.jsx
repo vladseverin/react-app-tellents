@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class TalentBox extends Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      favorited: PropTypes.bool.isRequired,
+      full_name: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      image: PropTypes.object.isRequired,
+      last_seen_at: PropTypes.string.isRequired,
+      media: PropTypes.object.isRequired,
+      offers: PropTypes.array.isRequired,
+      owner: PropTypes.bool.isRequired,
+      promotions: PropTypes.array.isRequired,
+      skill_tags: PropTypes.array.isRequired,
+      total_jobs: PropTypes.number.isRequired,
+      total_rate: PropTypes.number.isRequired,
+    }).isRequired,
+  }
+
   render() {
     const { data } = this.props;
 
+    console.log(data);
     return (
       <div className="job-box">
 

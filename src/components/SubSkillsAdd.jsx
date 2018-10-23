@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class SubSkillsAdd extends Component {
+  static propTypes = {
+    selectedId: PropTypes.number.isRequired,
+  }
+
   state = {
     userSkills: [],
     isOpenDropDown: false,

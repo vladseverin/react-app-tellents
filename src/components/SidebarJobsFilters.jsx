@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
+import PropTypes from 'prop-types';
 import history from '../utils/history';
 import {
   dataExperience,
@@ -11,10 +12,33 @@ import {
   dataAvailability,
   dataPayment,
   dataBudget,
-  dataProposals
+  dataProposals,
 } from '../utils/data-jobs';
 
 class SidebarJobsFilters extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+    dataExperience: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataPlaceOfWork: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataLocations: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataLanguages: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataAvailability: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataPayment: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataBudget: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dataProposals: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }
+
+  static defaultProps = {
+    history: {},
+    dataExperience: [],
+    dataPlaceOfWork: [],
+    dataLocations: [],
+    dataLanguages: [],
+    dataAvailability: [],
+    dataPayment: [],
+    dataBudget: [],
+    dataProposals: [],
+  }
   state = {
     experience: dataExperience,
     posted: '',

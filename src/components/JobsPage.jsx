@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 import history from '../utils/history';
 import queryString from 'query-string';
 import JobBox from './JobBox';
@@ -8,6 +9,28 @@ import noresult from '../img/2695f284d4f5795cff24f0dcb0320358.png';
 import StartNewProject from './StartNewProject';
 
 class Jobs extends Component {
+  static propTypes = {
+    history: PropTypes.object,
+    user: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      isAuthanticated: PropTypes.bool,
+    }).isRequired,
+    data: PropTypes.shape({
+      jobs: PropTypes.arrayOf(PropTypes.object),
+      meta: PropTypes.object,
+    }).isRequired,
+    dataSkills: PropTypes.array.isRequired,
+    skillTags: PropTypes.array.isRequired,
+    dataPromotions: PropTypes.object.isRequired,
+    getJobs: PropTypes.func,
+    unmountJobs: PropTypes.func,
+    getTags: PropTypes.func,
+    addNewJob: PropTypes.func,
+  }
+
   state = {
     isGoing: false,
     searchText: '',
@@ -43,7 +66,6 @@ class Jobs extends Component {
   handleSubmitForm = (event) => {
     event.preventDefault();
     const { searchText, parsed } = this.state;
-    const { data } = this.props;
 
     if (!searchText) {
       delete parsed['q'];
