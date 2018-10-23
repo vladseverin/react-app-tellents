@@ -328,7 +328,7 @@ class Talants extends Component {
                     type="button"
                     onClick={this.handleCreateProject}
                     className="button-box" >
-                    <i class="icon icon-hand"></i>
+                    <i className="icon icon-hand"></i>
                     Start new project
                   </button>
 

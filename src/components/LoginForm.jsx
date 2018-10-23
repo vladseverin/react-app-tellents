@@ -1,44 +1,39 @@
 import React, { Component } from 'react';
+import { Form, Field } from 'react-final-form';
 
 class LoginForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: {
-        text: '',
-        isValid: false,
-      },
-      password: {
-        text: '',
-        isValid: false,
-      },
-    };
-  }
-
-  handleChange = (event) => {
-    const { name, value } = event.target;
-
-    this.setState({
-      [name]: {
-        text: value,
-      }
-    });
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { email, password } = this.state;
+  handleSubmitFinal = (value) => {
+    const { email, password } = value;
     const { login } = this.props;
+    login(email, password);
+    document.getElementById("hidePopUpBtn2").click();
+  }
 
-    if ( email.text && password.text ) {
-      login(email.text, password.text);
-      document.getElementById("hidePopUpBtn2").click();
+  required = (value) => {
+    const { email, password } = value;
+    const errors = {};
+    const regExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    
+    if (!regExp.test(email)){
+      errors.email = 'Not a valid email';
     }
+
+    if (password.length < 8) {
+      errors.password = 'Short pass';
+    }
+
+    if (!email) {
+      errors.email = 'Email is empty';
+    }
+
+    if (!password) {
+      errors.password = 'Pass is empty';
+    }
+
+    return errors;
   }
 
   render() {
-    const { email, password } = this.state;
-
     return (
       <div className="modal-dialog" role="document" >
         <div className="modal-content">
@@ -61,37 +56,44 @@ class LoginForm extends Component {
                     <span className="omb_spanOr">or</span>
                 </div>
               </div>
+              
+              <Form
+                onSubmit={this.handleSubmitFinal}
+                initialValues={{ email: '', password: '' }}
+                validate={this.required}
+                render={({ handleSubmit, pristine, invalid, values, errors }) => (
+                  <form className="modal-form form-signin" onSubmit={handleSubmit}>
+                    <div className="loginWrapper">
+                      <Field 
+                        className="modal-form_item"
+                        name="email" 
+                        component="input" 
+                        type="text" 
+                        placeholder="Email Adress" 
+                      />
+                    </div>
 
-              <form className="modal-form form-signin" onSubmit={this.handleSubmit}>
+                    <div className="loginWrapper">
+                      <Field 
+                        className="modal-form_item"
+                        name="password" 
+                        component="input" 
+                        type="password"
+                        placeholder="Password (8 or more characters)"
+                      />
+                    </div>
 
-                <div className="loginWrapper">
-                  <input 
-                    className="modal-form_item"
-                    type="text" 
-                    name="email" 
-                    value={email.text} 
-                    onChange={this.handleChange} 
-                    placeholder="Email Adress"
-                  />
-                </div>
+                    <button className="btn btn-blue btn-with-icon" type="submit" disabled={pristine || invalid}>
+                      <span className="button-content">
+                        LOG IN
+                      </span>
+                    </button>
 
-                <div className="loginWrapper">
-                  <input 
-                    className="modal-form_item"
-                    type="password" 
-                    name="password" 
-                    value={password.text} 
-                    onChange={this.handleChange} 
-                    placeholder="Password (8 or more characters)"
-                  />
-                </div>
-
-                <button className="btn btn-blue btn-with-icon" type="submit">
-                  <span className="button-content">
-                    LOG IN
-                  </span>
-                </button>
-              </form>
+                    {console.log('value', values)}
+                    {console.log('error', errors)}
+                  </form>
+                )}
+              />
 
 
             </div>
